@@ -97,10 +97,28 @@ td.it small{color:var(--dim);font-size:12px}
 td.num{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 th.num{text-align:right}
 td input{padding:8px 10px;font-size:14px;text-align:right;font-variant-numeric:tabular-nums}
-td.q{width:80px}td.c{width:140px}td.m{width:92px}td.p{width:150px}
+td.q{width:80px}td.q input{min-width:58px}td.c{width:140px}td.m{width:92px}td.p{width:150px}
 td input::placeholder{color:#557064}
 tr.gp td{font-size:11.5px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);background:var(--bg2);padding:8px 12px}
 tfoot td{font-weight:800;border-top:1px solid var(--line2);background:var(--bg2)}
+table.ed td.it{min-width:320px;width:44%}
+table.ed td.it input{text-align:left;font-variant-numeric:normal}
+table.ed td.it .nm{font-weight:700;margin-bottom:6px}
+table.ed td.it .sp{font-size:13px;color:var(--mut);margin-bottom:6px}
+table.ed td.it .ex{display:flex;gap:6px}
+table.ed td.it .ex input{font-size:12px;padding:6px 9px;color:var(--mut)}
+table.ed td.it .ex input[data-t=grupo]{width:40%;flex:none;color:var(--gold)}
+table.ed td{vertical-align:top}
+table.ed td.num{padding-top:19px}
+td.ac{white-space:nowrap;width:1%}
+td.ac button{background:none;border:1px solid var(--line2);border-radius:7px;width:30px;height:30px;cursor:pointer;color:var(--mut);margin-left:3px;font-size:13px}
+td.ac button:hover:not(:disabled){border-color:var(--lime);color:var(--lime)}
+td.ac button:disabled{opacity:.3;cursor:default}
+td.ac button.rm:hover,td.ac button.conf{border-color:var(--red);color:var(--red)}
+td.ac button.conf{width:auto;padding:0 8px;font-size:12px;font-weight:700}
+td.vz{text-align:center;color:var(--dim);padding:26px}
+.barra{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap}
+.barra .del{margin-left:auto}
 .dica{font-size:13px;color:var(--dim);margin:12px 2px 0}
 
 .resumo{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
@@ -193,14 +211,13 @@ let E=null; // estado do editor
 
 function calcular(){
   const m=E.modelo; if(!m)return null;
-  const campos=E.campos, mp=num(campos.margem_padrao);
+  const mp=num(E.campos.margem_padrao);
   const out={};let venda=0,custo=0,pend=0;
-  for(const [nome,itens] of Object.entries(m.listas)){
+  for(const nome of Object.keys(m.listas)){
     let s=0,p=0,c=0;
-    out[nome]=itens.map(d=>{
-      const v=E.itens[nome+'.'+d.id]||{};
-      const qtd=num(v.qtd)??d.qtd, cu=num(v.custo)??num(d.custo), mg=num(v.margem)??mp;
-      const sug=cu!=null&&mg!=null?r2(cu*(1+mg/100)):null, pr=num(v.preco)??sug, tot=pr!=null?r2(pr*qtd):null;
+    out[nome]=E.listas[nome].map(d=>{
+      const qtd=num(d.qtd)??1, cu=num(d.custo), mg=num(d.margem)??mp;
+      const sug=cu!=null&&mg!=null?r2(cu*(1+mg/100)):null, pr=num(d.preco)??sug, tot=pr!=null?r2(pr*qtd):null;
       if(tot==null)p++;else s+=tot;
       if(cu!=null)c+=cu*qtd;
       return {qtd,cu,mg,sug,pr,tot};
@@ -219,7 +236,7 @@ async function editor(slug,aba){
   const d=await api('acao=proposta&slug='+encodeURIComponent(slug));
   const campos={};
   (d.modelo?.campos||[]).forEach(c=>{campos[c.id]=d.calculo.campos[c.id]});
-  E={slug,d,modelo:d.modelo,campos,itens:structuredClone(d.salvo.itens||{}),status:d.calculo?.status||'Rascunho',atualizado:d.salvo.atualizado,sujo:false};
+  E={slug,d,modelo:d.modelo,campos,listas:structuredClone(d.listas||{}),status:d.calculo?.status||'Rascunho',atualizado:d.salvo.atualizado,sujo:false};
   const temModelo=Boolean(d.modelo);
   aba=aba||(temModelo?'dados':'links');
   app.innerHTML=`<a class="voltar" href="#/">← Todas as propostas</a>
@@ -272,32 +289,62 @@ function formDados(){
   });
 }
 
+const NUMS=['qtd','custo','margem','preco'];
+const novoId=()=>'i'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const lerNum=v=>{const t=String(v).trim();const n=t.includes(',')?t.replace(/\./g,'').replace(',','.'):t;return t===''||isNaN(Number(n))?null:Number(n)};
+
 function tabela(nome){
-  const itens=E.modelo.listas[nome];
-  let html=`<div class="tbl"><table><thead><tr><th>Item</th><th class="num">Qtd</th><th class="num">Custo unit.</th><th class="num">Margem %</th><th class="num">Preço unit.</th><th class="num">Total</th></tr></thead><tbody>`;
-  let g=null;
+  const itens=E.listas[nome], comGrupo=nome==='materiais';
+  const grupos=[...new Set(itens.map(d=>d.grupo).filter(Boolean))];
+  let html=`<div class="tbl"><table class="ed"><thead><tr><th>Item</th><th class="num">Qtd</th><th class="num">Custo unit.</th><th class="num">Margem %</th><th class="num">Preço unit.</th><th class="num">Total</th><th></th></tr></thead><tbody>`;
+  let g;
   itens.forEach((d,i)=>{
-    if(d.grupo&&d.grupo!==g){g=d.grupo;html+=`<tr class="gp"><td colspan="6">${esc(g)}</td></tr>`}
-    const v=E.itens[nome+'.'+d.id]||{};
-    html+=`<tr data-i="${i}"><td class="it"><b>${esc(d.item)}</b><small>${esc(d.ref?'Referência: '+d.ref:d.spec)}</small></td>
-      <td class="q"><input data-f="qtd" inputmode="numeric" value="${v.qtd??''}" placeholder="${d.qtd}"></td>
-      <td class="c"><input data-f="custo" inputmode="decimal" value="${v.custo??''}" placeholder="${d.custo!=null?d.custo:'—'}"></td>
-      <td class="m"><input data-f="margem" inputmode="decimal" value="${v.margem??''}"></td>
-      <td class="p"><input data-f="preco" inputmode="decimal" value="${v.preco??''}"></td>
-      <td class="num tot"></td></tr>`;
+    if(comGrupo&&d.grupo!==g){g=d.grupo;html+=`<tr class="gp"><td colspan="7">${esc(g||'Sem grupo')}</td></tr>`}
+    html+=`<tr data-i="${i}"><td class="it">
+        <input class="nm" data-t="item" value="${esc(d.item)}" placeholder="Nome do item">
+        <input class="sp" data-t="spec" value="${esc(d.spec)}" placeholder="Descrição que aparece para o cliente">
+        <div class="ex">${comGrupo?`<input data-t="grupo" value="${esc(d.grupo)}" placeholder="Grupo" list="gl-${nome}">`:''}<input data-t="ref" value="${esc(d.ref)}" placeholder="Referência interna (fornecedor, link)"></div>
+      </td>
+      ${NUMS.map(f=>`<td class="${{qtd:'q',custo:'c',margem:'m',preco:'p'}[f]}"><input data-f="${f}" inputmode="decimal" value="${d[f]??''}"></td>`).join('')}
+      <td class="num tot"></td>
+      <td class="ac"><button title="Subir" data-a="sobe" ${i?'':'disabled'}>↑</button><button title="Descer" data-a="desce" ${i<itens.length-1?'':'disabled'}>↓</button><button title="Remover" data-a="remove" class="rm">✕</button></td></tr>`;
   });
-  html+=`</tbody><tfoot><tr><td colspan="5">Total ${nome==='materiais'?'dos materiais':'dos serviços'}</td><td class="num" id="t-${nome}"></td></tr></tfoot></table></div>
-    <p class="dica">Os valores em cinza são os padrões. Custo com margem gera o preço sugerido; digitar um preço substitui o cálculo. Custo e margem não aparecem para o cliente.</p>`;
-  $('#p-'+nome).innerHTML=html;
-  $('#p-'+nome).querySelectorAll('tbody tr[data-i]').forEach(tr=>{
-    const d=itens[tr.dataset.i],k=nome+'.'+d.id;
-    tr.querySelectorAll('input').forEach(inp=>inp.oninput=()=>{
-      const val=inp.value.replace(/\./g,inp.value.includes(',')?'':'.').replace(',','.').trim();
-      E.itens[k]??={};
-      if(val===''||isNaN(Number(val)))delete E.itens[k][inp.dataset.f];else E.itens[k][inp.dataset.f]=Number(val);
+  if(!itens.length)html+=`<tr><td colspan="7" class="vz">Nenhum item. Use “Adicionar item”.</td></tr>`;
+  html+=`</tbody><tfoot><tr><td colspan="5">Total ${comGrupo?'dos materiais':'dos serviços'}</td><td class="num" id="t-${nome}"></td><td></td></tr></tfoot></table></div>
+    <datalist id="gl-${nome}">${grupos.map(x=>`<option value="${esc(x)}">`).join('')}</datalist>
+    <div class="barra"><button class="btn" data-a="add">+ Adicionar item</button><button class="btn del" data-a="restaura">Restaurar itens do modelo</button></div>
+    <p class="dica">Custo com margem (ou a margem padrão da aba Dados) gera o preço sugerido, em cinza; digitar um preço substitui o cálculo. Custo, margem e referência não aparecem para o cliente. ${comGrupo?'Itens com o mesmo grupo aparecem juntos sob o mesmo título na proposta.':''}</p>`;
+  const pn=$('#p-'+nome);pn.innerHTML=html;
+
+  pn.querySelectorAll('tbody tr[data-i]').forEach(tr=>{
+    const i=Number(tr.dataset.i),d=itens[i];
+    tr.querySelectorAll('input[data-f]').forEach(inp=>inp.oninput=()=>{
+      const v=lerNum(inp.value);
+      if(v==null)delete d[inp.dataset.f];else d[inp.dataset.f]=v;
       sujo();atualizarTabela(nome);
     });
+    tr.querySelectorAll('input[data-t]').forEach(inp=>{
+      inp.oninput=()=>{d[inp.dataset.t]=inp.value;sujo()};
+      if(inp.dataset.t==='grupo')inp.onchange=()=>tabela(nome);
+    });
+    tr.querySelector('[data-a=sobe]').onclick=()=>{[itens[i-1],itens[i]]=[itens[i],itens[i-1]];sujo();tabela(nome)};
+    tr.querySelector('[data-a=desce]').onclick=()=>{[itens[i+1],itens[i]]=[itens[i],itens[i+1]];sujo();tabela(nome)};
+    const rm=tr.querySelector('[data-a=remove]');
+    rm.onclick=()=>{
+      if(rm.dataset.conf!=='1'){rm.dataset.conf='1';rm.textContent='Remover?';rm.classList.add('conf');setTimeout(()=>{rm.dataset.conf='';rm.textContent='✕';rm.classList.remove('conf')},3500);return}
+      itens.splice(i,1);sujo();tabela(nome);
+    };
   });
+  pn.querySelector('[data-a=add]').onclick=()=>{
+    itens.push({id:novoId(),qtd:1,...(comGrupo?{grupo:itens.length?itens[itens.length-1].grupo:''}:{})});
+    sujo();tabela(nome);
+    const ult=pn.querySelectorAll('tbody tr[data-i] .nm');ult[ult.length-1]?.focus();
+  };
+  const rs=pn.querySelector('[data-a=restaura]');
+  rs.onclick=()=>{
+    if(rs.dataset.conf!=='1'){rs.dataset.conf='1';rs.textContent='Confirmar: descarta os itens atuais';setTimeout(()=>{rs.dataset.conf='';rs.textContent='Restaurar itens do modelo'},4000);return}
+    E.listas[nome]=structuredClone(E.modelo.listas[nome]);sujo();tabela(nome);
+  };
   atualizarTabela(nome);
 }
 
@@ -305,7 +352,8 @@ function atualizarTabela(nome){
   const c=calcular(),linhas=c[nome];
   const pn=$('#p-'+nome);if(!pn)return;
   pn.querySelectorAll('tbody tr[data-i]').forEach(tr=>{
-    const l=linhas[tr.dataset.i],d=E.modelo.listas[nome][tr.dataset.i];
+    const l=linhas[tr.dataset.i];
+    tr.querySelector('[data-f="qtd"]').placeholder='1';
     tr.querySelector('[data-f="margem"]').placeholder=num(E.campos.margem_padrao)!=null?E.campos.margem_padrao:'—';
     tr.querySelector('[data-f="preco"]').placeholder=l.sug!=null?l.sug.toFixed(2):'—';
     tr.querySelector('.tot').textContent=BRL(l.tot);
@@ -333,7 +381,7 @@ function resumo(){
 async function salvar(){
   const b=$('#salvar');b.disabled=true;
   try{
-    const r=await api('acao=salvar&slug='+E.slug,{method:'PUT',body:JSON.stringify({campos:E.campos,itens:E.itens,status:E.status})});
+    const r=await api('acao=salvar&slug='+E.slug,{method:'PUT',body:JSON.stringify({campos:E.campos,listas:E.listas,status:E.status})});
     E.atualizado=r.salvo.atualizado;sujo(false);toast('Proposta salva');
   }catch(e){toast('Erro ao salvar: '+e.message,true)}
   b.disabled=false;

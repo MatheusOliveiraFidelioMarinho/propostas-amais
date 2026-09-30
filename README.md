@@ -23,11 +23,19 @@ Propostas cadastradas:
 
 ## Painel de valores
 
-Cada item de materiais e serviços tem **custo**, **margem** e **preço**. Custo
+As listas de **materiais** e **serviços** são editadas no próprio painel:
+adicionar, remover, renomear, mudar descrição, grupo, referência interna e
+ordem. A lista do cadastro (`lib/registro.js`) é só o ponto de partida; depois
+do primeiro salvamento a lista da proposta passa a ser a do painel, e
+“Restaurar itens do modelo” volta para a do cadastro. Itens de materiais com o
+mesmo grupo aparecem juntos sob o mesmo título no deck, e tabelas longas
+reduzem a fonte sozinhas para caber no slide (até cerca de 20 linhas).
+
+Cada item tem **custo**, **margem** e **preço**. Custo
 com margem (ou a margem padrão da aba Dados) gera o preço sugerido; digitar um
 preço substitui o cálculo. Totais e valores por extenso são calculados sozinhos.
 
-- Custo, margem e referências **nunca** saem para o cliente: `api/dados.js`
+- Custo, margem e referência interna **nunca** saem para o cliente: `api/dados.js`
   entrega só o que aparece na proposta.
 - Enquanto faltar preço em algum item, a proposta mostra `R$ ______` naquele total.
 - “Mostrar o valor de cada item” liga as colunas de preço nas tabelas do deck.
@@ -81,5 +89,6 @@ Sem as variáveis do Redis, os dados ficam em memória enquanto o servidor roda.
 
 1. Criar a pasta em `propostas/<pasta>/` com o HTML e as imagens (caminhos relativos).
 2. Cadastrar em `lib/registro.js` com `slug`, `cliente`, `titulo`, `pasta` e `pagina`.
-3. Para ter valores editáveis, definir `modelo` (campos e listas) e marcar o HTML
+3. Para ter valores editáveis, definir `modelo` (campos e listas iniciais, que podem
+   ser vazias) e marcar o HTML
    com `data-f`, `data-lista`, `data-t` e `data-x`, como no modelo da Binatural.

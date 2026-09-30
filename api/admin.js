@@ -3,13 +3,13 @@
  *
  *   GET    ?acao=lista                     propostas com status, totais e links
  *   GET    ?acao=proposta&slug=            modelo, dados calculados e links
- *   PUT    ?acao=salvar&slug=              grava campos, itens e status
+ *   PUT    ?acao=salvar&slug=              grava campos, listas de itens e status
  *   POST   ?acao=link&slug=                cria link de cliente { rotulo, dias }
  *   DELETE ?acao=link&token=               remove link de cliente
  */
 
 import { PROPOSTAS, STATUS, proposta } from '../lib/registro.js';
-import { carregar, calcular } from '../lib/calc.js';
+import { carregar, calcular, listasBase } from '../lib/calc.js';
 import { logado, tokenAleatorio } from '../lib/auth.js';
 import { redis, lerJSON, gravarJSON, persistente } from '../lib/store.js';
 
@@ -77,6 +77,7 @@ async function tratar(req) {
     return json({
       proposta: { slug: p.slug, cliente: p.cliente, titulo: p.titulo, unidade: p.unidade },
       modelo: p.modelo || null, padroes: p.padroes || {}, status: STATUS, salvo,
+      listas: p.modelo ? listasBase(p, salvo) : null,
       calculo: p.modelo ? calcular(p, salvo) : null,
       links: await links(p.slug), persistente,
     });
@@ -91,18 +92,25 @@ async function tratar(req) {
     for (const [k, v] of Object.entries(corpo.campos || {})) {
       if (ids.has(k)) campos[k] = typeof v === 'boolean' ? v : String(v ?? '').slice(0, 500);
     }
-    const chaves = new Set(Object.entries(p.modelo.listas).flatMap(([n, it]) => it.map((i) => `${n}.${i.id}`)));
-    const itens = {};
-    for (const [k, v] of Object.entries(corpo.itens || {})) {
-      if (!chaves.has(k) || typeof v !== 'object') continue;
-      itens[k] = {};
-      for (const f of ['qtd', 'custo', 'margem', 'preco']) {
-        const n = v[f];
-        if (n !== '' && n !== null && n !== undefined && Number.isFinite(Number(n))) itens[k][f] = Number(n);
-      }
+    const listas = {};
+    for (const nome of Object.keys(p.modelo.listas)) {
+      const itens = corpo.listas?.[nome];
+      if (!Array.isArray(itens)) continue;
+      listas[nome] = itens.slice(0, 150).filter((v) => v && typeof v === 'object').map((v, i) => {
+        const item = { id: String(v.id || `i${Date.now().toString(36)}${i}`).slice(0, 40) };
+        for (const [f, max] of [['grupo', 60], ['item', 160], ['spec', 300], ['ref', 160]]) {
+          const t = String(v[f] ?? '').trim().slice(0, max);
+          if (t) item[f] = t;
+        }
+        for (const f of ['qtd', 'custo', 'margem', 'preco']) {
+          const n = v[f];
+          if (n !== '' && n !== null && n !== undefined && Number.isFinite(Number(n))) item[f] = Number(n);
+        }
+        return item;
+      });
     }
     const salvo = {
-      campos, itens,
+      campos, listas,
       status: STATUS.includes(corpo.status) ? corpo.status : 'Rascunho',
       atualizado: Date.now(),
     };

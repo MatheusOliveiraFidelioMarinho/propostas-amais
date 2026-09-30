@@ -368,6 +368,8 @@ table.mat td.sv{color:var(--fg);font-weight:700}
 body.precos table.mat{font-size:14.5px}
 body.precos table.mat td{padding:7px 14px 7px 0}
 body.precos table.mat tr.gp td{padding:10px 0 5px}
+table.mat td.qt{font-size:1.1em}
+table.mat tr.gp td{font-size:.76em}
 </style>
 </head>
 <body class="idle">
@@ -881,12 +883,26 @@ function linhas(nome,itens,precos){
   }
   return html;
 }
+// listas longas: reduz a fonte da tabela até ela caber acima do rodapé do slide
+function caber(){
+  document.querySelectorAll('[data-lista]').forEach(tb=>{
+    const tab=tb.closest('table'),sl=tb.closest('.slide'),ft=sl.querySelector('.foot');
+    tab.style.fontSize='';tab.querySelectorAll('td').forEach(td=>{td.style.paddingTop=td.style.paddingBottom=''});
+    let fs=parseFloat(getComputedStyle(tab).fontSize);
+    const limite=()=>ft.offsetTop-12;
+    while(tab.offsetTop+tab.offsetHeight>limite()&&fs>10){
+      fs-=.5;tab.style.fontSize=fs+'px';
+      tab.querySelectorAll('td').forEach(td=>{td.style.paddingTop=td.style.paddingBottom=Math.max(2,(fs-9)*.9)+'px'});
+    }
+  });
+}
 fetch('dados.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{
   document.title=d.titulo;
   document.body.classList.toggle('precos',d.exibirPrecos);
   document.querySelectorAll('[data-f]').forEach(el=>{el.textContent=d.campos[el.dataset.f]??''});
   document.querySelectorAll('[data-show]').forEach(el=>{el.hidden=!d.campos[el.dataset.show]});
   document.querySelectorAll('[data-lista]').forEach(el=>{el.innerHTML=linhas(el.dataset.lista,d.listas[el.dataset.lista]||[],d.exibirPrecos)});
+  caber();
   document.querySelectorAll('[data-t]').forEach(el=>{const t=d.totais[el.dataset.t];el.textContent=t?BRL(t.valor):'R$ ______'});
   document.querySelectorAll('[data-x]').forEach(el=>{const t=d.totais[el.dataset.x];el.textContent=t?'( '+t.extenso+' )':'( ____________________________ )'});
 }).catch(e=>console.warn('dados indisponíveis',e));
