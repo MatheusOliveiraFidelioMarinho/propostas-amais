@@ -365,6 +365,8 @@ table.mat td.pc{text-align:right;color:var(--fg);font-weight:650;white-space:now
 table.mat td.sv{color:var(--fg);font-weight:700}
 .pagto{margin-top:16px;font-size:16px;color:var(--mut)}
 .foot span span{margin:0;padding:0;border:0}
+.inv b.parcial{color:var(--amber)!important}
+.inv p.parcial{color:var(--amber);font-weight:700}
 body.precos table.mat{font-size:14.5px}
 body.precos table.mat td{padding:7px 14px 7px 0}
 body.precos table.mat tr.gp td{padding:10px 0 5px}
@@ -903,8 +905,10 @@ fetch('dados.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(r.st
   document.querySelectorAll('[data-show]').forEach(el=>{el.hidden=!d.campos[el.dataset.show]});
   document.querySelectorAll('[data-lista]').forEach(el=>{el.innerHTML=linhas(el.dataset.lista,d.listas[el.dataset.lista]||[],d.exibirPrecos)});
   caber();
-  document.querySelectorAll('[data-t]').forEach(el=>{const t=d.totais[el.dataset.t];el.textContent=t?BRL(t.valor):'R$ ______'});
-  document.querySelectorAll('[data-x]').forEach(el=>{const t=d.totais[el.dataset.x];el.textContent=t?'( '+t.extenso+' )':'( ____________________________ )'});
+  document.querySelectorAll('[data-t]').forEach(el=>{const t=d.totais[el.dataset.t];el.textContent=t?BRL(t.valor):'R$ ______';el.classList.toggle('parcial',!!t?.parcial)});
+  document.querySelectorAll('[data-x]').forEach(el=>{const t=d.totais[el.dataset.x];
+    el.textContent=!t?'( ____________________________ )':t.parcial?`Prévia da equipe · ${t.pendentes} ${t.pendentes===1?'item':'itens'} sem preço · o cliente vê em branco`:'( '+t.extenso+' )';
+    el.classList.toggle('parcial',!!t?.parcial)});
 }).catch(e=>console.warn('dados indisponíveis',e));
 </script>
 </body>

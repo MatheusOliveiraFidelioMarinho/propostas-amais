@@ -100,10 +100,10 @@ function linkIndisponivel() {
 }
 
 // Resolve o restante do caminho de uma proposta para o arquivo real.
-function servirProposta(req, p, resto) {
+function servirProposta(req, p, resto, equipe = false) {
   if (resto.split('/').some((s) => s === '..' || s === '.')) return linkIndisponivel();
   if (resto === '' || resto === 'index.html') return reescrever(req, `/propostas/${p.pasta}/${p.pagina}`);
-  if (resto === 'dados.json') return reescrever(req, `/api/dados?slug=${encodeURIComponent(p.slug)}`);
+  if (resto === 'dados.json') return reescrever(req, `/api/dados?slug=${encodeURIComponent(p.slug)}${equipe ? '&previa=1' : ''}`);
   return reescrever(req, `/propostas/${p.pasta}/${resto}`);
 }
 
@@ -166,7 +166,7 @@ export default async function middleware(req, ctx) {
     const p = proposta(pp[1]);
     if (!p) return new Response('Proposta não encontrada', { status: 404 });
     if (pp[2] === undefined) return redirecionar(`/p/${p.slug}/`);
-    return servirProposta(req, p, pp[2].slice(1));
+    return servirProposta(req, p, pp[2].slice(1), true);
   }
 
   return seguir();

@@ -312,6 +312,7 @@ function tabela(nome){
   if(!itens.length)html+=`<tr><td colspan="7" class="vz">Nenhum item. Use “Adicionar item”.</td></tr>`;
   html+=`</tbody><tfoot><tr><td colspan="5">Total ${comGrupo?'dos materiais':'dos serviços'}</td><td class="num" id="t-${nome}"></td><td></td></tr></tfoot></table></div>
     <datalist id="gl-${nome}">${grupos.map(x=>`<option value="${esc(x)}">`).join('')}</datalist>
+    <div class="aviso" id="av-${nome}" hidden></div>
     <div class="barra"><button class="btn" data-a="add">+ Adicionar item</button><button class="btn del" data-a="restaura">Restaurar itens do modelo</button></div>
     <p class="dica">Custo com margem (ou a margem padrão da aba Dados) gera o preço sugerido, em cinza; digitar um preço substitui o cálculo. Custo, margem e referência não aparecem para o cliente. ${comGrupo?'Itens com o mesmo grupo aparecem juntos sob o mesmo título na proposta.':''}</p>`;
   const pn=$('#p-'+nome);pn.innerHTML=html;
@@ -359,7 +360,9 @@ function atualizarTabela(nome){
     tr.querySelector('.tot').textContent=BRL(l.tot);
   });
   const t=c[nome+'_tot'];
-  $('#t-'+nome).textContent=BRL(t.s)+(t.p?` · ${t.p} pendente${t.p>1?'s':''}`:'');
+  $('#t-'+nome).textContent=BRL(t.s)+(t.p?` · ${t.p} sem preço`:'');
+  const av=$('#av-'+nome);
+  if(av){av.hidden=!t.p;av.textContent=`Faltam ${t.p} ${t.p===1?'item':'itens'} sem preço. Enquanto isso, o link do cliente mostra este total em branco; na sua visualização aparece o valor parcial em amarelo. Para ter preço, informe custo e margem (ou a margem padrão na aba Dados) ou digite o preço direto.`}
 }
 
 function resumo(){
