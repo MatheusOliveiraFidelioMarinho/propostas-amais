@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Proposta Cluster Binatural</title>
+<style>
+:root{
+  --bg:#050d09; --bg2:#08150f; --card:#0b1b14; --card2:#0f2219; --line:#1a3328; --line2:#27463a;
+  --fg:#eef4f0; --mut:#a3b8ad; --dim:#6a8479;
+  --lime:#b0e000; --gold:#d6b25e; --green:#6fdc8c; --blue:#5b95f9; --amber:#f2b33d; --red:#f07a6a;
+  --rad:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.5;
+}
+img{display:block;max-width:100%}
+::selection{background:var(--lime);color:#000}
+
+/* ---------- STAGE 1600x900 escalado ---------- */
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000}
+#stage{
+  position:relative;width:1600px;height:900px;flex:none;overflow:hidden;
+  background:var(--bg);transform-origin:center center;
+}
+.slide{
+  position:absolute;inset:0;padding:72px 96px 88px;
+  opacity:0;visibility:hidden;transform:translateX(40px);
+  transition:opacity .45s ease,transform .45s ease,visibility .45s;
+  display:flex;flex-direction:column;
+  background:
+    radial-gradient(900px 520px at 88% 8%,rgba(176,224,0,.07),transparent 62%),
+    radial-gradient(760px 520px at 4% 100%,rgba(214,178,94,.06),transparent 60%),
+    var(--bg);
+}
+.slide.on{opacity:1;visibility:visible;transform:none}
+.slide.prev{transform:translateX(-40px)}
+
+/* cabecalho e rodape de cada slide */
+.top{display:flex;align-items:center;gap:18px;margin-bottom:34px}
+.eyebrow{
+  font-size:14px;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;color:var(--lime);
+  border-left:3px solid var(--lime);padding:2px 0 2px 14px;
+}
+.top .num{margin-left:auto;font-size:14px;font-weight:700;color:var(--dim);letter-spacing:1px}
+.foot{
+  position:absolute;left:96px;right:96px;bottom:30px;display:flex;align-items:center;gap:18px;
+  font-size:13px;color:var(--dim);font-weight:600;letter-spacing:.3px;
+}
+.foot img{height:24px;width:auto}
+.foot .bn{height:30px;width:30px;border-radius:7px;background:#f4f1e8;padding:3px;object-fit:contain}
+.foot span{margin-left:6px;padding-left:18px;border-left:1px solid var(--line2)}
+
+h1{font-size:68px;line-height:1.04;letter-spacing:-2px;font-weight:800}
+h2{font-size:48px;line-height:1.1;letter-spacing:-1.4px;font-weight:800;margin-bottom:14px}
+h3{font-size:22px;font-weight:750;letter-spacing:-.3px;margin-bottom:8px}
+.lead{font-size:21px;color:var(--mut);max-width:62ch}
+.hl{color:var(--lime)}
+.gd{color:var(--gold)}
+b.w{color:var(--fg);font-weight:700}
+
+/* ---------- CAPA ---------- */
+#s1{padding:0;flex-direction:row}
+#s1 .left{flex:1.15;padding:80px 96px;display:flex;flex-direction:column;justify-content:center}
+#s1 .left .amais{height:74px;width:auto;margin-bottom:64px;align-self:flex-start}
+#s1 .left h1 span{display:block}
+#s1 .left .lead{margin-top:26px}
+#s1 .meta{display:flex;gap:44px;margin-top:54px;padding-top:26px;border-top:1px solid var(--line)}
+#s1 .meta div b{display:block;font-size:13px;letter-spacing:1.8px;text-transform:uppercase;color:var(--dim);font-weight:800;margin-bottom:4px}
+#s1 .meta div span{font-size:19px;font-weight:650}
+#s1 .right{
+  flex:.85;position:relative;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,#f6f3ea 0%,#ece6d6 100%);
+}
+#s1 .right img{width:62%;height:auto}
+#s1 .right .tag{
+  position:absolute;bottom:64px;left:0;right:0;text-align:center;
+  font-size:14px;letter-spacing:3px;text-transform:uppercase;color:#12352a;font-weight:800;opacity:.7;
+}
+#s1 .right::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:6px;
+  background:linear-gradient(var(--gold),var(--lime));
+}
+
+/* ---------- CARDS ---------- */
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:28px}
+.card p{font-size:16.5px;color:var(--mut)}
+.ico{
+  display:flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:12px;margin-bottom:18px;
+  background:rgba(176,224,0,.09);border:1px solid rgba(176,224,0,.3);
+}
+.ico svg{width:25px;height:25px;stroke:var(--lime);stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- TOPOLOGIA ---------- */
+#topo{display:grid;grid-template-columns:1fr 360px;gap:36px;flex:1;min-height:0}
+#topo svg{width:100%;height:100%}
+.nbox{fill:#0e2119;stroke:#27463a;stroke-width:1.5}
+.nbox.hi{stroke:rgba(176,224,0,.55)}
+.ntitle{fill:#eef4f0;font-size:21px;font-weight:800}
+.nsub{fill:#a3b8ad;font-size:14.5px;font-weight:500}
+.nstat{fill:#6fdc8c;font-size:13px;font-weight:800;letter-spacing:1.4px}
+.lk{fill:none;stroke-width:3.5;stroke-linecap:round}
+.lk.g{stroke:var(--green)} .lk.b{stroke:var(--blue)} .lk.a{stroke:var(--amber)}
+.lk.dash{stroke-dasharray:8 8}
+.pulse{animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.legend{display:flex;flex-direction:column;gap:14px}
+.lg{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.lg b{display:flex;align-items:center;gap:12px;font-size:17px;margin-bottom:4px}
+.lg b i{width:26px;height:4px;border-radius:3px;flex:none}
+.lg p{font-size:14.5px;color:var(--mut)}
+
+/* ---------- TABELAS / SPECS ---------- */
+.spec{display:grid;grid-template-columns:230px 1fr;border-top:1px solid var(--line)}
+.spec div{padding:15px 0;border-bottom:1px solid var(--line);font-size:18px}
+.spec div:nth-child(odd){color:var(--dim);font-weight:700;font-size:14px;letter-spacing:1.4px;text-transform:uppercase;padding-top:19px}
+.spec div:nth-child(even){font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:17px}
+th{text-align:left;font-size:13px;letter-spacing:1.6px;text-transform:uppercase;color:var(--dim);font-weight:800;padding:0 16px 12px 0;border-bottom:1px solid var(--line2)}
+td{padding:15px 16px 15px 0;border-bottom:1px solid var(--line);color:var(--mut);vertical-align:top}
+td:first-child{color:var(--fg);font-weight:700}
+.pill{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1px;padding:4px 10px;border-radius:6px;text-transform:uppercase}
+.pill.ok{background:rgba(111,220,140,.13);color:var(--green)}
+.pill.at{background:rgba(242,179,61,.14);color:var(--amber)}
+.pill.cr{background:rgba(240,122,106,.14);color:var(--red)}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:9px;vertical-align:middle}
+
+/* servidor */
+.hw{display:grid;grid-template-columns:420px 1fr;gap:56px;flex:1;align-items:center}
+.box3d{
+  position:relative;height:520px;border-radius:18px;
+  background:linear-gradient(160deg,#13281f,#0a1812);border:1px solid var(--line2);
+  display:flex;align-items:center;justify-content:center;gap:34px;
+}
+.tower{width:150px;height:380px;border-radius:10px;background:linear-gradient(180deg,#1c2a24,#101a16);border:1px solid #33514a;position:relative;padding:22px 18px}
+.tower .bay{height:26px;border-radius:4px;background:#0a120f;border:1px solid #2b423a;margin-bottom:9px}
+.tower .led{position:absolute;bottom:26px;left:18px;width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 14px var(--green)}
+.tower .lbl{position:absolute;bottom:22px;right:16px;font-size:14px;font-weight:800;color:var(--mut)}
+.tower .grill{position:absolute;left:18px;right:18px;bottom:62px;height:120px;border-radius:5px;
+  background:repeating-linear-gradient(90deg,#16221e 0 5px,#0b1310 5px 9px)}
+
+/* storage */
+.pool{border-radius:var(--rad);padding:30px;background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column}
+.pool.nv{border-color:rgba(91,149,249,.45)}
+.pool.hd{border-color:rgba(214,178,94,.45)}
+.pool .ph{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.pool .ph .pill{margin-left:auto}
+.disks{display:flex;gap:12px;margin:22px 0}
+.disk{flex:1;height:78px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:13px;font-weight:800;letter-spacing:.6px}
+.pool.nv .disk{background:rgba(91,149,249,.1);border:1px solid rgba(91,149,249,.45);color:#b8d0ff}
+.pool.hd .disk{background:rgba(214,178,94,.09);border:1px solid rgba(214,178,94,.42);color:#ecd6a0}
+.mirror .disk{height:62px}
+.disk small{font-weight:600;opacity:.75;font-size:11.5px;letter-spacing:.3px}
+.mirror{display:flex;gap:12px}
+.mirror > div{flex:1;display:flex;gap:8px;padding:8px;align-items:stretch;border:1px dashed rgba(214,178,94,.4);border-radius:12px;position:relative}
+.mirror > div::after{content:attr(data-l);position:absolute;top:-10px;left:12px;background:var(--card);padding:0 6px;font-size:11px;font-weight:800;color:var(--gold);letter-spacing:1px}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:auto}
+.kv div{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kv b{display:block;font-size:26px;font-weight:800;letter-spacing:-.6px}
+.kv span{font-size:13px;color:var(--dim);font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+.uses{margin-top:6px;font-size:16px;color:var(--mut)}
+.uses li{list-style:none;padding:6px 0 6px 22px;position:relative}
+.uses li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:9px;border-radius:2px;background:currentColor;opacity:.6}
+.pool.nv .uses li::before{background:var(--blue);opacity:1}
+.pool.hd .uses li::before{background:var(--gold);opacity:1}
+
+/* switch */
+.sw{
+  border-radius:16px;padding:26px 30px;background:linear-gradient(180deg,#e9ecea,#cfd4d1);
+  display:flex;align-items:center;gap:26px;margin-bottom:30px;box-shadow:0 20px 50px rgba(0,0,0,.45);
+}
+.sw .brand{font-size:15px;font-weight:800;letter-spacing:2px;color:#2a3431;width:120px}
+.ports{display:grid;grid-template-columns:repeat(12,1fr);gap:7px;flex:1}
+.port{height:30px;border-radius:4px;background:#26302d;border:2px solid #3a4743;position:relative}
+.port.u::after{content:"";position:absolute;top:3px;left:4px;width:6px;height:6px;border-radius:50%}
+.port.g::after{background:var(--green);box-shadow:0 0 8px var(--green)}
+.port.b::after{background:var(--blue);box-shadow:0 0 8px var(--blue)}
+.port.a::after{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.sfp{display:flex;gap:8px}
+.sfp div{width:44px;height:30px;border-radius:4px;background:#1a2220;border:2px solid #56625e}
+
+/* quorum */
+.votes{display:flex;gap:18px;align-items:stretch;margin:6px 0 30px}
+.vote{flex:1;border-radius:var(--rad);padding:24px 26px;background:var(--card);border:1px solid rgba(111,220,140,.4);position:relative}
+.vote .v{position:absolute;top:22px;right:24px;font-size:40px;font-weight:800;color:var(--green);line-height:1}
+.vote p{color:var(--mut);font-size:15.5px}
+.op{display:flex;align-items:center;font-size:36px;font-weight:800;color:var(--dim)}
+.total{flex:.8;border-radius:var(--rad);padding:24px;background:rgba(111,220,140,.1);border:1px solid var(--green);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.total b{font-size:54px;font-weight:800;color:var(--green);line-height:1}
+.total span{font-size:14px;color:var(--mut);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:8px}
+
+/* capacidade */
+.big{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:30px}
+.big div{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:26px}
+.big b{display:block;font-size:52px;font-weight:800;letter-spacing:-1.6px;line-height:1.05}
+.big span{display:block;font-size:14px;color:var(--dim);font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-top:6px}
+.big p{font-size:15.5px;color:var(--mut);margin-top:12px}
+.bar{height:44px;border-radius:10px;overflow:hidden;display:flex;border:1px solid var(--line2);margin:14px 0 10px}
+.bar div{display:flex;align-items:center;padding-left:16px;font-size:14px;font-weight:800;color:#06110c}
+
+/* etapas */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:24px 24px 26px;position:relative}
+.step .n{font-size:15px;font-weight:800;color:var(--bg);background:var(--lime);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.step p{font-size:15.5px;color:var(--mut)}
+
+/* encerramento */
+#fim{align-items:center;justify-content:center;text-align:center}
+#fim .logos{display:flex;align-items:center;gap:56px;margin-bottom:56px}
+#fim .logos .amais{height:110px;width:auto}
+#fim .logos .bnbox{background:#f4f1e8;border-radius:22px;padding:22px 30px}
+#fim .logos .bnbox img{height:150px;width:auto}
+#fim .logos i{width:1px;height:130px;background:var(--line2)}
+
+/* ---------- CONTROLES ---------- */
+#ctrl{
+  position:fixed;right:22px;bottom:18px;z-index:10;display:flex;align-items:center;gap:8px;
+  background:rgba(5,13,9,.82);backdrop-filter:blur(10px);border:1px solid var(--line2);border-radius:12px;padding:6px;
+  transition:opacity .3s;
+}
+#ctrl button{
+  background:none;border:0;color:var(--mut);width:38px;height:38px;border-radius:8px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+#ctrl button:hover{background:var(--lime);color:#000}
+#ctrl button svg{width:19px;height:19px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+#count{font-size:13px;font-weight:700;color:var(--mut);min-width:54px;text-align:center;font-variant-numeric:tabular-nums}
+#prog{position:fixed;left:0;top:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--lime));z-index:10;transition:width .4s}
+body.idle #ctrl{opacity:0}
+body.idle{cursor:none}
+@media (max-width:700px){#ctrl{right:50%;transform:translateX(50%);bottom:12px}}
+
+/* ---------- TELA DE SENHA ---------- */
+#lock{display:none}
+body.locked #viewport,body.locked #ctrl,body.locked #prog{display:none}
+body.locked{cursor:auto}
+body.locked #lock{
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;
+  background:radial-gradient(700px 420px at 80% 10%,rgba(176,224,0,.08),transparent 60%),var(--bg);
+}
+#lock form{width:100%;max-width:380px;display:flex;flex-direction:column;gap:14px;text-align:center}
+#lock img{height:60px;width:auto;margin:0 auto 18px}
+#lock p{color:var(--mut);font-size:15px;margin-bottom:6px}
+#lock input{
+  background:var(--card);border:1px solid var(--line2);border-radius:10px;color:var(--fg);
+  font:inherit;font-size:17px;padding:14px 16px;text-align:center;outline:none;
+}
+#lock input:focus{border-color:var(--lime)}
+#lock button{
+  background:var(--lime);color:#000;border:0;border-radius:10px;font:inherit;font-size:16px;font-weight:800;
+  padding:14px;cursor:pointer;
+}
+#lock .err{color:var(--red);font-size:14px;min-height:20px;margin:0}
+#lock.shake form{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
+/* ---------- PROPOSTA ---------- */
+.ac{font-size:17px;color:var(--mut);margin-bottom:26px;display:flex;gap:28px;flex-wrap:wrap}
+.ac b{color:var(--fg)}
+
+/* rack */
+.scope{display:grid;grid-template-columns:400px 1fr;gap:56px;flex:1;align-items:center}
+.rack{
+  position:relative;height:560px;border-radius:16px;padding:30px 44px;
+  background:linear-gradient(180deg,#1a2622,#0c1411);border:1px solid #33514a;
+  display:flex;flex-direction:column;gap:10px;box-shadow:0 24px 60px rgba(0,0,0,.45);
+}
+.rack::before,.rack::after{
+  content:"";position:absolute;top:22px;bottom:22px;width:14px;border-radius:3px;
+  background:repeating-linear-gradient(180deg,#2b3f38 0 4px,transparent 4px 14px),#121c18;
+}
+.rack::before{left:16px}.rack::after{right:16px}
+.u{height:58px;border-radius:6px;display:flex;align-items:center;gap:12px;padding:0 14px;position:relative;flex:none}
+.u .lb{font-size:12.5px;font-weight:800;letter-spacing:.8px;white-space:nowrap}
+.u.sw1{background:linear-gradient(180deg,#e9ecea,#cfd4d1)}
+.u.sw1 .lb{color:#2a3431}
+.u.sw1 .pp{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;flex:1}
+.u.sw1 .pp i{height:11px;border-radius:2px;background:#26302d}
+.u.sw1 .pp i.on{background:#26302d;box-shadow:inset 0 0 0 2px var(--green)}
+.u.srv{background:linear-gradient(180deg,#26312d,#171f1c);border:1px solid #3d4d48}
+.u.srv .lb{color:var(--mut)}
+.u.srv .bays{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;flex:1}
+.u.srv .bays i{height:22px;border-radius:3px;background:#0a120f;border:1px solid #2b423a}
+.u.nas{background:linear-gradient(180deg,#2d2f33,#1b1d20);border:1px solid #4a4d52}
+.u.nas .lb{color:#c9ccd1}
+.u.nas .bays{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;flex:1}
+.u.nas .bays i{height:26px;border-radius:3px;background:#101113;border:1px solid #3c3f44}
+.u .led{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);flex:none}
+.u.pnl{background:#101a16;border:1px dashed #27463a;justify-content:center}
+.u.pnl .lb{color:var(--dim);font-weight:700}
+.rack .cap{margin-top:auto;text-align:center;font-size:12.5px;font-weight:800;letter-spacing:2px;color:var(--dim);text-transform:uppercase}
+
+.eq{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.eq > div{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}
+.eq .q{font-size:40px;font-weight:800;color:var(--lime);letter-spacing:-1px;line-height:1}
+.eq b{display:block;font-size:20px;font-weight:750}
+.eq p{font-size:15.5px;color:var(--mut)}
+
+/* servidor 1U */
+.r1u{display:flex;flex-direction:column;gap:26px;width:100%;padding:0 34px}
+.r1u .u{height:78px}
+.r1u .u .lb{font-size:15px}
+.r1u .u.srv .bays i{height:30px}
+
+/* switch portas mistas */
+.port.m{border-color:#566460;background:#2c3633}
+.swcap{display:flex;gap:26px;margin:-14px 0 24px;font-size:14.5px;color:var(--mut);font-weight:600}
+.swcap i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:8px;vertical-align:middle}
+
+/* condicoes */
+.ul{list-style:none}
+.ul li{position:relative;padding:9px 0 9px 30px;font-size:17px;color:var(--mut);border-bottom:1px solid var(--line)}
+.ul li:last-child{border-bottom:0}
+.ul li::before{content:"";position:absolute;left:4px;top:18px;width:12px;height:2px;background:var(--red);border-radius:2px}
+.ul.ok li::before{background:var(--green);height:8px;width:8px;border-radius:2px;top:16px}
+
+/* planilha */
+table.mat{font-size:16.5px}
+table.mat td{padding:11px 16px 11px 0}
+table.mat td.qt{color:var(--lime);font-weight:800;font-size:18px;text-align:center;padding-right:24px}
+table.mat td.it{color:var(--fg);font-weight:700}
+table.mat tr.gp td{
+  color:var(--gold);font-size:12.5px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;
+  padding:16px 0 8px;border-bottom:1px solid var(--line2)
+}
+
+/* investimento */
+.inv{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:18px;margin:8px 0 26px}
+.inv > div{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:28px}
+.inv > div.tt{border-color:var(--lime);background:rgba(176,224,0,.06)}
+.inv span{display:block;font-size:13px;color:var(--dim);font-weight:800;letter-spacing:1.6px;text-transform:uppercase;margin-bottom:14px}
+.inv b{display:block;font-size:44px;font-weight:800;letter-spacing:-1px;line-height:1.1;color:var(--fg)}
+.inv > div.tt b{color:var(--lime)}
+.inv p{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line2);font-size:14.5px;color:var(--dim);min-height:48px}
+.sig{display:flex;align-items:flex-end;gap:40px;margin-top:auto;padding-bottom:30px}
+.sig .ln{flex:none;width:380px;border-top:1px solid var(--line2);padding-top:12px}
+.sig .ln b{display:block;font-size:17px}
+.sig .ln span{font-size:14.5px;color:var(--mut)}
+.sig .dt{margin-left:auto;text-align:right;font-size:15px;color:var(--mut)}
+
+/* ---------- IMPRESSAO / PDF ---------- */
+@media print{
+  @page{size:1600px 900px;margin:0}
+  html,body{height:auto;overflow:visible}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #ctrl,#prog{display:none!important}
+  #viewport{position:static;display:block;background:none}
+  #stage{transform:none!important;width:1600px;height:auto;overflow:visible}
+  .slide{position:relative;inset:auto;width:1600px;height:900px;opacity:1;visibility:visible;transform:none;transition:none;break-after:page}
+}
+
+/* dados dinâmicos */
+.pc{display:none}
+body.precos .pc{display:table-cell}
+table.mat td.pc{text-align:right;color:var(--fg);font-weight:650;white-space:nowrap}
+table.mat td.sv{color:var(--fg);font-weight:700}
+.pagto{margin-top:16px;font-size:16px;color:var(--mut)}
+.foot span span{margin:0;padding:0;border:0}
+body.precos table.mat{font-size:14.5px}
+body.precos table.mat td{padding:7px 14px 7px 0}
+body.precos table.mat tr.gp td{padding:10px 0 5px}
+</style>
+</head>
+<body class="idle">
+<div id="prog"></div>
+
+<div id="viewport"><div id="stage">
+
+<section class="slide" id="s1">
+  <div class="left">
+    <img class="amais" src="img/logo-amais.png" alt="A+.com Engenharia e Tecnologia">
+    <div class="eyebrow" style="align-self:flex-start;margin-bottom:26px">Proposta comercial</div>
+    <h1><span>Cluster de Alta</span><span>Disponibilidade</span><span class="hl">Proxmox VE</span></h1>
+    <p class="lead">Fornecimento, instalação e configuração de infraestrutura de virtualização com dois servidores Dell PowerEdge R360, storage QNAP compartilhado, switch core UniFi 10 GbE e rack.</p>
+    <div class="meta">
+      <div><b>Cliente</b><span>Binatural</span></div>
+      <div><b>Unidade</b><span><span data-f="local"></span></span></div>
+      <div><b>A/C</b><span data-f="contato"></span></div>
+      <div><b>Data</b><span data-f="data"></span></div>
+    </div>
+  </div>
+  <div class="right">
+    <img src="img/logo-binatural.png" alt="Binatural">
+    <div class="tag"><span data-f="tag"></span></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Objetivo</div><div class="num"></div></div>
+  <h2>Uma infraestrutura que <span class="hl">não para</span></h2>
+  <div class="ac"><span><b>A/C:</b> <span data-f="contato"></span>, Binatural</span><span><b>Assunto:</b> fornecimento, instalação e configuração de cluster de virtualização Proxmox VE</span></div>
+  <p class="lead" style="margin-bottom:38px">Apresentamos esta proposta para a implantação de uma infraestrutura de virtualização em cluster, conforme o projeto técnico apresentado, que elimina a dependência de um único equipamento para cada sistema e centraliza os dados em um storage protegido.</p>
+  <div class="grid g4">
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.6-3.4 7.8-8 9-4.6-1.2-8-4.4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <h3>Alta disponibilidade</h3>
+      <p>Se um servidor falhar, as máquinas virtuais reiniciam automaticamente no outro nó, sem intervenção manual.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/></svg></div>
+      <h3>Consolidação</h3>
+      <p>Servidores, ERP, arquivos e aplicações rodando como VMs e containers em uma única plataforma gerenciada.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8 1.3 8 3v0"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/></svg></div>
+      <h3>Dados protegidos</h3>
+      <p>Storage em RAID com camada NVMe para desempenho e camada de alta capacidade para backups e arquivos.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></div>
+      <h3>Escalabilidade</h3>
+      <p>Novos nós, discos e VLANs podem ser adicionados sem redesenhar a solução e sem licenciamento por núcleo.</p>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Escopo do projeto</div><div class="num"></div></div>
+  <div class="scope">
+    <div class="rack">
+      <div class="u sw1"><span class="led"></span><span class="lb">PRO XG 24</span><div class="pp"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="u pnl"><span class="lb">Organizador de cabos</span></div>
+      <div class="u srv"><span class="led"></span><span class="lb">PVE1 · R360</span><div class="bays"><i></i><i></i><i></i><i></i></div></div>
+      <div class="u srv"><span class="led"></span><span class="lb">PVE2 · R360</span><div class="bays"><i></i><i></i><i></i><i></i></div></div>
+      <div class="u nas"><span class="led"></span><span class="lb">QNAP 435XeU</span><div class="bays"><i></i><i></i><i></i><i></i></div></div>
+      <div class="u pnl"><span class="lb">Espaço para expansão</span></div>
+      <div class="cap">Rack 19" · 1000 mm</div>
+    </div>
+    <div>
+      <h2>O que esta proposta <span class="hl">contempla</span></h2>
+      <p class="lead" style="margin-bottom:22px">Fornecimento, instalação e configuração dos equipamentos abaixo, montados em rack e entregues como um cluster Proxmox VE em operação.</p>
+      <div class="eq">
+        <div><span class="q">02</span><div><b>Servidores Dell PowerEdge R360</b><p>Xeon 6 6369P, 64 GB DDR5 e fonte redundante em cada nó</p></div></div>
+        <div><span class="q">01</span><div><b>Storage QNAP TS-435XeU</b><p>4 HDs Seagate IronWolf de 8 TB e 2 SSDs NVMe de 2 TB</p></div></div>
+        <div><span class="q">01</span><div><b>Switch core UniFi Pro XG 24</b><p>Portas 10 GbE e 2.5 GbE, com segmentação em VLANs</p></div></div>
+        <div><span class="q">01</span><div><b>Rack fechado 19" e materiais diversos</b><p>Rack tipo servidor de 1000 mm, cabeamento e organização dos equipamentos</p></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Solução técnica</div><div class="num"></div></div>
+  <div id="topo">
+    <svg viewBox="0 0 1000 640" aria-label="Topologia do cluster Proxmox Binatural">
+      <path id="pC" class="lk g" d="M340 140 H660"/>
+      <path id="p1g" class="lk g" d="M160 210 L425 300"/>
+      <path id="p1b" class="lk b" d="M190 210 L455 300"/>
+      <path id="p1a" class="lk a" d="M220 210 L485 300"/>
+      <path id="p2g" class="lk g" d="M840 210 L575 300"/>
+      <path id="p2b" class="lk b" d="M810 210 L545 300"/>
+      <path id="p2a" class="lk a" d="M780 210 L515 300"/>
+      <path id="pQb" class="lk b" d="M475 410 V490"/>
+      <path id="pQg" class="lk g dash" d="M525 410 V490"/>
+      <path id="pL" class="lk a" d="M350 355 H250"/>
+
+      <g fill="#6fdc8c"><circle r="6"><animateMotion dur="2.4s" repeatCount="indefinite"><mpath href="#pC"/></animateMotion></circle>
+        <circle r="6"><animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#pC"/></animateMotion></circle>
+        <circle r="5"><animateMotion dur="2.8s" repeatCount="indefinite"><mpath href="#p1g"/></animateMotion></circle>
+        <circle r="5"><animateMotion dur="2.8s" repeatCount="indefinite"><mpath href="#p2g"/></animateMotion></circle>
+        <circle r="5"><animateMotion dur="2s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#pQg"/></animateMotion></circle></g>
+      <g fill="#5b95f9"><circle r="5"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#p1b"/></animateMotion></circle>
+        <circle r="5"><animateMotion dur="1.6s" begin=".8s" repeatCount="indefinite"><mpath href="#p2b"/></animateMotion></circle>
+        <circle r="5"><animateMotion dur="1.2s" repeatCount="indefinite"><mpath href="#pQb"/></animateMotion></circle>
+        <circle r="5"><animateMotion dur="1.2s" begin=".6s" repeatCount="indefinite"><mpath href="#pQb"/></animateMotion></circle></g>
+      <g fill="#f2b33d"><circle r="5"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#p1a"/></animateMotion></circle>
+        <circle r="5"><animateMotion dur="3.2s" begin="1.6s" repeatCount="indefinite"><mpath href="#p2a"/></animateMotion></circle>
+        <circle r="5"><animateMotion dur="2.2s" repeatCount="indefinite"><mpath href="#pL"/></animateMotion></circle></g>
+
+      <rect x="235" y="14" width="530" height="50" rx="25" fill="#10261c" stroke="#6fdc8c" stroke-opacity=".5"/>
+      <text x="500" y="46" text-anchor="middle" fill="#eef4f0" font-size="17" font-weight="700">Quorum Corosync: PVE1 (1) + PVE2 (1) + QDevice (1) = 3/3</text>
+      <text x="500" y="124" text-anchor="middle" fill="#6fdc8c" font-size="13" font-weight="800" letter-spacing="1.2">COROSYNC ANEL 1 · CABO DIRETO</text>
+
+      <rect class="nbox hi" x="40" y="80" width="300" height="130" rx="16"/>
+      <circle class="pulse" cx="68" cy="108" r="7" fill="#6fdc8c"/><text class="nstat" x="84" y="113">ONLINE</text>
+      <text class="ntitle" x="62" y="152">PVE1 (Nó 1)</text>
+      <text class="nsub" x="62" y="178">Dell PowerEdge R360</text>
+      <text class="nsub" x="62" y="198">Xeon 6 6369P · 64 GB DDR5</text>
+      <rect class="nbox hi" x="660" y="80" width="300" height="130" rx="16"/>
+      <circle class="pulse" cx="688" cy="108" r="7" fill="#6fdc8c"/><text class="nstat" x="704" y="113">ONLINE</text>
+      <text class="ntitle" x="682" y="152">PVE2 (Nó 2)</text>
+      <text class="nsub" x="682" y="178">Dell PowerEdge R360</text>
+      <text class="nsub" x="682" y="198">Xeon 6 6369P · 64 GB DDR5</text>
+      <rect class="nbox" x="350" y="300" width="300" height="110" rx="16"/>
+      <circle class="pulse" cx="378" cy="328" r="7" fill="#6fdc8c"/><text class="nstat" x="394" y="333">ONLINE</text>
+      <text class="ntitle" x="372" y="370">Switch Core</text>
+      <text class="nsub" x="372" y="394">UniFi USW Pro XG 24 · 10 GbE</text>
+      <rect class="nbox" x="30" y="310" width="220" height="90" rx="16"/>
+      <text class="ntitle" x="52" y="348" font-size="19">Rede Binatural</text>
+      <text class="nsub" x="52" y="374">Usuários e internet</text>
+      <rect class="nbox hi" x="330" y="490" width="340" height="130" rx="16"/>
+      <circle class="pulse" cx="358" cy="518" r="7" fill="#6fdc8c"/><text class="nstat" x="374" y="523">ONLINE</text>
+      <text class="ntitle" x="352" y="562">QNAP TS-435XeU + QDevice</text>
+      <text class="nsub" x="352" y="588">NVMe RAID 1 (iSCSI) · HDD RAID 10 (NFS)</text>
+      <text class="nsub" x="352" y="608">Voto de desempate do quorum</text>
+    </svg>
+    <div class="legend">
+      <div class="lg"><b><i style="background:var(--green)"></i>Cluster e quorum</b><p>Corosync em dois anéis: VLAN de cluster no switch e cabo direto entre os nós. O QDevice no QNAP dá o terceiro voto.</p></div>
+      <div class="lg"><b><i style="background:var(--blue)"></i>Storage</b><p>VLAN dedicada para iSCSI e NFS, isolada do tráfego de usuários. O QNAP se conecta ao switch em 10 GbE SFP+.</p></div>
+      <div class="lg"><b><i style="background:var(--amber)"></i>Gerência e produção</b><p>Interface web do Proxmox, iDRAC e a rede das VMs acessada pelos usuários da Binatural.</p></div>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Equipamentos · Processamento</div><div class="num"></div></div>
+  <div class="hw">
+    <div class="box3d">
+      <div class="r1u">
+        <div class="u srv"><span class="led"></span><span class="lb">PVE1</span><div class="bays"><i></i><i></i><i></i><i></i></div></div>
+        <div class="u srv"><span class="led"></span><span class="lb">PVE2</span><div class="bays"><i></i><i></i><i></i><i></i></div></div>
+      </div>
+    </div>
+    <div>
+      <h2>2 × Dell PowerEdge <span class="hl">R360</span></h2>
+      <p class="lead" style="margin-bottom:26px">Servidores rack 1U idênticos formam o cluster. Qualquer um deles é capaz de assumir as cargas críticas do outro.</p>
+      <div class="spec">
+        <div>Processador</div><div>Intel Xeon 6 6369P · 3.3 GHz · 8 núcleos / 16 threads · 24 MB</div>
+        <div>Memória</div><div>64 GB DDR5 5600 (4 × 16 GB) por nó · 128 GB no cluster</div>
+        <div>Disco local</div><div>2 TB SATA 7.2K hot-plug para o Proxmox VE · controladora PERC H355</div>
+        <div>Energia</div><div>Fonte redundante (1+1) hot-plug de 600 W</div>
+        <div>Gerência</div><div>iDRAC9 para console, energia e alertas · TPM 2.0</div>
+        <div>Licença</div><div>Windows Server 2025 Standard 16 núcleos para as VMs Windows</div>
+        <div>Hypervisor</div><div>Proxmox VE 9 com KVM e containers LXC</div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Equipamentos · Armazenamento</div><div class="num"></div></div>
+  <h2>Storage QNAP TS-435XeU em <span class="hl">duas camadas</span></h2>
+  <p class="lead" style="margin-bottom:30px">Storage rack 1U com 4 baias e 2 portas 10 GbE SFP+. Os discos das VMs ficam fora dos servidores, e assim qualquer nó enxerga os mesmos dados.</p>
+  <div class="grid g2" style="flex:1">
+    <div class="pool nv">
+      <div class="ph"><h3 style="margin:0">Camada de desempenho</h3><span class="pill" style="background:rgba(91,149,249,.14);color:#9cc0ff">iSCSI</span></div>
+      <p class="uses" style="margin:0">2 SSDs NVMe M.2 de 2 TB nos slots internos do QNAP</p>
+      <div class="disks"><div class="disk">NVMe 2 TB<small>espelho A</small></div><div class="disk">NVMe 2 TB<small>espelho B</small></div></div>
+      <ul class="uses">
+        <li>Discos das VMs de produção: ERP, banco de dados e servidores de aplicação</li>
+        <li>LVM compartilhado entre os dois nós, pronto para HA e migração ao vivo</li>
+      </ul>
+      <div class="kv" style="margin-top:22px"><div><span>Arranjo</span><b>RAID 1</b></div><div><span>Capacidade útil</span><b>≈ 2 TB</b></div></div>
+    </div>
+    <div class="pool hd">
+      <div class="ph"><h3 style="margin:0">Camada de capacidade</h3><span class="pill" style="background:rgba(214,178,94,.14);color:var(--gold)">NFS</span></div>
+      <p class="uses" style="margin:0">4 × Seagate IronWolf 8 TB, projetados para NAS em operação contínua</p>
+      <div class="disks mirror"><div data-l="PAR 1"><div class="disk">8 TB</div><div class="disk">8 TB</div></div><div data-l="PAR 2"><div class="disk">8 TB</div><div class="disk">8 TB</div></div></div>
+      <ul class="uses">
+        <li>Backups agendados das VMs, ISOs e modelos</li>
+        <li>Arquivos da empresa e VMs de menor exigência de disco</li>
+      </ul>
+      <div class="kv" style="margin-top:22px"><div><span>Arranjo</span><b>RAID 10</b></div><div><span>Capacidade útil</span><b>≈ 16 TB</b></div></div>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Equipamentos · Rede</div><div class="num"></div></div>
+  <h2>Switch core <span class="hl">UniFi Pro XG 24</span></h2>
+  <p class="lead" style="margin-bottom:28px">Switch camada 3 com o tráfego separado em VLANs, para que backup e storage não disputem banda com os usuários.</p>
+  <div class="sw">
+    <div class="brand">UniFi<br>Pro XG 24</div>
+    <div class="ports">
+      <div class="port u g"></div><div class="port u b"></div><div class="port u a"></div><div class="port u g"></div><div class="port u b"></div><div class="port u a"></div><div class="port u a"></div><div class="port"></div>
+      <div class="port m u a"></div><div class="port m u a"></div><div class="port m"></div><div class="port m"></div>
+      <div class="port"></div><div class="port"></div><div class="port"></div><div class="port"></div><div class="port"></div><div class="port"></div><div class="port"></div><div class="port"></div>
+      <div class="port m"></div><div class="port m"></div><div class="port m"></div><div class="port m"></div>
+    </div>
+    <div class="sfp"><div></div><div></div></div>
+  </div>
+  <div class="swcap"><span><i style="background:#26302d;border:2px solid #3a4743"></i>16 × 10 GbE RJ45</span><span><i style="background:#2c3633;border:2px solid #566460"></i>8 × 2.5 GbE RJ45</span><span><i style="background:#1a2220;border:2px solid #56625e"></i>2 × SFP28 25G</span></div>
+  <table>
+    <tr><th style="width:24%">VLAN</th><th style="width:36%">Tráfego</th><th>Membros</th></tr>
+    <tr><td><span class="dot" style="background:var(--amber)"></span>10 · Gerência</td><td>Interface web do Proxmox, iDRAC e painel do QNAP</td><td>PVE1, PVE2, QNAP, estação da TI</td></tr>
+    <tr><td><span class="dot" style="background:var(--green)"></span>20 · Cluster</td><td>Corosync anel 0 e voto do QDevice</td><td>PVE1, PVE2, QNAP</td></tr>
+    <tr><td><span class="dot" style="background:var(--blue)"></span>30 · Storage</td><td>iSCSI e NFS com jumbo frames (MTU 9000)</td><td>PVE1, PVE2, QNAP</td></tr>
+    <tr><td><span class="dot" style="background:var(--lime)"></span>40 · Migração</td><td>Migração ao vivo de VMs entre os nós</td><td>PVE1, PVE2</td></tr>
+    <tr><td><span class="dot" style="background:var(--gold)"></span>100 · Produção</td><td>Rede das VMs acessada pelos usuários</td><td>VMs, estações, uplink de internet</td></tr>
+  </table>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Quorum e alta disponibilidade</div><div class="num"></div></div>
+  <h2>Três votos, <span class="hl">nenhum empate</span></h2>
+  <p class="lead" style="margin-bottom:30px">Um cluster de dois nós sozinho não sabe quem está certo quando perde contato. O QDevice no QNAP dá o voto de desempate: quem mantém a maioria segue operando.</p>
+  <div class="votes">
+    <div class="vote"><div class="v">1</div><h3>PVE1</h3><p>Nó de processamento</p></div>
+    <div class="op">+</div>
+    <div class="vote"><div class="v">1</div><h3>PVE2</h3><p>Nó de processamento</p></div>
+    <div class="op">+</div>
+    <div class="vote"><div class="v">1</div><h3>QDevice</h3><p>Serviço QNetd em container no QNAP</p></div>
+    <div class="op">=</div>
+    <div class="total"><b>3/3</b><span>Maioria exigida: 2</span></div>
+  </div>
+  <table>
+    <tr><th style="width:26%">Evento</th><th style="width:12%">Votos</th><th>Comportamento do cluster</th></tr>
+    <tr><td>Falha do PVE1 ou PVE2</td><td>2 de 3</td><td><span class="pill ok">Automático</span>&nbsp; Quorum mantido. O nó isolado é desligado com segurança e as VMs protegidas reiniciam no nó restante.</td></tr>
+    <tr><td>Manutenção planejada</td><td>3 de 3</td><td><span class="pill ok">Sem parada</span>&nbsp; As VMs são migradas ao vivo para o outro nó antes da atualização ou reinício.</td></tr>
+    <tr><td>QDevice indisponível</td><td>2 de 3</td><td><span class="pill at">Alerta</span>&nbsp; Os dois nós seguem operando normalmente. O terceiro voto volta junto com o serviço.</td></tr>
+  </table>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Distribuição das cargas</div><div class="num"></div></div>
+  <h2>Cada dado no <span class="hl">lugar certo</span></h2>
+  <p class="lead" style="margin-bottom:34px">As cargas são distribuídas entre os dois nós em operação normal e os discos ficam na camada de storage adequada ao perfil de uso.</p>
+  <table>
+    <tr><th style="width:28%">Carga</th><th style="width:20%">Nó preferencial</th><th style="width:24%">Storage</th><th>Proteção</th></tr>
+    <tr><td>ERP e banco de dados</td><td>PVE1</td><td><span class="dot" style="background:var(--blue)"></span>NVMe RAID 1 · iSCSI</td><td>HA ativo · backup diário</td></tr>
+    <tr><td>Controlador de domínio e DNS</td><td>PVE2</td><td><span class="dot" style="background:var(--blue)"></span>NVMe RAID 1 · iSCSI</td><td>HA ativo · backup diário</td></tr>
+    <tr><td>Servidor de arquivos</td><td>PVE2</td><td><span class="dot" style="background:var(--gold)"></span>HDD RAID 10 · NFS</td><td>HA ativo · backup diário</td></tr>
+    <tr><td>Aplicações internas e web</td><td>PVE1</td><td><span class="dot" style="background:var(--blue)"></span>NVMe RAID 1 · iSCSI</td><td>HA ativo · backup diário</td></tr>
+    <tr><td>Monitoramento e utilitários</td><td>Qualquer</td><td><span class="dot" style="background:var(--gold)"></span>HDD RAID 10 · NFS</td><td>Backup semanal</td></tr>
+    <tr><td>Backups, ISOs e modelos</td><td>Não se aplica</td><td><span class="dot" style="background:var(--gold)"></span>HDD RAID 10 · NFS</td><td>Retenção diária, semanal e mensal</td></tr>
+  </table>
+  <p style="margin-top:22px;font-size:15px;color:var(--dim)">Distribuição ilustrativa, a ser validada no levantamento dos sistemas da Binatural.</p>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Capacidade da solução</div><div class="num"></div></div>
+  <h2>Números do <span class="hl">cluster</span></h2>
+  <div class="big" style="margin-top:22px">
+    <div><b class="hl">128 GB</b><span>RAM DDR5 total</span><p>64 GB em cada nó para VMs e containers.</p></div>
+    <div><b style="color:var(--blue)">≈ 2 TB</b><span>NVMe útil</span><p>Camada rápida para as VMs de produção.</p></div>
+    <div><b class="gd">≈ 16 TB</b><span>HDD útil</span><p>Backups, arquivos e cargas de menor exigência.</p></div>
+    <div><b style="color:var(--green)">10 GbE</b><span>Núcleo da rede</span><p>Entre o storage e o switch core.</p></div>
+  </div>
+  <div class="card">
+    <h3>Regra de reserva N+1 para memória</h3>
+    <p>Para que um único nó consiga assumir todas as VMs protegidas por HA, a memória dessas VMs somada nos dois nós deve caber em um servidor. A barra mostra o nó sobrevivente após uma falha.</p>
+    <div class="bar">
+      <div style="width:12.5%;background:#6a8479">Host 8 GB</div>
+      <div style="width:75%;background:var(--lime)">VMs críticas dos dois nós com HA · até 48 GB</div>
+      <div style="width:12.5%;background:#27463a;color:var(--mut)">Margem</div>
+    </div>
+    <p style="font-size:14.5px">Em operação normal cada nó roda cerca de 24 GB de VMs críticas e usa a memória livre para cargas não críticas, que são as primeiras a serem desligadas em caso de falha.</p>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Proteção de dados</div><div class="num"></div></div>
+  <h2>Camadas de <span class="hl">proteção</span></h2>
+  <p class="lead" style="margin-bottom:38px">Alta disponibilidade protege contra falha de hardware. Backup protege contra erro humano, vírus e corrupção de dados. A solução entrega os dois.</p>
+  <div class="grid g3">
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M8 15h3"/></svg></div>
+      <h3>RAID no storage</h3>
+      <p>RAID 1 no NVMe e RAID 10 nos HDDs. A queda de um disco não interrompe o serviço e a troca é feita com o equipamento ligado.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg></div>
+      <h3>Snapshots e backup</h3>
+      <p>Snapshots antes de atualizações e backup agendado de todas as VMs para o volume NFS, com retenção diária, semanal e mensal.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M17.5 19a4.5 4.5 0 100-9 6 6 0 00-11.6 1.5A4 4 0 006.5 19z"/></svg></div>
+      <h3>Cópia fora do local</h3>
+      <p>Recomendamos uma cópia dos backups fora da sede, em nuvem ou disco externo rotativo, seguindo a regra 3, 2, 1.</p>
+    </div>
+  </div>
+  <div class="card" style="margin-top:18px;display:flex;gap:40px;align-items:center">
+    <div style="flex:none"><span class="pill ok">Regra 3, 2, 1</span></div>
+    <p><b class="w">3</b> cópias dos dados, em <b class="w">2</b> tipos de mídia diferentes, com <b class="w">1</b> delas fora da empresa. É o padrão mínimo contra ransomware e perda total do site.</p>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Infraestrutura e execução</div><div class="num"></div></div>
+  <h2>Da instalação à <span class="hl">operação assistida</span></h2>
+  <p class="lead" style="margin-bottom:34px">Serviços executados por equipe técnica especializada, com a migração dos sistemas atuais fora do horário de expediente para não afetar a rotina da unidade.</p>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><h3>Levantamento</h3><p>Inventário dos sistemas, volumes de dados e janelas de manutenção.</p></div>
+    <div class="step"><div class="n">2</div><h3>Montagem física</h3><p>Instalação do rack, servidores, storage, switch core e cabeamento identificado.</p></div>
+    <div class="step"><div class="n">3</div><h3>Storage</h3><p>Criação do RAID 1 e RAID 10, volumes iSCSI e NFS e container do QDevice.</p></div>
+    <div class="step"><div class="n">4</div><h3>Rede</h3><p>VLANs, jumbo frames, anel direto do Corosync e regras de acesso.</p></div>
+    <div class="step"><div class="n">5</div><h3>Cluster Proxmox</h3><p>Instalação dos nós, criação do cluster, QDevice, storages e grupos de HA.</p></div>
+    <div class="step"><div class="n">6</div><h3>Migração</h3><p>Conversão dos servidores atuais em VMs e validação com os usuários.</p></div>
+    <div class="step"><div class="n">7</div><h3>Testes de falha</h3><p>Desligamento simulado de cada nó, disco e link para comprovar o failover.</p></div>
+    <div class="step"><div class="n">8</div><h3>Entrega</h3><p>Rotina de backup, documentação, treinamento da equipe e operação assistida.</p></div>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Pontos de atenção</div><div class="num"></div></div>
+  <h2>Recomendações para <span class="hl">evoluir a resiliência</span></h2>
+  <p class="lead" style="margin-bottom:30px">Itens que não impedem a implantação, mas eliminam os pontos únicos de falha que ainda restam na solução.</p>
+  <table>
+    <tr><th style="width:30%">Ponto</th><th style="width:14%">Impacto</th><th>Recomendação</th></tr>
+    <tr><td>Storage único</td><td><span class="pill cr">Alto</span></td><td>O QNAP concentra os discos das VMs. Manter contrato de garantia, discos reserva e restauração testada dos backups.</td></tr>
+    <tr><td>Switch core único</td><td><span class="pill at">Médio</span></td><td>O anel direto mantém o cluster sincronizado, mas storage e usuários dependem do switch. Prever um segundo switch em expansão futura.</td></tr>
+    <tr><td>Disco local único</td><td><span class="pill at">Médio</span></td><td>Adicionar um segundo disco em cada R360 para espelhar o sistema do Proxmox.</td></tr>
+    <tr><td>Energia elétrica</td><td><span class="pill at">Médio</span></td><td>Nobreak dimensionado para todo o rack, com desligamento automático e ordenado dos equipamentos.</td></tr>
+  </table>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Condições</div><div class="num"></div></div>
+  <h2>Limites do <span class="hl">escopo</span></h2>
+  <p class="lead" style="margin-bottom:30px">Itens que ficam fora desta proposta e condições de prazo e suporte da implantação.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="card">
+      <h3>Itens não contemplados</h3>
+      <ul class="ul">
+        <li>Fornecimento de nobreaks</li>
+        <li>Obras civis e adequações elétricas estruturais</li>
+        <li>Cópia de backup fora do local, em nuvem ou mídia externa</li>
+        <li>Licenças de software não previstas e assinatura de suporte do Proxmox VE</li>
+        <li>Licenças de sistemas e aplicações de terceiros a serem migrados</li>
+        <li>Manutenção mensal recorrente</li>
+      </ul>
+    </div>
+    <div class="grid" style="gap:18px">
+      <div class="card">
+        <h3>Prazo de execução</h3>
+        <p>Definido após a aprovação da proposta, o prazo de entrega dos equipamentos pelos fabricantes e a disponibilidade da unidade para as janelas de migração.</p>
+      </div>
+      <div class="card">
+        <h3>Suporte e garantia</h3>
+        <ul class="ul ok">
+          <li>Suporte presencial e remoto por 90 dias após a entrega final</li>
+          <li>Garantia dos equipamentos conforme condições de cada fabricante</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Planilha de materiais</div><div class="num"></div></div>
+  <h2>Materiais <span class="hl">fornecidos</span></h2>
+  <table class="mat" style="margin-top:14px">
+    <thead><tr><th style="width:8%;text-align:center;padding-right:24px">Qtd</th><th style="width:30%">Item</th><th>Especificação</th><th class="pc" style="width:12%;text-align:right">Unitário</th><th class="pc" style="width:12%;text-align:right">Total</th></tr></thead>
+    <tbody data-lista="materiais"></tbody>
+  </table>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Serviços</div><div class="num"></div></div>
+  <h2>Serviços de <span class="hl">implantação</span></h2>
+  <p class="lead" style="margin-bottom:10px">Executados por equipe técnica especializada, do levantamento à operação assistida.</p>
+  <table class="mat" style="margin-top:14px">
+    <thead><tr><th style="width:34%">Serviço</th><th>Descrição</th><th class="pc" style="width:15%;text-align:right">Valor</th></tr></thead>
+    <tbody data-lista="servicos"></tbody>
+  </table>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Investimento</div><div class="num"></div></div>
+  <h2>Investimento da <span class="hl">solução</span></h2>
+  <p class="lead" style="margin-bottom:26px">Fornecimento dos materiais da planilha e serviço de instalação, configuração e migração para a Binatural <span data-f="local"></span>.</p>
+  <div class="inv">
+    <div><span>Valor do serviço</span><b data-t="servicos"></b><p data-x="servicos"></p></div>
+    <div><span>Valor do material</span><b data-t="materiais"></b><p data-x="materiais"></p></div>
+    <div class="tt"><span>Valor total</span><b data-t="geral"></b><p data-x="geral"></p></div>
+  </div>
+  <div class="card" style="display:flex;gap:40px;align-items:center">
+    <div style="flex:none"><span class="pill ok">Incluso</span></div>
+    <p>O serviço de instalação e configuração conta com suporte <b class="w">presencial e remoto durante 90 dias</b> após a entrega final. A A+.com permanece à disposição para esclarecimentos técnicos e eventuais adequações necessárias.</p>
+  </div>
+  <p class="pagto" data-show="pagamento"><b class="w">Condições de pagamento:</b> <span data-f="pagamento"></span></p>
+  <div class="sig">
+    <div class="ln"><b>Darkson S. Mourão</b><span>Gerente Comercial · Mourão Informática LTDA<br>(61) 3358-6941 / 9248-0219</span></div>
+    <div class="dt"><span data-f="cidade_data"></span><br><b class="w">Proposta válida por <span data-f="validade"></span></b></div>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide" id="fim">
+  <div class="logos">
+    <img class="amais" src="img/logo-amais.png" alt="A+.com Engenharia e Tecnologia">
+    <i></i>
+    <div class="bnbox"><img src="img/logo-binatural.png" alt="Binatural"></div>
+  </div>
+  <h1>Obrigado</h1>
+  <p class="lead" style="margin:22px auto 0;text-align:center">Infraestrutura em cluster de alta disponibilidade para a Binatural, <span data-f="local"></span>.<br>Projeto e implantação <b class="w">A+.com Engenharia e Tecnologia</b>.</p>
+</section>
+
+</div></div>
+
+<div id="ctrl">
+  <button id="bPrev" aria-label="Slide anterior"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <div id="count"></div>
+  <button id="bNext" aria-label="Próximo slide"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+  <button id="bFull" aria-label="Tela cheia"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const stage=document.getElementById('stage');
+const count=document.getElementById('count');
+const prog=document.getElementById('prog');
+let cur=0;
+
+function fit(){
+  const s=Math.min(innerWidth/1600,innerHeight/900);
+  stage.style.transform='scale('+s+')';
+}
+function go(i){
+  i=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach((el,k)=>{el.classList.toggle('on',k===i);el.classList.toggle('prev',k<i)});
+  cur=i;
+  count.textContent=(i+1)+' / '+slides.length;
+  prog.style.width=((i+1)/slides.length*100)+'%';
+  history.replaceState(null,'','#'+(i+1));
+}
+document.getElementById('bPrev').onclick=()=>go(cur-1);
+document.getElementById('bNext').onclick=()=>go(cur+1);
+document.getElementById('bFull').onclick=toggleFull;
+function toggleFull(){
+  if(document.fullscreenElement)document.exitFullscreen();
+  else document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();
+}
+document.addEventListener('keydown',e=>{
+  if(document.body.classList.contains('locked'))return;
+  if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){go(cur+1);e.preventDefault()}
+  else if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){go(cur-1);e.preventDefault()}
+  else if(e.key==='Home')go(0);
+  else if(e.key==='End')go(slides.length-1);
+  else if(e.key==='f'||e.key==='F')toggleFull();
+});
+let tx=null;
+addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+addEventListener('touchend',e=>{
+  if(tx===null)return;
+  const d=e.changedTouches[0].clientX-tx;
+  if(Math.abs(d)>50)go(cur+(d<0?1:-1));
+  tx=null;
+});
+let idle;
+addEventListener('mousemove',()=>{
+  document.body.classList.remove('idle');
+  clearTimeout(idle);
+  idle=setTimeout(()=>document.body.classList.add('idle'),2500);
+});
+addEventListener('resize',fit);
+fit();
+go((parseInt(location.hash.slice(1),10)||1)-1);
+
+/* numeração automática */
+slides.forEach((el,k)=>{const n=el.querySelector('.num');if(n)n.textContent=String(k+1).padStart(2,'0')});
+
+/* dados da proposta salvos no painel */
+const BRL=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function linhas(nome,itens,precos){
+  let html='',grupo=null;
+  for(const i of itens){
+    if(nome==='materiais'){
+      if(i.grupo!==grupo){grupo=i.grupo;html+=`<tr class="gp"><td colspan="5">${esc(grupo)}</td></tr>`}
+      html+=`<tr><td class="qt">${i.qtd}</td><td class="it">${esc(i.item)}</td><td>${esc(i.spec)}</td>`+
+        (precos?`<td class="pc">${i.preco!=null?BRL(i.preco):'—'}</td><td class="pc">${i.total!=null?BRL(i.total):'—'}</td>`:'')+'</tr>';
+    }else{
+      html+=`<tr><td class="sv">${esc(i.item)}</td><td>${esc(i.spec)}</td>`+
+        (precos?`<td class="pc">${i.total!=null?BRL(i.total):'—'}</td>`:'')+'</tr>';
+    }
+  }
+  return html;
+}
+fetch('dados.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{
+  document.title=d.titulo;
+  document.body.classList.toggle('precos',d.exibirPrecos);
+  document.querySelectorAll('[data-f]').forEach(el=>{el.textContent=d.campos[el.dataset.f]??''});
+  document.querySelectorAll('[data-show]').forEach(el=>{el.hidden=!d.campos[el.dataset.show]});
+  document.querySelectorAll('[data-lista]').forEach(el=>{el.innerHTML=linhas(el.dataset.lista,d.listas[el.dataset.lista]||[],d.exibirPrecos)});
+  document.querySelectorAll('[data-t]').forEach(el=>{const t=d.totais[el.dataset.t];el.textContent=t?BRL(t.valor):'R$ ______'});
+  document.querySelectorAll('[data-x]').forEach(el=>{const t=d.totais[el.dataset.x];el.textContent=t?'( '+t.extenso+' )':'( ____________________________ )'});
+}).catch(e=>console.warn('dados indisponíveis',e));
+</script>
+</body>
+</html>

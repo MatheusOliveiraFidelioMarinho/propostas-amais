@@ -1,0 +1,11 @@
+{
+  "name": "propostas-amais",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node dev/server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
