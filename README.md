@@ -41,6 +41,14 @@ preço substitui o cálculo. Totais e valores por extenso são calculados sozinh
 - “Mostrar o valor de cada item” liga as colunas de preço nas tabelas do deck.
 - Salvou, a proposta já muda. Não precisa de novo deploy.
 
+## PDF
+
+Cada proposta tem botão de PDF: nos controles do deck (ícone de download), na
+barra do CFTV térmico, nos cartões do portal e no painel. O navegador abre a
+janela de impressão já configurada; é só escolher **Salvar como PDF**. O deck
+sai com um slide por página em 16:9 e texto selecionável. O cliente também
+consegue baixar pelo link dele. `?pdf=1` no endereço abre a janela direto.
+
 ## Links de cliente
 
 Na aba **Links de cliente** de cada proposta: informe para quem é o link e, se

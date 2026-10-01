@@ -355,7 +355,9 @@ table.mat tr.gp td{
   #ctrl,#prog{display:none!important}
   #viewport{position:static;display:block;background:none}
   #stage{transform:none!important;width:1600px;height:auto;overflow:visible}
-  .slide{position:relative;inset:auto;width:1600px;height:900px;opacity:1;visibility:visible;transform:none;transition:none;break-after:page}
+  .slide{position:relative;inset:auto;width:1600px;height:900px;opacity:1;visibility:visible;transform:none;transition:none;break-after:page;break-inside:avoid}
+  .slide:last-child{break-after:auto}
+  html,body{background:var(--bg)}
 }
 
 /* dados dinâmicos */
@@ -810,6 +812,7 @@ table.mat tr.gp td{font-size:.76em}
   <button id="bPrev" aria-label="Slide anterior"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
   <div id="count"></div>
   <button id="bNext" aria-label="Próximo slide"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+  <button id="bPdf" aria-label="Baixar PDF" title="Baixar PDF"><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></button>
   <button id="bFull" aria-label="Tela cheia"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
 </div>
 
@@ -898,7 +901,7 @@ function caber(){
     }
   });
 }
-fetch('dados.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{
+const pronto=fetch('dados.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{
   document.title=d.titulo;
   document.body.classList.toggle('precos',d.exibirPrecos);
   document.querySelectorAll('[data-f]').forEach(el=>{el.textContent=d.campos[el.dataset.f]??''});
@@ -910,6 +913,11 @@ fetch('dados.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(r.st
     el.textContent=!t?'( ____________________________ )':t.parcial?`Prévia da equipe · ${t.pendentes} ${t.pendentes===1?'item':'itens'} sem preço · o cliente vê em branco`:'( '+t.extenso+' )';
     el.classList.toggle('parcial',!!t?.parcial)});
 }).catch(e=>console.warn('dados indisponíveis',e));
+
+/* PDF: o navegador salva um slide por página (Imprimir › Salvar como PDF) */
+function baixarPdf(){pronto.then(()=>document.fonts.ready).then(()=>setTimeout(()=>print(),150))}
+document.getElementById('bPdf').onclick=baixarPdf;
+if(new URLSearchParams(location.search).has('pdf'))baixarPdf();
 </script>
 </body>
 </html>

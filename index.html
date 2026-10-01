@@ -200,6 +200,7 @@ async function lista(){
         ${p.editavel?(p.total&&p.total.completo?`<div class="valor">${BRL(p.total.valor)}</div>`:`<div class="valor pend">Valores pendentes</div>`):''}
         <div class="acoes">
           <a class="btn" href="/p/${p.slug}/" target="_blank" rel="noopener">Abrir</a>
+          <a class="btn" href="/p/${p.slug}/?pdf=1" target="_blank" rel="noopener" title="Abre a proposta e a janela de salvar em PDF">PDF</a>
           ${p.editavel?`<a class="btn pri" href="#/${p.slug}">Editar valores</a>`:''}
           <a class="btn" href="#/${p.slug}/links">Links de cliente</a>
         </div>
@@ -246,6 +247,7 @@ async function editor(slug,aba){
         ${temModelo?`<span class="estado" id="estado"></span>
         <select class="st" id="status">${d.status.map(s=>`<option ${s===E.status?'selected':''}>${esc(s)}</option>`).join('')}</select>`:''}
         <a class="btn" href="/p/${slug}/" target="_blank" rel="noopener">Abrir proposta</a>
+        <a class="btn" href="/p/${slug}/?pdf=1" target="_blank" rel="noopener">Baixar PDF</a>
         ${temModelo?'<button class="btn pri" id="salvar">Salvar</button>':''}
       </div>
     </div>${aviso(d.persistente)}
