@@ -4,7 +4,7 @@
  *   /pub/*            público (logo da tela de login)
  *   /s/<token>/...    link de cliente: só a proposta daquele link, enquanto existir
  *                     (se o link tiver senha, pede a senha antes de abrir)
- *   /p/<slug>/...     proposta vista pela equipe (exige login)
+ *   /p/<slug>/...     proposta vista pela equipe (exige login); só aqui o PDF funciona
  *   todo o resto      portal, painel e API (exige login)
  *
  * /p/ e /s/ são reescritos para propostas/<pasta>/ e dados.json para
@@ -119,6 +119,8 @@ function linkIndisponivel() {
 // Resolve o restante do caminho de uma proposta para o arquivo real.
 function servirProposta(req, p, resto, equipe = false) {
   if (resto.split('/').some((s) => s === '..' || s === '.')) return linkIndisponivel();
+  // protecao.js: vazio para a equipe; no link de cliente, bloqueia PDF, impressão e atalhos de captura
+  if (resto === 'protecao.js') return reescrever(req, `/api/protecao${equipe ? '?equipe=1' : ''}`);
   if (resto === '' || resto === 'index.html') return reescrever(req, `/propostas/${p.pasta}/${p.pagina}`);
   if (resto === 'dados.json') return reescrever(req, `/api/dados?slug=${encodeURIComponent(p.slug)}${equipe ? '&previa=1' : ''}`);
   return reescrever(req, `/propostas/${p.pasta}/${resto}`);

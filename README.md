@@ -53,11 +53,26 @@ preço substitui o cálculo. Totais e valores por extenso são calculados sozinh
 
 ## PDF
 
-Cada proposta tem botão de PDF: nos controles do deck (ícone de download), na
+O PDF é só da equipe (`/p/`). Cada proposta tem botão de PDF: nos controles do deck (ícone de download), na
 barra do CFTV térmico, nos cartões do portal e no painel. O navegador abre a
 janela de impressão já configurada; é só escolher **Salvar como PDF**. O deck
-sai com um slide por página em 16:9 e texto selecionável. O cliente também
-consegue baixar pelo link dele. `?pdf=1` no endereço abre a janela direto.
+sai com um slide por página em 16:9 e texto selecionável. `?pdf=1` no endereço
+abre a janela direto.
+
+## Proteção no link de cliente
+
+No link de cliente (`/s/`), toda proposta e projeto abre protegido
+(`api/protecao.js`, incluído pelas páginas como `protecao.js`):
+
+- sem botão de PDF, e imprimir ou “salvar como PDF” sai só com um aviso;
+- atalhos de imprimir e salvar, menu de contexto, seleção e cópia desligados;
+- uma cortina cobre o conteúdo quando a janela perde o foco ou quando os
+  atalhos de captura do sistema são pressionados, e só sai com um clique.
+
+Captura e gravação de tela não podem ser totalmente impedidas por uma página
+web: câmera de celular, gravador já em execução e captura por botão em
+celular passam. Toda proposta nova precisa de `<script src="protecao.js"></script>`
+no `<head>`.
 
 ## Links de cliente
 
@@ -112,7 +127,8 @@ Sem as variáveis do Redis, os dados ficam em memória enquanto o servidor roda.
 
 ## Nova proposta
 
-1. Criar a pasta em `propostas/<pasta>/` com o HTML e as imagens (caminhos relativos).
+1. Criar a pasta em `propostas/<pasta>/` com o HTML e as imagens (caminhos relativos),
+   com `<script src="protecao.js"></script>` no `<head>`.
 2. Cadastrar em `lib/registro.js` com `slug`, `cliente`, `titulo`, `pasta` e `pagina`.
 3. Para ter valores editáveis, definir `modelo` (campos e listas iniciais, que podem
    ser vazias) e marcar o HTML
