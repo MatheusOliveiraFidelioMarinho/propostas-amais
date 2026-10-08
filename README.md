@@ -22,8 +22,8 @@ Propostas cadastradas:
   comercial da rede óptica (OLT, caixas XFTTA, backbone 12FO e uplinks de 10G),
   com a topologia e as tabelas de fibras por DIO
   (`propostas/binatural-gpon/proposta.html`).
-- **Binatural · Formosa, GO · Rede óptica GPON · projeto técnico**: o documento
-  do projeto em página corrida, sem valores, com PDF em A4
+- **Binatural · Formosa, GO · Rede óptica GPON · projeto executivo**: o documento
+  do projeto em página corrida (base: `Projeto_GPON_Binatural_Formosa_GO.docx`), sem valores, com PDF em A4
   (`propostas/binatural-gpon/projeto.html`).
 - **UFV Samambaia · CFTV térmico de perímetro**: apresentação hospedada como
   está, sem campos editáveis.
