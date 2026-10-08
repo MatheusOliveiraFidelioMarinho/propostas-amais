@@ -127,14 +127,17 @@ td.vz{text-align:center;color:var(--dim);padding:26px}
 .resumo b{font-size:22px;font-weight:800;letter-spacing:-.4px;font-variant-numeric:tabular-nums}
 .resumo .int{border-style:dashed}
 
-.linkform{display:grid;grid-template-columns:1fr 170px auto;gap:12px;align-items:end;background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:18px;margin-bottom:18px}
+.linkform{display:grid;grid-template-columns:1fr 150px 200px auto;gap:12px;align-items:end;background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:18px;margin-bottom:18px}
 .linkform label{display:block;font-size:12.5px;font-weight:700;color:var(--mut);margin-bottom:7px}
 .links{display:flex;flex-direction:column;gap:12px}
 .lk{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:16px 18px;display:grid;grid-template-columns:1fr auto;gap:10px 16px;align-items:center}
 .lk .r{font-weight:750}
 .lk code{display:block;font-size:13px;color:var(--lime);word-break:break-all;margin-top:4px;font-family:ui-monospace,Menlo,monospace}
 .lk .info{grid-column:1/-1;font-size:12.5px;color:var(--dim);display:flex;gap:16px;flex-wrap:wrap}
-.lk .bt{display:flex;gap:8px}
+.lk .bt{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.lk .sen{grid-column:1/-1;display:flex;gap:8px;align-items:center}
+.lk .sen input{flex:1;max-width:320px;padding:9px 11px;border-radius:8px;border:1px solid var(--line2);background:var(--bg);color:var(--fg);font:inherit;font-size:14px;outline:none}
+.lk .sen input:focus{border-color:var(--lime)}
 .vazio{padding:26px;text-align:center;color:var(--dim);border:1px dashed var(--line2);border-radius:var(--rad);font-size:14.5px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--lime);color:#000;font-weight:800;font-size:14px;padding:11px 18px;border-radius:10px;transition:.25s;pointer-events:none;z-index:20}
 .toast.on{opacity:1;transform:translateX(-50%)}
@@ -398,15 +401,16 @@ function painelLinks(){
   el.innerHTML=`<form class="linkform" id="lf">
       <div><label for="lr">Para quem é o link</label><input id="lr" placeholder="Ex.: Sr. David, diretoria Binatural" maxlength="120"></div>
       <div><label for="ld">Expira em (dias)</label><input id="ld" inputmode="numeric" placeholder="Sem prazo"></div>
+      <div><label for="ls">Senha de acesso (opcional)</label><input id="ls" placeholder="Sem senha" maxlength="64" autocomplete="off"></div>
       <button class="btn pri" type="submit">Gerar link</button>
     </form><div class="links" id="ll"></div>
-    <p class="dica">O cliente abre só esta proposta, sem senha. Ao excluir o link, o acesso é cortado na hora.</p>`;
+    <p class="dica">O cliente abre só esta proposta. Sem senha, basta o link; com senha, ele informa a senha antes de abrir. A senha não fica visível depois de salva: anote e envie ao cliente por outro canal. Ao excluir o link, o acesso é cortado na hora.</p>`;
   $('#lf').onsubmit=async e=>{
     e.preventDefault();
     try{
-      const r=await api('acao=link&slug='+E.slug,{method:'POST',body:JSON.stringify({rotulo:$('#lr').value,dias:$('#ld').value})});
-      E.d.links.unshift({token:r.token,rotulo:r.rotulo,criado:r.criado,expira:r.expira,acessos:0,ultimoAcesso:null});
-      $('#lr').value='';$('#ld').value='';renderLinks();
+      const r=await api('acao=link&slug='+E.slug,{method:'POST',body:JSON.stringify({rotulo:$('#lr').value,dias:$('#ld').value,senha:$('#ls').value})});
+      E.d.links.unshift({token:r.token,rotulo:r.rotulo,criado:r.criado,expira:r.expira,protegido:r.protegido,acessos:0,ultimoAcesso:null});
+      $('#lr').value='';$('#ld').value='';$('#ls').value='';renderLinks();
       copiar(urlLink(r.token));
     }catch(err){toast('Erro: '+err.message,true)}
   };
@@ -421,13 +425,22 @@ function renderLinks(){
   el.innerHTML=E.d.links.map(l=>{
     const venc=l.expira&&l.expira<Date.now();
     return `<div class="lk" data-t="${l.token}">
-      <div><div class="r">${esc(l.rotulo)} ${venc?'<span class="pill cr">Expirado</span>':''}</div><code>${esc(urlLink(l.token))}</code></div>
-      <div class="bt"><button class="btn sm" data-a="copiar">Copiar</button><a class="btn sm" href="${esc(urlLink(l.token))}" target="_blank" rel="noopener">Abrir</a><button class="btn sm del" data-a="excluir">Excluir</button></div>
+      <div><div class="r">${esc(l.rotulo)} ${venc?'<span class="pill cr">Expirado</span>':''} ${l.protegido?'<span class="pill ok">Com senha</span>':''}</div><code>${esc(urlLink(l.token))}</code></div>
+      <div class="bt"><button class="btn sm" data-a="copiar">Copiar</button><a class="btn sm" href="${esc(urlLink(l.token))}" target="_blank" rel="noopener">Abrir</a><button class="btn sm" data-a="senha">${l.protegido?'Trocar senha':'Definir senha'}</button><button class="btn sm del" data-a="excluir">Excluir</button></div>
+      <div class="sen" hidden><input placeholder="Nova senha (em branco remove a senha)" maxlength="64" autocomplete="off"><button class="btn sm pri" data-a="gravar">Salvar senha</button></div>
       <div class="info"><span>Criado em ${data(l.criado)}</span><span>${l.expira?'Expira em '+data(l.expira):'Sem prazo de expiração'}</span><span>${l.acessos} acesso${l.acessos===1?'':'s'}</span><span>Último acesso: ${data(l.ultimoAcesso)}</span></div>
     </div>`}).join('');
   el.querySelectorAll('.lk').forEach(div=>{
     const t=div.dataset.t;
     div.querySelector('[data-a=copiar]').onclick=()=>copiar(urlLink(t));
+    const sen=div.querySelector('.sen');
+    div.querySelector('[data-a=senha]').onclick=()=>{sen.hidden=!sen.hidden;if(!sen.hidden)sen.querySelector('input').focus()};
+    sen.querySelector('[data-a=gravar]').onclick=async()=>{
+      try{
+        const r=await api('acao=link-senha&token='+encodeURIComponent(t),{method:'PUT',body:JSON.stringify({senha:sen.querySelector('input').value})});
+        E.d.links.find(l=>l.token===t).protegido=r.protegido;renderLinks();toast(r.protegido?'Senha salva':'Senha removida');
+      }catch(err){toast('Erro: '+err.message,true)}
+    };
     const del=div.querySelector('[data-a=excluir]');
     del.onclick=async()=>{
       if(del.dataset.conf!=='1'){del.dataset.conf='1';del.textContent='Confirmar exclusão';setTimeout(()=>{del.dataset.conf='';del.textContent='Excluir'},4000);return}

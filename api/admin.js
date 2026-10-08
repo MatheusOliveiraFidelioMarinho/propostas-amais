@@ -4,13 +4,14 @@
  *   GET    ?acao=lista                     propostas com status, totais e links
  *   GET    ?acao=proposta&slug=            modelo, dados calculados e links
  *   PUT    ?acao=salvar&slug=              grava campos, listas de itens e status
- *   POST   ?acao=link&slug=                cria link de cliente { rotulo, dias }
+ *   POST   ?acao=link&slug=                cria link de cliente { rotulo, dias, senha? }
+ *   PUT    ?acao=link-senha&token=         define, troca ou remove a senha { senha }
  *   DELETE ?acao=link&token=               remove link de cliente
  */
 
 import { PROPOSTAS, STATUS, proposta } from '../lib/registro.js';
 import { carregar, calcular, listasBase } from '../lib/calc.js';
-import { logado, tokenAleatorio } from '../lib/auth.js';
+import { logado, tokenAleatorio, hashSenhaLink } from '../lib/auth.js';
 import { redis, lerJSON, gravarJSON, persistente } from '../lib/store.js';
 
 const json = (dados, status = 200) =>
@@ -27,11 +28,19 @@ async function links(slug) {
     if (!bruto) return;
     const l = JSON.parse(bruto);
     lista.push({
-      token: t, rotulo: l.rotulo, criado: l.criado, expira: l.expira || null,
+      token: t, rotulo: l.rotulo, criado: l.criado, expira: l.expira || null, protegido: Boolean(l.senha),
       acessos: Number(vals[i * 3 + 1] || 0), ultimoAcesso: vals[i * 3 + 2] ? Number(vals[i * 3 + 2]) : null,
     });
   });
   return lista.sort((a, b) => b.criado - a.criado);
+}
+
+// Senha opcional do link: '' = sem senha, null = inválida.
+const SENHA_INVALIDA = 'a senha do link precisa ter de 4 a 64 caracteres';
+function senhaLink(valor) {
+  const s = String(valor ?? '').trim();
+  if (!s) return '';
+  return s.length >= 4 && s.length <= 64 ? s : null;
 }
 
 async function autorizado(req) {
@@ -64,9 +73,22 @@ async function tratar(req) {
     const token = q.get('token') || '';
     const link = await lerJSON('link:' + token);
     if (!link) return json({ erro: 'link não encontrado' }, 404);
-    await redis('DEL', `link:${token}`, `link:${token}:v`, `link:${token}:u`);
+    await redis('DEL', `link:${token}`, `link:${token}:v`, `link:${token}:u`, `link:${token}:f`);
     await redis('SREM', 'links:' + link.slug, token);
     return json({ ok: true });
+  }
+
+  if (acao === 'link-senha' && req.method === 'PUT') {
+    const token = q.get('token') || '';
+    const link = await lerJSON('link:' + token);
+    if (!link) return json({ erro: 'link não encontrado' }, 404);
+    const corpo = await req.json().catch(() => ({}));
+    const senha = senhaLink(corpo.senha);
+    if (senha === null) return json({ erro: SENHA_INVALIDA }, 400);
+    if (senha) link.senha = await hashSenhaLink(token, senha); else delete link.senha;
+    await gravarJSON('link:' + token, link);
+    await redis('DEL', `link:${token}:f`);
+    return json({ ok: true, protegido: Boolean(link.senha) });
   }
 
   const p = proposta(q.get('slug'));
@@ -121,6 +143,8 @@ async function tratar(req) {
   if (req.method === 'POST' && acao === 'link') {
     const corpo = await req.json().catch(() => ({}));
     const dias = Number(corpo.dias) || 0;
+    const senha = senhaLink(corpo.senha);
+    if (senha === null) return json({ erro: SENHA_INVALIDA }, 400);
     const token = tokenAleatorio();
     const link = {
       slug: p.slug,
@@ -128,9 +152,11 @@ async function tratar(req) {
       criado: Date.now(),
       expira: dias > 0 ? Date.now() + dias * 86400000 : null,
     };
+    if (senha) link.senha = await hashSenhaLink(token, senha);
     await gravarJSON('link:' + token, link);
     await redis('SADD', 'links:' + p.slug, token);
-    return json({ ok: true, token, ...link });
+    const { senha: _hash, ...visivel } = link;
+    return json({ ok: true, token, ...visivel, protegido: Boolean(senha) });
   }
 
   return json({ erro: 'ação inválida' }, 400);

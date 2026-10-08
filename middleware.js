@@ -3,6 +3,7 @@
  *
  *   /pub/*            público (logo da tela de login)
  *   /s/<token>/...    link de cliente: só a proposta daquele link, enquanto existir
+ *                     (se o link tiver senha, pede a senha antes de abrir)
  *   /p/<slug>/...     proposta vista pela equipe (exige login)
  *   todo o resto      portal, painel e API (exige login)
  *
@@ -10,7 +11,7 @@
  * /api/dados, então o endereço mostrado ao cliente nunca muda.
  */
 
-import { COOKIE, VALIDADE, logado, senhaConfere, novoToken } from './lib/auth.js';
+import { COOKIE, VALIDADE, logado, senhaConfere, novoToken, igual, lerCookie, hashSenhaLink, passeLink, cookieLink } from './lib/auth.js';
 import { proposta } from './lib/registro.js';
 import { lerJSON, redis } from './lib/store.js';
 
@@ -93,6 +94,22 @@ function telaLogin({ destino = '/', erro = false, status = 401 } = {}) {
   </form>`, status);
 }
 
+// Tela de senha de um link de cliente protegido.
+function telaSenhaLink(token, { erro = false, bloqueado = false, status = 401 } = {}) {
+  return pagina(`<span class="eyebrow">Acesso protegido</span>
+  <h1>Informe a senha de acesso</h1>
+  <p class="sub">Esta proposta é protegida. Use a senha enviada pelo seu contato na A+.com.</p>
+  <form method="POST" action="/s/${token}/__senha" autocomplete="off">
+    <label for="senha">Senha</label>
+    <input id="senha" name="senha" type="password" autofocus required>
+    <button type="submit">Abrir proposta</button>
+    ${bloqueado ? '<div class="erro">Muitas tentativas. Aguarde alguns minutos e tente de novo.</div>' : erro ? '<div class="erro">Senha incorreta.</div>' : ''}
+  </form>`, status);
+}
+
+const MAX_TENTATIVAS = 10;      // senhas erradas por link
+const BLOQUEIO = 15 * 60;       // segundos até liberar de novo
+
 function linkIndisponivel() {
   return pagina(`<span class="eyebrow">Link indisponível</span>
   <h1>Este link não está mais ativo</h1>
@@ -143,6 +160,31 @@ export default async function middleware(req, ctx) {
     if (!p || (link.expira && link.expira < Date.now())) return linkIndisponivel();
     if (resto === undefined) return redirecionar(`/s/${token}/${url.search}`);
     const arquivo = resto.slice(1);
+
+    if (link.senha) {
+      if (arquivo === '__senha' && req.method === 'POST') {
+        const falhas = `link:${token}:f`;
+        if (Number(await redis('GET', falhas) || 0) >= MAX_TENTATIVAS) return telaSenhaLink(token, { bloqueado: true, status: 429 });
+        let form;
+        try { form = await req.formData(); } catch { form = null; }
+        const enviada = form ? String(form.get('senha') || '') : '';
+        if (igual(await hashSenhaLink(token, enviada), link.senha)) {
+          await redis('DEL', falhas);
+          return redirecionar(`/s/${token}/`, {
+            'Set-Cookie': `${cookieLink(token)}=${await passeLink(token, link.senha)}; Path=/s/${token}; HttpOnly; Secure; SameSite=Lax; Max-Age=${VALIDADE}`,
+          });
+        }
+        if ((await redis('INCR', falhas)) === 1) await redis('EXPIRE', falhas, String(BLOQUEIO));
+        return telaSenhaLink(token, { erro: true });
+      }
+      const passe = lerCookie(req, cookieLink(token)) || '';
+      if (!igual(passe, await passeLink(token, link.senha))) {
+        if (arquivo === '' || arquivo === 'index.html' || arquivo === '__senha') return telaSenhaLink(token);
+        return new Response('acesso protegido por senha', { status: 401, headers: { 'Cache-Control': 'no-store' } });
+      }
+    }
+    if (arquivo === '__senha') return redirecionar(`/s/${token}/`);
+
     if (arquivo === '' || arquivo === 'index.html') {
       const conta = redis('INCR', `link:${token}:v`).then(() => redis('SET', `link:${token}:u`, String(Date.now())));
       if (ctx?.waitUntil) ctx.waitUntil(conta.catch(() => {})); else await conta.catch(() => {});

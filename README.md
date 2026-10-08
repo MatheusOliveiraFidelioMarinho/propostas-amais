@@ -11,13 +11,17 @@ de acesso enviados aos clientes.
 | `/` | equipe (senha) | Lista das propostas por cliente, com status, total e links ativos |
 | `/#/<slug>` | equipe | Painel: dados, materiais, serviços, resumo e links de cliente |
 | `/p/<slug>/` | equipe | A proposta como o cliente vê |
-| `/s/<token>/` | cliente | Só aquela proposta, sem senha, até o link ser excluído ou expirar |
+| `/s/<token>/` | cliente | Só aquela proposta, até o link ser excluído ou expirar; a senha é opcional |
 
 Propostas cadastradas:
 
 - **Binatural · Formosa, GO** e **Binatural · Bahia**: apresentação técnica e
   proposta comercial do cluster Proxmox VE, em um deck só. As duas usam o mesmo
   modelo (`propostas/binatural-cluster/proposta.html`) e mudam só os dados.
+- **Binatural · Formosa, GO · Rede óptica GPON**: projeto técnico e proposta
+  comercial da rede óptica (OLT, caixas XFTTA, backbone 12FO e uplinks de 10G),
+  com a topologia e as tabelas de fibras por DIO
+  (`propostas/binatural-gpon/proposta.html`).
 - **UFV Samambaia · CFTV térmico de perímetro**: apresentação hospedada como
   está, sem campos editáveis.
 
@@ -54,6 +58,13 @@ consegue baixar pelo link dele. `?pdf=1` no endereço abre a janela direto.
 Na aba **Links de cliente** de cada proposta: informe para quem é o link e, se
 quiser, em quantos dias expira. O link é copiado na hora. A lista mostra
 acessos e último acesso, e **Excluir** corta o acesso imediatamente.
+
+A **senha de acesso** é opcional. Preenchida ao gerar o link (ou depois, em
+**Definir senha**), o cliente precisa informá-la antes de abrir a proposta. O
+portal guarda só o hash, então a senha não aparece de novo: anote e envie ao
+cliente por um canal diferente do link. Trocar a senha derruba quem já tinha
+entrado; salvar em branco remove a proteção. Dez senhas erradas bloqueiam o
+link por 15 minutos.
 
 ## Como funciona
 

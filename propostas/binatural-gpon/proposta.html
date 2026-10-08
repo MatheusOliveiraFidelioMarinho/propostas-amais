@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Rede Óptica GPON Binatural</title>
+<style>
+:root{
+  --bg:#050d09; --bg2:#08150f; --card:#0b1b14; --card2:#0f2219; --line:#1a3328; --line2:#27463a;
+  --fg:#eef4f0; --mut:#a3b8ad; --dim:#6a8479;
+  --lime:#b0e000; --gold:#d6b25e; --green:#6fdc8c; --blue:#5b95f9; --amber:#f2b33d; --red:#f07a6a;
+  --rad:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.5;
+}
+img{display:block;max-width:100%}
+::selection{background:var(--lime);color:#000}
+
+/* ---------- STAGE 1600x900 escalado ---------- */
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000}
+#stage{
+  position:relative;width:1600px;height:900px;flex:none;overflow:hidden;
+  background:var(--bg);transform-origin:center center;
+}
+.slide{
+  position:absolute;inset:0;padding:72px 96px 88px;
+  opacity:0;visibility:hidden;transform:translateX(40px);
+  transition:opacity .45s ease,transform .45s ease,visibility .45s;
+  display:flex;flex-direction:column;
+  background:
+    radial-gradient(900px 520px at 88% 8%,rgba(176,224,0,.07),transparent 62%),
+    radial-gradient(760px 520px at 4% 100%,rgba(214,178,94,.06),transparent 60%),
+    var(--bg);
+}
+.slide.on{opacity:1;visibility:visible;transform:none}
+.slide.prev{transform:translateX(-40px)}
+
+/* cabecalho e rodape de cada slide */
+.top{display:flex;align-items:center;gap:18px;margin-bottom:34px}
+.eyebrow{
+  font-size:14px;font-weight:800;letter-spacing:2.4px;text-transform:uppercase;color:var(--lime);
+  border-left:3px solid var(--lime);padding:2px 0 2px 14px;
+}
+.top .num{margin-left:auto;font-size:14px;font-weight:700;color:var(--dim);letter-spacing:1px}
+.foot{
+  position:absolute;left:96px;right:96px;bottom:30px;display:flex;align-items:center;gap:18px;
+  font-size:13px;color:var(--dim);font-weight:600;letter-spacing:.3px;
+}
+.foot img{height:24px;width:auto}
+.foot .bn{height:30px;width:30px;border-radius:7px;background:#f4f1e8;padding:3px;object-fit:contain}
+.foot span{margin-left:6px;padding-left:18px;border-left:1px solid var(--line2)}
+
+h1{font-size:68px;line-height:1.04;letter-spacing:-2px;font-weight:800}
+h2{font-size:48px;line-height:1.1;letter-spacing:-1.4px;font-weight:800;margin-bottom:14px}
+h3{font-size:22px;font-weight:750;letter-spacing:-.3px;margin-bottom:8px}
+.lead{font-size:21px;color:var(--mut);max-width:62ch}
+.hl{color:var(--lime)}
+.gd{color:var(--gold)}
+b.w{color:var(--fg);font-weight:700}
+
+/* ---------- CAPA ---------- */
+#s1{padding:0;flex-direction:row}
+#s1 .left{flex:1.15;padding:80px 96px;display:flex;flex-direction:column;justify-content:center}
+#s1 .left .amais{height:74px;width:auto;margin-bottom:64px;align-self:flex-start}
+#s1 .left h1 span{display:block}
+#s1 .left .lead{margin-top:26px}
+#s1 .meta{display:flex;gap:44px;margin-top:54px;padding-top:26px;border-top:1px solid var(--line)}
+#s1 .meta div b{display:block;font-size:13px;letter-spacing:1.8px;text-transform:uppercase;color:var(--dim);font-weight:800;margin-bottom:4px}
+#s1 .meta div span{font-size:19px;font-weight:650}
+#s1 .right{
+  flex:.85;position:relative;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,#f6f3ea 0%,#ece6d6 100%);
+}
+#s1 .right img{width:62%;height:auto}
+#s1 .right .tag{
+  position:absolute;bottom:64px;left:0;right:0;text-align:center;
+  font-size:14px;letter-spacing:3px;text-transform:uppercase;color:#12352a;font-weight:800;opacity:.7;
+}
+#s1 .right::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:6px;
+  background:linear-gradient(var(--gold),var(--lime));
+}
+
+/* ---------- CARDS ---------- */
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:28px}
+.card p{font-size:16.5px;color:var(--mut)}
+.ico{
+  display:flex;align-items:center;justify-content:center;width:50px;height:50px;border-radius:12px;margin-bottom:18px;
+  background:rgba(176,224,0,.09);border:1px solid rgba(176,224,0,.3);
+}
+.ico svg{width:25px;height:25px;stroke:var(--lime);stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- TOPOLOGIA ---------- */
+#topo{display:grid;grid-template-columns:1fr 360px;gap:36px;flex:1;min-height:0}
+#topo svg{width:100%;height:100%}
+.nbox{fill:#0e2119;stroke:#27463a;stroke-width:1.5}
+.nbox.hi{stroke:rgba(176,224,0,.55)}
+.ntitle{fill:#eef4f0;font-size:21px;font-weight:800}
+.nsub{fill:#a3b8ad;font-size:14.5px;font-weight:500}
+.nstat{fill:#6fdc8c;font-size:13px;font-weight:800;letter-spacing:1.4px}
+.lk{fill:none;stroke-width:3.5;stroke-linecap:round}
+.lk.g{stroke:var(--green)} .lk.b{stroke:var(--blue)} .lk.a{stroke:var(--amber)}
+.lk.dash{stroke-dasharray:8 8}
+.pulse{animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.legend{display:flex;flex-direction:column;gap:14px}
+.lg{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.lg b{display:flex;align-items:center;gap:12px;font-size:17px;margin-bottom:4px}
+.lg b i{width:26px;height:4px;border-radius:3px;flex:none}
+.lg p{font-size:14.5px;color:var(--mut)}
+
+/* ---------- TABELAS / SPECS ---------- */
+.spec{display:grid;grid-template-columns:230px 1fr;border-top:1px solid var(--line)}
+.spec div{padding:15px 0;border-bottom:1px solid var(--line);font-size:18px}
+.spec div:nth-child(odd){color:var(--dim);font-weight:700;font-size:14px;letter-spacing:1.4px;text-transform:uppercase;padding-top:19px}
+.spec div:nth-child(even){font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:17px}
+th{text-align:left;font-size:13px;letter-spacing:1.6px;text-transform:uppercase;color:var(--dim);font-weight:800;padding:0 16px 12px 0;border-bottom:1px solid var(--line2)}
+td{padding:15px 16px 15px 0;border-bottom:1px solid var(--line);color:var(--mut);vertical-align:top}
+td:first-child{color:var(--fg);font-weight:700}
+.pill{display:inline-block;font-size:12.5px;font-weight:800;letter-spacing:1px;padding:4px 10px;border-radius:6px;text-transform:uppercase}
+.pill.ok{background:rgba(111,220,140,.13);color:var(--green)}
+.pill.at{background:rgba(242,179,61,.14);color:var(--amber)}
+.pill.cr{background:rgba(240,122,106,.14);color:var(--red)}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:9px;vertical-align:middle}
+
+/* servidor */
+.hw{display:grid;grid-template-columns:420px 1fr;gap:56px;flex:1;align-items:center}
+.box3d{
+  position:relative;height:520px;border-radius:18px;
+  background:linear-gradient(160deg,#13281f,#0a1812);border:1px solid var(--line2);
+  display:flex;align-items:center;justify-content:center;gap:34px;
+}
+.tower{width:150px;height:380px;border-radius:10px;background:linear-gradient(180deg,#1c2a24,#101a16);border:1px solid #33514a;position:relative;padding:22px 18px}
+.tower .bay{height:26px;border-radius:4px;background:#0a120f;border:1px solid #2b423a;margin-bottom:9px}
+.tower .led{position:absolute;bottom:26px;left:18px;width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 14px var(--green)}
+.tower .lbl{position:absolute;bottom:22px;right:16px;font-size:14px;font-weight:800;color:var(--mut)}
+.tower .grill{position:absolute;left:18px;right:18px;bottom:62px;height:120px;border-radius:5px;
+  background:repeating-linear-gradient(90deg,#16221e 0 5px,#0b1310 5px 9px)}
+
+/* storage */
+.pool{border-radius:var(--rad);padding:30px;background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column}
+.pool.nv{border-color:rgba(91,149,249,.45)}
+.pool.hd{border-color:rgba(214,178,94,.45)}
+.pool .ph{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.pool .ph .pill{margin-left:auto}
+.disks{display:flex;gap:12px;margin:22px 0}
+.disk{flex:1;height:78px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:13px;font-weight:800;letter-spacing:.6px}
+.pool.nv .disk{background:rgba(91,149,249,.1);border:1px solid rgba(91,149,249,.45);color:#b8d0ff}
+.pool.hd .disk{background:rgba(214,178,94,.09);border:1px solid rgba(214,178,94,.42);color:#ecd6a0}
+.mirror .disk{height:62px}
+.disk small{font-weight:600;opacity:.75;font-size:11.5px;letter-spacing:.3px}
+.mirror{display:flex;gap:12px}
+.mirror > div{flex:1;display:flex;gap:8px;padding:8px;align-items:stretch;border:1px dashed rgba(214,178,94,.4);border-radius:12px;position:relative}
+.mirror > div::after{content:attr(data-l);position:absolute;top:-10px;left:12px;background:var(--card);padding:0 6px;font-size:11px;font-weight:800;color:var(--gold);letter-spacing:1px}
+.kv{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:auto}
+.kv div{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kv b{display:block;font-size:26px;font-weight:800;letter-spacing:-.6px}
+.kv span{font-size:13px;color:var(--dim);font-weight:700;letter-spacing:.6px;text-transform:uppercase}
+.uses{margin-top:6px;font-size:16px;color:var(--mut)}
+.uses li{list-style:none;padding:6px 0 6px 22px;position:relative}
+.uses li::before{content:"";position:absolute;left:0;top:15px;width:9px;height:9px;border-radius:2px;background:currentColor;opacity:.6}
+.pool.nv .uses li::before{background:var(--blue);opacity:1}
+.pool.hd .uses li::before{background:var(--gold);opacity:1}
+
+/* switch */
+.sw{
+  border-radius:16px;padding:26px 30px;background:linear-gradient(180deg,#e9ecea,#cfd4d1);
+  display:flex;align-items:center;gap:26px;margin-bottom:30px;box-shadow:0 20px 50px rgba(0,0,0,.45);
+}
+.sw .brand{font-size:15px;font-weight:800;letter-spacing:2px;color:#2a3431;width:120px}
+.ports{display:grid;grid-template-columns:repeat(12,1fr);gap:7px;flex:1}
+.port{height:30px;border-radius:4px;background:#26302d;border:2px solid #3a4743;position:relative}
+.port.u::after{content:"";position:absolute;top:3px;left:4px;width:6px;height:6px;border-radius:50%}
+.port.g::after{background:var(--green);box-shadow:0 0 8px var(--green)}
+.port.b::after{background:var(--blue);box-shadow:0 0 8px var(--blue)}
+.port.a::after{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.sfp{display:flex;gap:8px}
+.sfp div{width:44px;height:30px;border-radius:4px;background:#1a2220;border:2px solid #56625e}
+
+/* quorum */
+.votes{display:flex;gap:18px;align-items:stretch;margin:6px 0 30px}
+.vote{flex:1;border-radius:var(--rad);padding:24px 26px;background:var(--card);border:1px solid rgba(111,220,140,.4);position:relative}
+.vote .v{position:absolute;top:22px;right:24px;font-size:40px;font-weight:800;color:var(--green);line-height:1}
+.vote p{color:var(--mut);font-size:15.5px}
+.op{display:flex;align-items:center;font-size:36px;font-weight:800;color:var(--dim)}
+.total{flex:.8;border-radius:var(--rad);padding:24px;background:rgba(111,220,140,.1);border:1px solid var(--green);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.total b{font-size:54px;font-weight:800;color:var(--green);line-height:1}
+.total span{font-size:14px;color:var(--mut);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:8px}
+
+/* capacidade */
+.big{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:30px}
+.big div{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:26px}
+.big b{display:block;font-size:52px;font-weight:800;letter-spacing:-1.6px;line-height:1.05}
+.big span{display:block;font-size:14px;color:var(--dim);font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-top:6px}
+.big p{font-size:15.5px;color:var(--mut);margin-top:12px}
+.bar{height:44px;border-radius:10px;overflow:hidden;display:flex;border:1px solid var(--line2);margin:14px 0 10px}
+.bar div{display:flex;align-items:center;padding-left:16px;font-size:14px;font-weight:800;color:#06110c}
+
+/* etapas */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:24px 24px 26px;position:relative}
+.step .n{font-size:15px;font-weight:800;color:var(--bg);background:var(--lime);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.step p{font-size:15.5px;color:var(--mut)}
+
+/* encerramento */
+#fim{align-items:center;justify-content:center;text-align:center}
+#fim .logos{display:flex;align-items:center;gap:56px;margin-bottom:56px}
+#fim .logos .amais{height:110px;width:auto}
+#fim .logos .bnbox{background:#f4f1e8;border-radius:22px;padding:22px 30px}
+#fim .logos .bnbox img{height:150px;width:auto}
+#fim .logos i{width:1px;height:130px;background:var(--line2)}
+
+/* ---------- CONTROLES ---------- */
+#ctrl{
+  position:fixed;right:22px;bottom:18px;z-index:10;display:flex;align-items:center;gap:8px;
+  background:rgba(5,13,9,.82);backdrop-filter:blur(10px);border:1px solid var(--line2);border-radius:12px;padding:6px;
+  transition:opacity .3s;
+}
+#ctrl button{
+  background:none;border:0;color:var(--mut);width:38px;height:38px;border-radius:8px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+#ctrl button:hover{background:var(--lime);color:#000}
+#ctrl button svg{width:19px;height:19px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+#count{font-size:13px;font-weight:700;color:var(--mut);min-width:54px;text-align:center;font-variant-numeric:tabular-nums}
+#prog{position:fixed;left:0;top:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--lime));z-index:10;transition:width .4s}
+body.idle #ctrl{opacity:0}
+body.idle{cursor:none}
+@media (max-width:700px){#ctrl{right:50%;transform:translateX(50%);bottom:12px}}
+
+/* ---------- TELA DE SENHA ---------- */
+#lock{display:none}
+body.locked #viewport,body.locked #ctrl,body.locked #prog{display:none}
+body.locked{cursor:auto}
+body.locked #lock{
+  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;padding:16px;
+  background:radial-gradient(700px 420px at 80% 10%,rgba(176,224,0,.08),transparent 60%),var(--bg);
+}
+#lock form{width:100%;max-width:380px;display:flex;flex-direction:column;gap:14px;text-align:center}
+#lock img{height:60px;width:auto;margin:0 auto 18px}
+#lock p{color:var(--mut);font-size:15px;margin-bottom:6px}
+#lock input{
+  background:var(--card);border:1px solid var(--line2);border-radius:10px;color:var(--fg);
+  font:inherit;font-size:17px;padding:14px 16px;text-align:center;outline:none;
+}
+#lock input:focus{border-color:var(--lime)}
+#lock button{
+  background:var(--lime);color:#000;border:0;border-radius:10px;font:inherit;font-size:16px;font-weight:800;
+  padding:14px;cursor:pointer;
+}
+#lock .err{color:var(--red);font-size:14px;min-height:20px;margin:0}
+#lock.shake form{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+
+/* ---------- PROPOSTA ---------- */
+.ac{font-size:17px;color:var(--mut);margin-bottom:26px;display:flex;gap:28px;flex-wrap:wrap}
+.ac b{color:var(--fg)}
+
+/* rack */
+.scope{display:grid;grid-template-columns:400px 1fr;gap:56px;flex:1;align-items:center}
+.rack{
+  position:relative;height:560px;border-radius:16px;padding:30px 44px;
+  background:linear-gradient(180deg,#1a2622,#0c1411);border:1px solid #33514a;
+  display:flex;flex-direction:column;gap:10px;box-shadow:0 24px 60px rgba(0,0,0,.45);
+}
+.rack::before,.rack::after{
+  content:"";position:absolute;top:22px;bottom:22px;width:14px;border-radius:3px;
+  background:repeating-linear-gradient(180deg,#2b3f38 0 4px,transparent 4px 14px),#121c18;
+}
+.rack::before{left:16px}.rack::after{right:16px}
+.u{height:58px;border-radius:6px;display:flex;align-items:center;gap:12px;padding:0 14px;position:relative;flex:none}
+.u .lb{font-size:12.5px;font-weight:800;letter-spacing:.8px;white-space:nowrap}
+.u.sw1{background:linear-gradient(180deg,#e9ecea,#cfd4d1)}
+.u.sw1 .lb{color:#2a3431}
+.u.sw1 .pp{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;flex:1}
+.u.sw1 .pp i{height:11px;border-radius:2px;background:#26302d}
+.u.sw1 .pp i.on{background:#26302d;box-shadow:inset 0 0 0 2px var(--green)}
+.u.srv{background:linear-gradient(180deg,#26312d,#171f1c);border:1px solid #3d4d48}
+.u.srv .lb{color:var(--mut)}
+.u.srv .bays{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;flex:1}
+.u.srv .bays i{height:22px;border-radius:3px;background:#0a120f;border:1px solid #2b423a}
+.u.nas{background:linear-gradient(180deg,#2d2f33,#1b1d20);border:1px solid #4a4d52}
+.u.nas .lb{color:#c9ccd1}
+.u.nas .bays{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;flex:1}
+.u.nas .bays i{height:26px;border-radius:3px;background:#101113;border:1px solid #3c3f44}
+.u .led{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);flex:none}
+.u.pnl{background:#101a16;border:1px dashed #27463a;justify-content:center}
+.u.pnl .lb{color:var(--dim);font-weight:700}
+.rack .cap{margin-top:auto;text-align:center;font-size:12.5px;font-weight:800;letter-spacing:2px;color:var(--dim);text-transform:uppercase}
+
+.eq{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.eq > div{display:grid;grid-template-columns:92px 1fr;gap:18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}
+.eq .q{font-size:40px;font-weight:800;color:var(--lime);letter-spacing:-1px;line-height:1}
+.eq b{display:block;font-size:20px;font-weight:750}
+.eq p{font-size:15.5px;color:var(--mut)}
+
+/* servidor 1U */
+.r1u{display:flex;flex-direction:column;gap:26px;width:100%;padding:0 34px}
+.r1u .u{height:78px}
+.r1u .u .lb{font-size:15px}
+.r1u .u.srv .bays i{height:30px}
+
+/* switch portas mistas */
+.port.m{border-color:#566460;background:#2c3633}
+.swcap{display:flex;gap:26px;margin:-14px 0 24px;font-size:14.5px;color:var(--mut);font-weight:600}
+.swcap i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:8px;vertical-align:middle}
+
+/* condicoes */
+.ul{list-style:none}
+.ul li{position:relative;padding:9px 0 9px 30px;font-size:17px;color:var(--mut);border-bottom:1px solid var(--line)}
+.ul li:last-child{border-bottom:0}
+.ul li::before{content:"";position:absolute;left:4px;top:18px;width:12px;height:2px;background:var(--red);border-radius:2px}
+.ul.ok li::before{background:var(--green);height:8px;width:8px;border-radius:2px;top:16px}
+
+/* planilha */
+table.mat{font-size:16.5px}
+table.mat td{padding:11px 16px 11px 0}
+table.mat td.qt{color:var(--lime);font-weight:800;font-size:18px;text-align:center;padding-right:24px}
+table.mat td.it{color:var(--fg);font-weight:700}
+table.mat tr.gp td{
+  color:var(--gold);font-size:12.5px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;
+  padding:16px 0 8px;border-bottom:1px solid var(--line2)
+}
+
+/* investimento */
+.inv{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:18px;margin:8px 0 26px}
+.inv > div{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:28px}
+.inv > div.tt{border-color:var(--lime);background:rgba(176,224,0,.06)}
+.inv span{display:block;font-size:13px;color:var(--dim);font-weight:800;letter-spacing:1.6px;text-transform:uppercase;margin-bottom:14px}
+.inv b{display:block;font-size:44px;font-weight:800;letter-spacing:-1px;line-height:1.1;color:var(--fg)}
+.inv > div.tt b{color:var(--lime)}
+.inv p{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line2);font-size:14.5px;color:var(--dim);min-height:48px}
+.sig{display:flex;align-items:flex-end;gap:40px;margin-top:auto;padding-bottom:30px}
+.sig .ln{flex:none;width:380px;border-top:1px solid var(--line2);padding-top:12px}
+.sig .ln b{display:block;font-size:17px}
+.sig .ln span{font-size:14.5px;color:var(--mut)}
+.sig .dt{margin-left:auto;text-align:right;font-size:15px;color:var(--mut)}
+
+/* ---------- IMPRESSAO / PDF ---------- */
+@media print{
+  @page{size:1600px 900px;margin:0}
+  html,body{height:auto;overflow:visible}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #ctrl,#prog{display:none!important}
+  #viewport{position:static;display:block;background:none}
+  #stage{transform:none!important;width:1600px;height:auto;overflow:visible}
+  .slide{position:relative;inset:auto;width:1600px;height:900px;opacity:1;visibility:visible;transform:none;transition:none;break-after:page;break-inside:avoid}
+  .slide:last-child{break-after:auto}
+  html,body{background:var(--bg)}
+}
+
+/* dados dinâmicos */
+.pc{display:none}
+body.precos .pc{display:table-cell}
+table.mat td.pc{text-align:right;color:var(--fg);font-weight:650;white-space:nowrap}
+table.mat td.sv{color:var(--fg);font-weight:700}
+.pagto{margin-top:16px;font-size:16px;color:var(--mut)}
+.foot span span{margin:0;padding:0;border:0}
+.inv b.parcial{color:var(--amber)!important}
+.inv p.parcial{color:var(--amber);font-weight:700}
+body.precos table.mat{font-size:14.5px}
+body.precos table.mat td{padding:7px 14px 7px 0}
+body.precos table.mat tr.gp td{padding:10px 0 5px}
+table.mat td.qt{font-size:1.1em}
+table.mat tr.gp td{font-size:.76em}
+
+/* ---------- REDE OPTICA ---------- */
+table.tight td{padding:10px 16px 10px 0;font-size:16px}
+table.tight th.c,table.tight td.c{text-align:center;padding-left:8px;padding-right:8px}
+table.tight tr.tot td{color:var(--lime);font-weight:800;border-top:1px solid var(--line2);border-bottom:0}
+table.xs td{padding:6.5px 16px 6.5px 0;font-size:15px}
+.flow{display:flex;align-items:stretch;gap:10px}
+.flow .fb{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.flow .fb.hi{border-color:rgba(176,224,0,.55)}
+.flow .fb b{display:block;font-size:19px;font-weight:750;margin-bottom:2px}
+.flow .fb span{font-size:14.5px;color:var(--mut)}
+.flow .ar{display:flex;align-items:center;color:var(--lime);font-size:30px;font-weight:800}
+.flow.or .fb.hi{border-color:rgba(242,179,61,.55)}
+.flow.or .ar{color:var(--amber)}
+.camada{font-size:13px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;margin:0 0 12px}
+.topog{display:grid;grid-template-columns:1fr 330px;gap:30px;flex:1;min-height:0;align-items:center}
+.topoimg{background:#fff;border-radius:16px;padding:12px;display:flex;align-items:center;justify-content:center}
+.topoimg img{height:640px;width:auto;max-width:100%;object-fit:contain}
+</style>
+</head>
+<body class="idle">
+<div id="prog"></div>
+
+<div id="viewport"><div id="stage">
+
+<section class="slide" id="s1">
+  <div class="left">
+    <img class="amais" src="img/logo-amais.png" alt="A+.com Engenharia e Tecnologia">
+    <div class="eyebrow" style="align-self:flex-start;margin-bottom:26px">Projeto e proposta comercial</div>
+    <h1><span>Rede Óptica</span><span>Corporativa</span><span class="hl">GPON + 10G</span></h1>
+    <p class="lead">Projeto, fornecimento e instalação de rede óptica passiva com OLT Intelbras 8820i, 11 caixas XFTTA, backbone em fibra monomodo de 12FO e núcleo Ubiquiti de 10G.</p>
+    <div class="meta">
+      <div><b>Cliente</b><span>Binatural</span></div>
+      <div><b>Unidade</b><span><span data-f="local"></span></span></div>
+      <div><b>A/C</b><span data-f="contato"></span></div>
+      <div><b>Data</b><span data-f="data"></span></div>
+    </div>
+  </div>
+  <div class="right">
+    <img src="img/logo-binatural.png" alt="Binatural">
+    <div class="tag"><span data-f="tag"></span></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Objetivo</div><div class="num"></div></div>
+  <h2>Uma rede pronta para <span class="hl">crescer com a empresa</span></h2>
+  <div class="ac"><span><b>A/C:</b> <span data-f="contato"></span>, Binatural</span><span><b>Assunto:</b> projeto, fornecimento e instalação de rede óptica GPON com uplinks de 10G</span></div>
+  <p class="lead" style="margin-bottom:38px">Apresentamos o projeto da rede óptica que interliga as 8 áreas da planta a partir do CPD. Toda a infraestrutura passiva e os equipamentos de núcleo já ficam dimensionados para a expansão futura da unidade.</p>
+  <div class="grid g4">
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div>
+      <h3>Rede passiva em campo</h3>
+      <p>Entre o CPD e o usuário não há equipamento energizado: só fibra, DIOs e caixas com splitter.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.6-3.4 7.8-8 9-4.6-1.2-8-4.4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <h3>Imune a ruído elétrico</h3>
+      <p>A fibra não sofre interferência de motores, inversores e descargas atmosféricas da área industrial.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/></svg></div>
+      <h3>Núcleo de 10G</h3>
+      <p>Switches existentes ligados ao CPD em 10G por fibra, com LACP ativo e fibra reserva para dobrar o enlace.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></div>
+      <h3>Expansão já instalada</h3>
+      <p>88 pontos GPON para 17 ONTs iniciais. Novo ponto exige apenas um drop de fibra e uma ONT.</p>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Escopo do projeto</div><div class="num"></div></div>
+  <div class="scope">
+    <div class="rack">
+      <div class="u sw1"><span class="led"></span><span class="lb">AGGREGATION</span><div class="pp"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="u srv"><span class="led"></span><span class="lb">OLT 8820i</span><div class="bays"><i></i><i></i><i></i><i></i></div></div>
+      <div class="u pnl"><span class="lb">6 splitters 1x2 SC/APC</span></div>
+      <div class="u nas"><span class="led"></span><span class="lb">DIO CPD 48FO</span><div class="bays"><i></i><i></i><i></i><i></i></div></div>
+      <div class="u pnl"><span class="lb">Organizador de cordões</span></div>
+      <div class="u pnl"><span class="lb">Espaço para expansão</span></div>
+      <div class="cap">Rack do CPD</div>
+    </div>
+    <div>
+      <h2>O que este projeto <span class="hl">contempla</span></h2>
+      <p class="lead" style="margin-bottom:22px">Rede óptica completa, do rack do CPD até a ONT de cada ponto, entregue certificada e em operação.</p>
+      <div class="eq">
+        <div><span class="q">01</span><div><b>OLT Intelbras 8820i com 2 fontes AC redundantes</b><p>8 portas GPON, ligada ao núcleo por 2 links de 10G em LACP</p></div></div>
+        <div><span class="q">01</span><div><b>Switch Aggregation Ubiquiti</b><p>USW-Pro-Aggregation, 28 portas SFP+ de 10G no CPD</p></div></div>
+        <div><span class="q">08</span><div><b>DIOs interligados por cabos de 12FO</b><p>4 fibras fusionadas e entregues em SC/APC em cada DIO remoto</p></div></div>
+        <div><span class="q">11</span><div><b>Caixas XFTTA 2008 Intelbras</b><p>Splitter 1x8 em cada caixa: 88 pontos, 17 ONTs na fase inicial</p></div></div>
+        <div><span class="q">04</span><div><b>Uplinks de 10G em fibra WDM</b><p>Switches existentes do PCM, Laboratório, Supervisório e Carregamento</p></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Topologia da rede</div><div class="num"></div></div>
+  <div class="topog">
+    <div class="topoimg"><img src="img/topologia.png" alt="Topologia da rede óptica GPON da Binatural"></div>
+    <div class="legend">
+      <div class="lg"><b><i style="background:#3faa35"></i>Cabo óptico SM 12FO</b><p>Backbone entre os DIOs. Um cabo de 12 fibras chega em cada DIO remoto.</p></div>
+      <div class="lg"><b><i style="background:#a02b93"></i>Drop óptico / line cord</b><p>1 fibra SC/APC de cada caixa XFTTA até a ONT do ponto.</p></div>
+      <div class="lg"><b><i style="background:#ed7d31"></i>Cabo Cat6</b><p>Ligação da ONT ao switch existente da área.</p></div>
+      <div class="lg"><b>8 DIOs · 11 caixas · 17 ONTs</b><p>PCM e Caldeira seguem pelo DIO Almoxarifado; Carregamento, pelo DIO Supervisório.</p></div>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Solução técnica</div><div class="num"></div></div>
+  <h2>Duas camadas na <span class="hl">mesma planta de fibras</span></h2>
+  <p class="lead" style="margin-bottom:30px">GPON atende os pontos distribuídos; 10G ponto a ponto atende os switches que concentram usuários. As duas usam os mesmos cabos de 12FO.</p>
+  <p class="camada hl">GPON · pontos distribuídos</p>
+  <div class="flow" style="margin-bottom:34px">
+    <div class="fb hi"><b>OLT 8820i</b><span>6 de 8 portas PON em uso</span></div><div class="ar">›</div>
+    <div class="fb"><b>Splitter 1x2</b><span>No rack do CPD</span></div><div class="ar">›</div>
+    <div class="fb"><b>Cabo 12FO + DIO</b><span>4 fibras em SC/APC</span></div><div class="ar">›</div>
+    <div class="fb"><b>Caixa XFTTA</b><span>Splitter 1x8, 8 pontos</span></div><div class="ar">›</div>
+    <div class="fb"><b>ONT</b><span>Drop de 1 fibra SC/APC</span></div>
+  </div>
+  <p class="camada" style="color:var(--amber)">10G ponto a ponto · switches existentes</p>
+  <div class="flow or" style="margin-bottom:30px">
+    <div class="fb hi"><b>Switch Aggregation</b><span>2 × 10G em LACP com a OLT</span></div><div class="ar">›</div>
+    <div class="fb"><b>1 fibra WDM (BiDi)</b><span>10G com LACP ativo</span></div><div class="ar">›</div>
+    <div class="fb"><b>Switch USW-Pro da área</b><span>PCM, Laboratório, Supervisório e Carregamento</span></div><div class="ar">+</div>
+    <div class="fb"><b>ONT local</b><span>Segundo caminho de 1G por Cat6</span></div>
+  </div>
+  <div class="card" style="display:flex;gap:40px;align-items:center;padding:20px 28px">
+    <div style="flex:none"><span class="pill ok">Divisão 1:16</span></div>
+    <p>Cada porta PON passa por um splitter 1x2 no CPD e alimenta duas caixas XFTTA. Assim <b class="w">6 portas atendem as 11 caixas</b> e 2 portas ficam livres na OLT.</p>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Capacidade da solução</div><div class="num"></div></div>
+  <h2>A rede em <span class="hl">números</span></h2>
+  <div class="big" style="margin-top:22px">
+    <div><b class="hl">8</b><span>Áreas interligadas</span><p>CPD e 7 DIOs remotos em fibra monomodo.</p></div>
+    <div><b class="gd">11</b><span>Caixas XFTTA</span><p>Splitter 1x8 em cada caixa.</p></div>
+    <div><b style="color:var(--green)">88</b><span>Pontos GPON</span><p>17 em uso e 71 de reserva.</p></div>
+    <div><b style="color:var(--blue)">10G</b><span>Uplink por switch</span><p>4 switches, expansível a 20G.</p></div>
+  </div>
+  <div class="card">
+    <h3>Ocupação inicial dos pontos GPON</h3>
+    <p>A fase inicial usa 19% dos pontos instalados. O restante já está disponível nas caixas, com saída SC/APC identificada.</p>
+    <div class="bar">
+      <div style="width:19.3%;background:var(--lime)">17 em uso</div>
+      <div style="width:80.7%;background:#27463a;color:var(--mut)">71 pontos de reserva</div>
+    </div>
+    <p style="font-size:14.5px">Além dos pontos: 13 fibras de reserva já fusionadas nos DIOs, 44 fibras apagadas nos cabos, 2 portas PON e 22 portas de 10G livres no CPD.</p>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Backbone óptico</div><div class="num"></div></div>
+  <h2>Fibras em <span class="hl">cada DIO</span></h2>
+  <p class="lead" style="margin-bottom:18px">Cada DIO remoto recebe um cabo de 12FO e entrega 4 fibras fusionadas em pigtail SC/APC.</p>
+  <table class="tight">
+    <tr><th style="width:20%">DIO</th><th style="width:24%">Cabo que chega</th><th class="c">Fusionadas SC/APC</th><th class="c">Em uso</th><th class="c">Reserva fusionada</th><th class="c">Fusão de passagem</th><th class="c">Apagadas</th></tr>
+    <tr><td>Almoxarifado</td><td>CPD → Almoxarifado</td><td class="c">4</td><td class="c">2</td><td class="c">2</td><td class="c">8</td><td class="c">0</td></tr>
+    <tr><td>PCM</td><td>Almoxarifado → PCM</td><td class="c">4</td><td class="c">2</td><td class="c">2</td><td class="c">0</td><td class="c">8</td></tr>
+    <tr><td>Caldeira</td><td>Almoxarifado → Caldeira</td><td class="c">4</td><td class="c">1</td><td class="c">3</td><td class="c">0</td><td class="c">8</td></tr>
+    <tr><td>Administração</td><td>CPD → Administração</td><td class="c">4</td><td class="c">4</td><td class="c">0</td><td class="c">0</td><td class="c">8</td></tr>
+    <tr><td>Laboratório</td><td>CPD → Laboratório</td><td class="c">4</td><td class="c">2</td><td class="c">2</td><td class="c">0</td><td class="c">8</td></tr>
+    <tr><td>Supervisório</td><td>CPD → Supervisório</td><td class="c">4</td><td class="c">2</td><td class="c">2</td><td class="c">4</td><td class="c">4</td></tr>
+    <tr><td>Carregamento</td><td>Supervisório → Carregamento</td><td class="c">4</td><td class="c">2</td><td class="c">2</td><td class="c">0</td><td class="c">8</td></tr>
+    <tr class="tot"><td>Total</td><td>7 cabos · 84 fibras</td><td class="c">28</td><td class="c">15</td><td class="c">13</td><td class="c">12</td><td class="c">44</td></tr>
+  </table>
+  <p style="margin-top:16px;font-size:15px;color:var(--dim)">Fusão de passagem: fibras emendadas direto para o DIO seguinte, sem conector. Apagadas: fibras sem fusão, acomodadas e identificadas na bandeja para ativação futura.</p>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Backbone óptico · Descritivo</div><div class="num"></div></div>
+  <h2>Função de <span class="hl">cada fibra entregue</span></h2>
+  <p class="lead" style="margin-bottom:18px">As 4 fibras de cada DIO saem identificadas. O DIO do CPD concentra as 28 fibras em um painel de 48 posições SC/APC.</p>
+  <table class="tight">
+    <tr><th style="width:15%">DIO</th><th style="width:12%">Posições no CPD</th><th>Fibra 1</th><th>Fibra 2</th><th>Fibra 3</th><th>Fibra 4</th></tr>
+    <tr><td>Almoxarifado</td><td>01 a 04</td><td><span class="dot" style="background:var(--green)"></span>XFTTA ALMOX-01</td><td><span class="dot" style="background:var(--green)"></span>XFTTA ALMOX-02</td><td>Reserva</td><td>Reserva</td></tr>
+    <tr><td>PCM</td><td>05 a 08</td><td><span class="dot" style="background:var(--green)"></span>XFTTA PCM-01</td><td><span class="dot" style="background:var(--amber)"></span>Uplink 10G</td><td>Reserva · 2º uplink</td><td>Reserva</td></tr>
+    <tr><td>Caldeira</td><td>09 a 12</td><td><span class="dot" style="background:var(--green)"></span>XFTTA CALD-01</td><td>Reserva</td><td>Reserva</td><td>Reserva</td></tr>
+    <tr><td>Administração</td><td>13 a 16</td><td><span class="dot" style="background:var(--green)"></span>XFTTA ADM-01</td><td><span class="dot" style="background:var(--green)"></span>XFTTA ADM-02</td><td><span class="dot" style="background:var(--green)"></span>XFTTA ADM-03</td><td><span class="dot" style="background:var(--green)"></span>XFTTA ADM-04</td></tr>
+    <tr><td>Laboratório</td><td>17 a 20</td><td><span class="dot" style="background:var(--green)"></span>XFTTA LAB-01</td><td><span class="dot" style="background:var(--amber)"></span>Uplink 10G</td><td>Reserva · 2º uplink</td><td>Reserva</td></tr>
+    <tr><td>Supervisório</td><td>21 a 24</td><td><span class="dot" style="background:var(--green)"></span>XFTTA SUP-01</td><td><span class="dot" style="background:var(--amber)"></span>Uplink 10G</td><td>Reserva · 2º uplink</td><td>Reserva</td></tr>
+    <tr><td>Carregamento</td><td>25 a 28</td><td><span class="dot" style="background:var(--green)"></span>XFTTA CARR-01</td><td><span class="dot" style="background:var(--amber)"></span>Uplink 10G</td><td>Reserva · 2º uplink</td><td>Reserva</td></tr>
+  </table>
+  <p style="margin-top:16px;font-size:15px;color:var(--dim)"><span class="dot" style="background:var(--green)"></span>GPON &nbsp;&nbsp; <span class="dot" style="background:var(--amber)"></span>10G ponto a ponto &nbsp;&nbsp; Posições 29 a 48 do DIO CPD ficam livres para expansão. Toda a planta em conector SC/APC.</p>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Caixas XFTTA Intelbras</div><div class="num"></div></div>
+  <h2>Pontos reserva em <span class="hl">cada caixa</span></h2>
+  <p class="lead" style="margin-bottom:14px">11 caixas XFTTA 2008 com splitter 1x8 e saídas SC/APC: 88 pontos, 17 em uso e 71 de reserva.</p>
+  <table class="tight xs">
+    <tr><th style="width:13%">Caixa</th><th style="width:17%">Local</th><th style="width:11%">Porta PON</th><th>ONTs atendidas</th><th class="c" style="width:10%">Pontos</th><th class="c" style="width:10%">Em uso</th><th class="c" style="width:10%">Reserva</th></tr>
+    <tr><td>ADM-01</td><td>Administração</td><td>PON 1</td><td>ONT ADM 01 e 02</td><td class="c">8</td><td class="c">2</td><td class="c">6</td></tr>
+    <tr><td>ADM-02</td><td>Administração</td><td>PON 1</td><td>ONT ADM 03 e 04</td><td class="c">8</td><td class="c">2</td><td class="c">6</td></tr>
+    <tr><td>ADM-03</td><td>Administração</td><td>PON 2</td><td>ONT ADM 05 e 06</td><td class="c">8</td><td class="c">2</td><td class="c">6</td></tr>
+    <tr><td>ADM-04</td><td>Administração</td><td>PON 2</td><td>ONT ADM 07 e 08</td><td class="c">8</td><td class="c">2</td><td class="c">6</td></tr>
+    <tr><td>ALMOX-01</td><td>Almoxarifado</td><td>PON 3</td><td>ONT ALMOX 01 a 03</td><td class="c">8</td><td class="c">3</td><td class="c">5</td></tr>
+    <tr><td>ALMOX-02</td><td>Almoxarifado</td><td>PON 3</td><td>Caixa reserva</td><td class="c">8</td><td class="c">0</td><td class="c">8</td></tr>
+    <tr><td>PCM-01</td><td>PCM</td><td>PON 4</td><td>ONT PCM</td><td class="c">8</td><td class="c">1</td><td class="c">7</td></tr>
+    <tr><td>CALD-01</td><td>Caldeira</td><td>PON 4</td><td>ONT CCM e ONT Caldeira</td><td class="c">8</td><td class="c">2</td><td class="c">6</td></tr>
+    <tr><td>LAB-01</td><td>Laboratório</td><td>PON 5</td><td>ONT LAB</td><td class="c">8</td><td class="c">1</td><td class="c">7</td></tr>
+    <tr><td>SUP-01</td><td>Supervisório</td><td>PON 6</td><td>ONT Supervisório</td><td class="c">8</td><td class="c">1</td><td class="c">7</td></tr>
+    <tr><td>CARR-01</td><td>Carregamento</td><td>PON 6</td><td>ONT Carregamento</td><td class="c">8</td><td class="c">1</td><td class="c">7</td></tr>
+    <tr class="tot"><td>Total</td><td>11 caixas</td><td>6 portas</td><td>17 ONTs</td><td class="c">88</td><td class="c">17</td><td class="c">71</td></tr>
+  </table>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Switches existentes</div><div class="num"></div></div>
+  <h2>Dois caminhos até o CPD em <span class="hl">cada switch</span></h2>
+  <p class="lead" style="margin-bottom:24px">Cada switch existente recebe 1 uplink de 10G em fibra WDM com LACP ativo e 1 ONT GPON ligada por Cat6.</p>
+  <div class="grid g2" style="margin-bottom:22px">
+    <div class="pool hd" style="padding:24px 28px">
+      <div class="ph"><h3 style="margin:0">Uplink 10G em fibra WDM</h3><span class="pill" style="background:rgba(214,178,94,.14);color:var(--gold)">LACP ativo</span></div>
+      <ul class="uses">
+        <li>1 fibra por switch, com par de módulos SFP+ BiDi</li>
+        <li>Porta em grupo de agregação com LACP ativo desde a entrega</li>
+        <li>Segundo uplink na fibra reserva já fusionada: 20G sem parada</li>
+      </ul>
+    </div>
+    <div class="pool nv" style="padding:24px 28px">
+      <div class="ph"><h3 style="margin:0">ONT GPON de 1G</h3><span class="pill" style="background:rgba(91,149,249,.14);color:#9cc0ff">Contingência</span></div>
+      <ul class="uses">
+        <li>Ligada ao switch por cabo Cat6, em modo bridge</li>
+        <li>Caminho independente do uplink de 10G</li>
+        <li>Assume o tráfego se o uplink cair, com comutação validada em bancada</li>
+      </ul>
+    </div>
+  </div>
+  <table class="tight xs">
+    <tr><th style="width:18%">Switch</th><th style="width:20%">Modelo</th><th style="width:22%">Fibra do uplink</th><th style="width:22%">Porta no Aggregation</th><th>ONT local</th></tr>
+    <tr><td>PCM</td><td>USW-Pro-48-PoE</td><td>DIO PCM · fibra 2</td><td>SFP+ 1 · 2 reservada</td><td>ONT PCM</td></tr>
+    <tr><td>Laboratório</td><td>USW-Pro-24-PoE</td><td>DIO LAB · fibra 2</td><td>SFP+ 3 · 4 reservada</td><td>ONT LAB</td></tr>
+    <tr><td>Supervisório</td><td>USW-Pro-24-PoE</td><td>DIO SUP · fibra 2</td><td>SFP+ 5 · 6 reservada</td><td>ONT Supervisório</td></tr>
+    <tr><td>Carregamento</td><td>USW-Pro-24-PoE</td><td>DIO CARR · fibra 2</td><td>SFP+ 7 · 8 reservada</td><td>ONT Carregamento</td></tr>
+  </table>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Núcleo no CPD</div><div class="num"></div></div>
+  <h2>OLT e Switch Aggregation <span class="hl">com redundância</span></h2>
+  <p class="lead" style="margin-bottom:24px">Os dois equipamentos de núcleo ficam no rack do CPD, ligados entre si por 2 links de 10G em LACP ativo.</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>OLT Intelbras 8820i</h3>
+      <div class="spec" style="grid-template-columns:150px 1fr">
+        <div>GPON</div><div>8 portas · 6 em uso, 2 livres</div>
+        <div>Uplink</div><div>2 × 10G SFP+ em LACP ativo</div>
+        <div>Energia</div><div>2 fontes AC redundantes</div>
+        <div>Óptica</div><div>Módulos GPON classe C+</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Switch Aggregation Ubiquiti</h3>
+      <div class="spec" style="grid-template-columns:150px 1fr">
+        <div>Portas 10G</div><div>28 SFP+ · 6 em uso, 22 livres</div>
+        <div>Uplinks</div><div>4 switches em 10G BiDi</div>
+        <div>Reserva</div><div>4 portas para o 2º uplink de cada switch</div>
+        <div>Portas 25G</div><div>4 SFP28 para firewall e servidores</div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:18px;display:flex;gap:40px;align-items:center;padding:20px 28px">
+    <div style="flex:none"><span class="pill ok">VLANs</span></div>
+    <p>A rede é segmentada em <b class="w">VLANs por função</b> (802.1Q), que trafegam nos uplinks de 10G e nas portas PON. A mesma VLAN fica disponível em qualquer área, por ONT ou por porta de switch.</p>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Núcleo no CPD · Portas PON</div><div class="num"></div></div>
+  <h2>Alocação das <span class="hl">portas PON</span></h2>
+  <p class="lead" style="margin-bottom:18px">Cada porta em uso alimenta duas caixas XFTTA por um splitter 1x2 instalado no rack do CPD.</p>
+  <table class="tight">
+    <tr><th style="width:14%">Porta PON</th><th style="width:16%">Splitter 1x2</th><th style="width:24%">Saída A</th><th style="width:24%">Saída B</th><th class="c">ONTs</th><th class="c">Capacidade</th></tr>
+    <tr><td>PON 1</td><td>SPL-01</td><td>XFTTA ADM-01</td><td>XFTTA ADM-02</td><td class="c">4</td><td class="c">16</td></tr>
+    <tr><td>PON 2</td><td>SPL-02</td><td>XFTTA ADM-03</td><td>XFTTA ADM-04</td><td class="c">4</td><td class="c">16</td></tr>
+    <tr><td>PON 3</td><td>SPL-03</td><td>XFTTA ALMOX-01</td><td>XFTTA ALMOX-02</td><td class="c">3</td><td class="c">16</td></tr>
+    <tr><td>PON 4</td><td>SPL-04</td><td>XFTTA PCM-01</td><td>XFTTA CALD-01</td><td class="c">3</td><td class="c">16</td></tr>
+    <tr><td>PON 5</td><td>SPL-05</td><td>XFTTA LAB-01</td><td><span class="pill ok">Livre</span></td><td class="c">1</td><td class="c">16</td></tr>
+    <tr><td>PON 6</td><td>SPL-06</td><td>XFTTA SUP-01</td><td>XFTTA CARR-01</td><td class="c">2</td><td class="c">16</td></tr>
+    <tr><td>PON 7</td><td><span class="pill ok">Reserva</span></td><td>Livre</td><td>Livre</td><td class="c">0</td><td class="c">16</td></tr>
+    <tr><td>PON 8</td><td><span class="pill ok">Reserva</span></td><td>Livre</td><td>Livre</td><td class="c">0</td><td class="c">16</td></tr>
+  </table>
+  <p style="margin-top:16px;font-size:15px;color:var(--dim)">Com as 2 portas e a saída de splitter livres, a mesma OLT recebe mais 5 caixas XFTTA, chegando a 128 pontos GPON.</p>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Orçamento de potência óptica</div><div class="num"></div></div>
+  <h2>Enlaces com <span class="hl">folga de sinal</span></h2>
+  <p class="lead" style="margin-bottom:18px">Cálculo dos dois piores enlaces, com percurso de até 4 km. As distâncias reais serão confirmadas no levantamento em campo.</p>
+  <table class="tight">
+    <tr><th style="width:30%">Componente</th><th style="width:35%">GPON · OLT → ONT Caldeira</th><th>10G BiDi · CPD → switch Carregamento</th></tr>
+    <tr><td>Splitter 1x2 no CPD</td><td>3,8 dB</td><td>Não se aplica</td></tr>
+    <tr><td>Splitter 1x8 na caixa XFTTA</td><td>10,5 dB</td><td>Não se aplica</td></tr>
+    <tr><td>Conectores · 0,5 dB por par</td><td>6 pares · 3,0 dB</td><td>2 pares · 1,0 dB</td></tr>
+    <tr><td>Fusões · 0,1 dB cada</td><td>6 fusões · 0,6 dB</td><td>3 fusões · 0,3 dB</td></tr>
+    <tr><td>Fibra · 4 km</td><td>1,4 dB</td><td>1,6 dB</td></tr>
+    <tr><td>Perda total</td><td>19,3 dB</td><td>2,9 dB</td></tr>
+    <tr><td>Orçamento do enlace</td><td>28 dB · classe B+</td><td>6 dB · módulo BiDi 10 km, típico</td></tr>
+    <tr class="tot"><td>Margem</td><td>8,7 dB</td><td>3,1 dB</td></tr>
+  </table>
+  <p style="margin-top:16px;font-size:15px;color:var(--dim)">O splitter 1x2 também mantém a perda mínima acima de 13 dB nos lances curtos, evitando saturação das ONTs. Potência esperada na ONT: entre −10 e −18 dBm.</p>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Comparativo de tecnologias</div><div class="num"></div></div>
+  <h2>GPON frente às <span class="hl">alternativas</span></h2>
+  <p class="lead" style="margin-bottom:18px">O GPON cobre toda a planta sem equipamento energizado em campo e com uma fibra atendendo vários pontos.</p>
+  <table class="tight">
+    <tr><th style="width:19%">Critério</th><th style="width:19%">Cabo metálico Cat6</th><th style="width:21%">Fibra ponto a ponto</th><th style="width:21%"><span class="hl">GPON · proposto</span></th><th>XGS-PON · evolução</th></tr>
+    <tr><td>Alcance por enlace</td><td>100 m</td><td>10 km ou mais</td><td><b class="w">Até 20 km</b></td><td>Até 20 km</td></tr>
+    <tr><td>Ativos em campo</td><td>Switch a cada 100 m</td><td>Switch em cada área</td><td><b class="w">Nenhum</b></td><td>Nenhum</td></tr>
+    <tr><td>Fibras por área</td><td>Não se aplica</td><td>1 a 2 por switch</td><td><b class="w">1 para até 16 pontos</b></td><td>Igual ao GPON</td></tr>
+    <tr><td>Banda</td><td>1G por ponto</td><td>1 a 10G dedicados</td><td><b class="w">2,5G / 1,25G por porta PON</b></td><td>10G / 10G por porta PON</td></tr>
+    <tr><td>Ruído elétrico</td><td>Sensível</td><td>Imune</td><td><b class="w">Imune</b></td><td>Imune</td></tr>
+    <tr><td>Energia e climatização em campo</td><td>Em vários pontos</td><td>Em cada área</td><td><b class="w">Dispensadas</b></td><td>Dispensadas</td></tr>
+    <tr><td>Novo ponto de rede</td><td>Novo cabo até o switch</td><td>Porta livre ou novo switch</td><td><b class="w">Drop até a caixa</b></td><td>Igual ao GPON</td></tr>
+    <tr><td>Gerência</td><td>Switch a switch</td><td>Switch a switch</td><td><b class="w">Central, na OLT</b></td><td>Central, na OLT</td></tr>
+  </table>
+  <p style="margin-top:16px;font-size:15px;color:var(--dim)">O projeto é híbrido: GPON nos pontos distribuídos e 10G ponto a ponto apenas nos 4 switches existentes, na mesma planta de fibras.</p>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Por que GPON</div><div class="num"></div></div>
+  <h2>Vantagens para a <span class="hl">Binatural</span></h2>
+  <p class="lead" style="margin-bottom:26px">Menos pontos de falha em campo hoje e crescimento sem obra de rede amanhã.</p>
+  <div class="grid g3">
+    <div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div><h3>Sem energia em campo</h3><p>Caixas e splitters são passivos: dispensam nobreak, climatização e sala técnica nas áreas.</p></div>
+    <div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.6-3.4 7.8-8 9-4.6-1.2-8-4.4-8-9V6z"/></svg></div><h3>Imunidade elétrica</h3><p>Fibra não conduz surtos nem sofre interferência de motores e inversores.</p></div>
+    <div class="card"><div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></svg></div><h3>Alcance de até 20 km</h3><p>Novas áreas distantes entram na rede sem equipamento intermediário.</p></div>
+    <div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M6 3v6a6 6 0 0012 0V3M12 15v6"/></svg></div><h3>Economia de fibras</h3><p>Uma fibra do backbone atende uma caixa de 8 pontos; uma porta PON atende 16.</p></div>
+    <div class="card"><div class="ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></div><h3>Gerência centralizada</h3><p>Todas as ONTs são provisionadas e monitoradas pela OLT, com nível de sinal por ponto.</p></div>
+    <div class="card"><div class="ico"><svg viewBox="0 0 24 24"><path d="M4 19V9M10 19V5M16 19v-7M22 19H2"/></svg></div><h3>Crescimento simples</h3><p>Novo ponto: um drop de fibra até a caixa mais próxima e o cadastro da ONT.</p></div>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Expansão futura</div><div class="num"></div></div>
+  <h2>Tudo já dimensionado <span class="hl">para crescer</span></h2>
+  <p class="lead" style="margin-bottom:24px">Quatro etapas de crescimento sem trocar o núcleo e sem lançar novo cabo de backbone.</p>
+  <div class="steps" style="margin-bottom:22px">
+    <div class="step"><div class="n">1</div><h3>+71 pontos</h3><p>Nas áreas atuais, usando as saídas livres das 11 caixas XFTTA.</p></div>
+    <div class="step"><div class="n">2</div><h3>+40 pontos</h3><p>5 caixas a mais em novas áreas, com as 2 portas PON e a saída de splitter livres.</p></div>
+    <div class="step"><div class="n">3</div><h3>20G por switch</h3><p>Segundo uplink em LACP na fibra reserva já fusionada.</p></div>
+    <div class="step"><div class="n">4</div><h3>XGS-PON</h3><p>10G simétrico reaproveitando cabos, DIOs, splitters e caixas.</p></div>
+  </div>
+  <table class="tight xs">
+    <tr><th style="width:34%">Reserva já instalada</th><th class="c" style="width:12%">Instalado</th><th class="c" style="width:12%">Em uso</th><th class="c" style="width:12%">Reserva</th><th>Como se ativa</th></tr>
+    <tr><td>Pontos GPON nas caixas XFTTA</td><td class="c">88</td><td class="c">17</td><td class="c">71</td><td>Drop de 1 fibra e ONT</td></tr>
+    <tr><td>Portas PON da OLT</td><td class="c">8</td><td class="c">6</td><td class="c">2</td><td>Splitter 1x2 e novas caixas</td></tr>
+    <tr><td>Fibras fusionadas nos DIOs remotos</td><td class="c">28</td><td class="c">15</td><td class="c">13</td><td>Cordão óptico no painel</td></tr>
+    <tr><td>Fibras apagadas nos cabos</td><td class="c">44</td><td class="c">0</td><td class="c">44</td><td>Fusão de pigtail no DIO</td></tr>
+    <tr><td>Portas SFP+ do Switch Aggregation</td><td class="c">28</td><td class="c">6</td><td class="c">22</td><td>Novo uplink de 10G</td></tr>
+  </table>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Infraestrutura e execução</div><div class="num"></div></div>
+  <h2>Do lançamento dos cabos à <span class="hl">rede certificada</span></h2>
+  <p class="lead" style="margin-bottom:34px">Serviços executados por equipe técnica especializada, com ativação por área para não afetar a rotina da planta.</p>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><h3>Levantamento</h3><p>Rotas, metragens, pontos de fixação e projeto executivo.</p></div>
+    <div class="step"><div class="n">2</div><h3>Cabos ópticos</h3><p>Lançamento dos 7 lances de 12FO e dos cabos até as caixas.</p></div>
+    <div class="step"><div class="n">3</div><h3>DIOs e fusões</h3><p>Montagem dos 8 DIOs, fusões em SC/APC e fusões de passagem.</p></div>
+    <div class="step"><div class="n">4</div><h3>Caixas e drops</h3><p>Instalação das 11 caixas XFTTA e dos drops até as ONTs.</p></div>
+    <div class="step"><div class="n">5</div><h3>Rack do CPD</h3><p>OLT, Switch Aggregation, splitters 1x2 e cordões identificados.</p></div>
+    <div class="step"><div class="n">6</div><h3>Configuração</h3><p>OLT, ONTs, VLANs, LACP nos uplinks e proteção contra laço.</p></div>
+    <div class="step"><div class="n">7</div><h3>Certificação</h3><p>OTDR nas fibras, potência em todos os pontos e testes de falha.</p></div>
+    <div class="step"><div class="n">8</div><h3>Entrega</h3><p>Documentação as-built, treinamento da equipe e operação assistida.</p></div>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Testes e comissionamento</div><div class="num"></div></div>
+  <h2>O que é medido <span class="hl">antes da entrega</span></h2>
+  <p class="lead" style="margin-bottom:18px">A rede é entregue com as 40 fibras fusionadas certificadas e a potência medida nos 88 pontos das caixas.</p>
+  <table class="tight">
+    <tr><th style="width:26%">Teste</th><th style="width:44%">Como é feito</th><th>Critério de aceite</th></tr>
+    <tr><td>Certificação do backbone</td><td>OTDR em 1310 e 1550 nm em cada fibra fusionada</td><td>Até 0,1 dB por fusão</td></tr>
+    <tr><td>Potência GPON</td><td>Medição em 1490 nm em cada saída de caixa, usada ou reserva</td><td>Entre −10 e −25 dBm</td></tr>
+    <tr><td>Ativação das ONTs</td><td>Provisionamento das 17 ONTs e registro do sinal de cada uma</td><td>Todas online na OLT</td></tr>
+    <tr><td>Uplinks de 10G</td><td>Potência nos módulos BiDi e estado do LACP em cada grupo</td><td>LACP ativo nas duas pontas</td></tr>
+    <tr><td>OLT e Aggregation</td><td>Retirada de um dos links de 10G com tráfego</td><td><span class="pill ok">Sem parada</span></td></tr>
+    <tr><td>Fontes da OLT</td><td>Desligamento de uma fonte por vez</td><td><span class="pill ok">Sem parada</span></td></tr>
+    <tr><td>Contingência por ONT</td><td>Desconexão do uplink de 10G de cada switch</td><td>Tráfego segue pela ONT</td></tr>
+    <tr><td>Identificação e as-built</td><td>Etiquetas em cabos, DIOs, caixas e saídas</td><td>Relatórios e topologia final</td></tr>
+  </table>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Pontos de atenção</div><div class="num"></div></div>
+  <h2>Definições <span class="hl">antes da execução</span></h2>
+  <p class="lead" style="margin-bottom:24px">Itens que não impedem a aprovação do projeto, mas precisam ser fechados no levantamento em campo.</p>
+  <table>
+    <tr><th style="width:28%">Ponto</th><th style="width:14%">Impacto</th><th>Tratamento</th></tr>
+    <tr><td>Lance CPD–Almoxarifado</td><td><span class="pill at">Médio</span></td><td>Atende três DIOs e fica com as 12 fibras ocupadas. Avaliar cabo de 24FO somente nesse trecho para manter reserva.</td></tr>
+    <tr><td>Contingência pela ONT</td><td><span class="pill at">Médio</span></td><td>O LACP fica no uplink de 10G; a ONT atua como segundo caminho de 1G. A comutação automática é validada em bancada antes da implantação.</td></tr>
+    <tr><td>Metragens dos cabos</td><td><span class="pill at">Médio</span></td><td>Os comprimentos dos cabos e drops serão medidos em campo e ajustam a planilha de materiais.</td></tr>
+    <tr><td>Energia do CPD</td><td><span class="pill cr">Alto</span></td><td>OLT e Switch Aggregation concentram a rede. Fontes da OLT em circuitos distintos e nobreak dedicado ao rack.</td></tr>
+    <tr><td>Borda da rede</td><td><span class="pill ok">Baixo</span></td><td>Firewall e link de internet conectam-se ao Switch Aggregation. A lista de VLANs é definida com a TI da Binatural.</td></tr>
+  </table>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Condições</div><div class="num"></div></div>
+  <h2>Limites do <span class="hl">escopo</span></h2>
+  <p class="lead" style="margin-bottom:30px">Itens que ficam fora desta proposta e condições de prazo e suporte da implantação.</p>
+  <div class="grid g2" style="align-items:start">
+    <div class="card">
+      <h3>Itens não contemplados</h3>
+      <ul class="ul">
+        <li>Fornecimento de nobreaks e dos switches de acesso existentes</li>
+        <li>Obras civis, dutos, postes e adequações elétricas estruturais</li>
+        <li>Firewall, link de internet e plano de endereçamento da rede</li>
+        <li>Cabeamento metálico interno além da ligação ONT–switch</li>
+        <li>Licenças de software não previstas</li>
+        <li>Manutenção mensal recorrente</li>
+      </ul>
+    </div>
+    <div class="grid" style="gap:18px">
+      <div class="card">
+        <h3>Prazo de execução</h3>
+        <p>Definido após a aprovação da proposta, o levantamento em campo, o prazo de entrega dos equipamentos e a liberação das áreas pela unidade.</p>
+      </div>
+      <div class="card">
+        <h3>Suporte e garantia</h3>
+        <ul class="ul ok">
+          <li>Suporte presencial e remoto por 90 dias após a entrega final</li>
+          <li>Garantia dos equipamentos conforme condições de cada fabricante</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Planilha de materiais</div><div class="num"></div></div>
+  <h2>Materiais <span class="hl">fornecidos</span></h2>
+  <table class="mat" style="margin-top:14px">
+    <thead><tr><th style="width:8%;text-align:center;padding-right:24px">Qtd</th><th style="width:30%">Item</th><th>Especificação</th><th class="pc" style="width:12%;text-align:right">Unitário</th><th class="pc" style="width:12%;text-align:right">Total</th></tr></thead>
+    <tbody data-lista="materiais"></tbody>
+  </table>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Serviços</div><div class="num"></div></div>
+  <h2>Serviços de <span class="hl">implantação</span></h2>
+  <p class="lead" style="margin-bottom:10px">Executados por equipe técnica especializada, do levantamento à rede certificada.</p>
+  <table class="mat" style="margin-top:14px">
+    <thead><tr><th style="width:34%">Serviço</th><th>Descrição</th><th class="pc" style="width:15%;text-align:right">Valor</th></tr></thead>
+    <tbody data-lista="servicos"></tbody>
+  </table>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide">
+  <div class="top"><div class="eyebrow">Investimento</div><div class="num"></div></div>
+  <h2>Investimento da <span class="hl">solução</span></h2>
+  <p class="lead" style="margin-bottom:26px">Fornecimento dos materiais da planilha e serviço de instalação, configuração e certificação da rede óptica para a Binatural <span data-f="local"></span>.</p>
+  <div class="inv">
+    <div><span>Valor do serviço</span><b data-t="servicos"></b><p data-x="servicos"></p></div>
+    <div><span>Valor do material</span><b data-t="materiais"></b><p data-x="materiais"></p></div>
+    <div class="tt"><span>Valor total</span><b data-t="geral"></b><p data-x="geral"></p></div>
+  </div>
+  <div class="card" style="display:flex;gap:40px;align-items:center">
+    <div style="flex:none"><span class="pill ok">Incluso</span></div>
+    <p>O serviço de instalação e configuração conta com suporte <b class="w">presencial e remoto durante 90 dias</b> após a entrega final. A A+.com permanece à disposição para esclarecimentos técnicos e eventuais adequações necessárias.</p>
+  </div>
+  <p class="pagto" data-show="pagamento"><b class="w">Condições de pagamento:</b> <span data-f="pagamento"></span></p>
+  <div class="sig">
+    <div class="ln"><b>Darkson S. Mourão</b><span>Gerente Comercial · Mourão Informática LTDA<br>(61) 3358-6941 / 9248-0219</span></div>
+    <div class="dt"><span data-f="cidade_data"></span><br><b class="w">Proposta válida por <span data-f="validade"></span></b></div>
+  </div>
+  <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Projeto e proposta comercial · Binatural <span data-f="local"></span></span></div>
+</section>
+
+<section class="slide" id="fim">
+  <div class="logos">
+    <img class="amais" src="img/logo-amais.png" alt="A+.com Engenharia e Tecnologia">
+    <i></i>
+    <div class="bnbox"><img src="img/logo-binatural.png" alt="Binatural"></div>
+  </div>
+  <h1>Obrigado</h1>
+  <p class="lead" style="margin:22px auto 0;text-align:center">Rede óptica GPON e núcleo de 10G para a Binatural, <span data-f="local"></span>.<br>Projeto e implantação <b class="w">A+.com Engenharia e Tecnologia</b>.</p>
+</section>
+
+</div></div>
+
+<div id="ctrl">
+  <button id="bPrev" aria-label="Slide anterior"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <div id="count"></div>
+  <button id="bNext" aria-label="Próximo slide"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+  <button id="bPdf" aria-label="Baixar PDF" title="Baixar PDF"><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></button>
+  <button id="bFull" aria-label="Tela cheia"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const stage=document.getElementById('stage');
+const count=document.getElementById('count');
+const prog=document.getElementById('prog');
+let cur=0;
+
+function fit(){
+  const s=Math.min(innerWidth/1600,innerHeight/900);
+  stage.style.transform='scale('+s+')';
+}
+function go(i){
+  i=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach((el,k)=>{el.classList.toggle('on',k===i);el.classList.toggle('prev',k<i)});
+  cur=i;
+  count.textContent=(i+1)+' / '+slides.length;
+  prog.style.width=((i+1)/slides.length*100)+'%';
+  history.replaceState(null,'','#'+(i+1));
+}
+document.getElementById('bPrev').onclick=()=>go(cur-1);
+document.getElementById('bNext').onclick=()=>go(cur+1);
+document.getElementById('bFull').onclick=toggleFull;
+function toggleFull(){
+  if(document.fullscreenElement)document.exitFullscreen();
+  else document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();
+}
+document.addEventListener('keydown',e=>{
+  if(document.body.classList.contains('locked'))return;
+  if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){go(cur+1);e.preventDefault()}
+  else if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){go(cur-1);e.preventDefault()}
+  else if(e.key==='Home')go(0);
+  else if(e.key==='End')go(slides.length-1);
+  else if(e.key==='f'||e.key==='F')toggleFull();
+});
+let tx=null;
+addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+addEventListener('touchend',e=>{
+  if(tx===null)return;
+  const d=e.changedTouches[0].clientX-tx;
+  if(Math.abs(d)>50)go(cur+(d<0?1:-1));
+  tx=null;
+});
+let idle;
+addEventListener('mousemove',()=>{
+  document.body.classList.remove('idle');
+  clearTimeout(idle);
+  idle=setTimeout(()=>document.body.classList.add('idle'),2500);
+});
+addEventListener('resize',fit);
+fit();
+go((parseInt(location.hash.slice(1),10)||1)-1);
+
+/* numeração automática */
+slides.forEach((el,k)=>{const n=el.querySelector('.num');if(n)n.textContent=String(k+1).padStart(2,'0')});
+
+/* dados da proposta salvos no painel */
+const BRL=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function linhas(nome,itens,precos){
+  let html='',grupo=null;
+  for(const i of itens){
+    if(nome==='materiais'){
+      if(i.grupo!==grupo){grupo=i.grupo;html+=`<tr class="gp"><td colspan="5">${esc(grupo)}</td></tr>`}
+      html+=`<tr><td class="qt">${i.qtd}</td><td class="it">${esc(i.item)}</td><td>${esc(i.spec)}</td>`+
+        (precos?`<td class="pc">${i.preco!=null?BRL(i.preco):'—'}</td><td class="pc">${i.total!=null?BRL(i.total):'—'}</td>`:'')+'</tr>';
+    }else{
+      html+=`<tr><td class="sv">${esc(i.item)}</td><td>${esc(i.spec)}</td>`+
+        (precos?`<td class="pc">${i.total!=null?BRL(i.total):'—'}</td>`:'')+'</tr>';
+    }
+  }
+  return html;
+}
+// listas longas: reduz a fonte da tabela até ela caber acima do rodapé do slide
+function caber(){
+  document.querySelectorAll('[data-lista]').forEach(tb=>{
+    const tab=tb.closest('table'),sl=tb.closest('.slide'),ft=sl.querySelector('.foot');
+    tab.style.fontSize='';tab.querySelectorAll('td').forEach(td=>{td.style.paddingTop=td.style.paddingBottom=''});
+    let fs=parseFloat(getComputedStyle(tab).fontSize);
+    const limite=()=>ft.offsetTop-12;
+    while(tab.offsetTop+tab.offsetHeight>limite()&&fs>10){
+      fs-=.5;tab.style.fontSize=fs+'px';
+      tab.querySelectorAll('td').forEach(td=>{td.style.paddingTop=td.style.paddingBottom=Math.max(2,(fs-9)*.9)+'px'});
+    }
+  });
+}
+const pronto=fetch('dados.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{
+  document.title=d.titulo;
+  document.body.classList.toggle('precos',d.exibirPrecos);
+  document.querySelectorAll('[data-f]').forEach(el=>{el.textContent=d.campos[el.dataset.f]??''});
+  document.querySelectorAll('[data-show]').forEach(el=>{el.hidden=!d.campos[el.dataset.show]});
+  document.querySelectorAll('[data-lista]').forEach(el=>{el.innerHTML=linhas(el.dataset.lista,d.listas[el.dataset.lista]||[],d.exibirPrecos)});
+  caber();
+  document.querySelectorAll('[data-t]').forEach(el=>{const t=d.totais[el.dataset.t];el.textContent=t?BRL(t.valor):'R$ ______';el.classList.toggle('parcial',!!t?.parcial)});
+  document.querySelectorAll('[data-x]').forEach(el=>{const t=d.totais[el.dataset.x];
+    el.textContent=!t?'( ____________________________ )':t.parcial?`Prévia da equipe · ${t.pendentes} ${t.pendentes===1?'item':'itens'} sem preço · o cliente vê em branco`:'( '+t.extenso+' )';
+    el.classList.toggle('parcial',!!t?.parcial)});
+}).catch(e=>console.warn('dados indisponíveis',e));
+
+/* PDF: o navegador salva um slide por página (Imprimir › Salvar como PDF) */
+function baixarPdf(){pronto.then(()=>document.fonts.ready).then(()=>setTimeout(()=>print(),150))}
+document.getElementById('bPdf').onclick=baixarPdf;
+if(new URLSearchParams(location.search).has('pdf'))baixarPdf();
+</script>
+</body>
+</html>
