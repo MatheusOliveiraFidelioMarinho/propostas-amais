@@ -22,6 +22,9 @@ Propostas cadastradas:
   comercial da rede óptica (OLT, caixas XFTTA, backbone 12FO e uplinks de 10G),
   com a topologia e as tabelas de fibras por DIO
   (`propostas/binatural-gpon/proposta.html`).
+- **Binatural · Formosa, GO · Rede óptica GPON · projeto técnico**: o documento
+  do projeto em página corrida, sem valores, com PDF em A4
+  (`propostas/binatural-gpon/projeto.html`).
 - **UFV Samambaia · CFTV térmico de perímetro**: apresentação hospedada como
   está, sem campos editáveis.
 
@@ -41,7 +44,10 @@ preço substitui o cálculo. Totais e valores por extenso são calculados sozinh
 
 - Custo, margem e referência interna **nunca** saem para o cliente: `api/dados.js`
   entrega só o que aparece na proposta.
-- Enquanto faltar preço em algum item, a proposta mostra `R$ ______` naquele total.
+- O slide de **investimento** só aparece para o cliente quando todos os itens têm
+  preço. Enquanto faltar algum, ele some do deck do cliente e a equipe vê a prévia
+  parcial em amarelo. “Mostrar o slide de investimento ao cliente”, na aba Dados,
+  esconde o slide mesmo com os valores fechados.
 - “Mostrar o valor de cada item” liga as colunas de preço nas tabelas do deck.
 - Salvou, a proposta já muda. Não precisa de novo deploy.
 

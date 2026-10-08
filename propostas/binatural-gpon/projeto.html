@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Projeto Rede Óptica GPON · Binatural Formosa, GO</title>
+<style>
+:root{
+  --bg:#050d09; --bg2:#08150f; --card:#0b1b14; --line:#1a3328; --line2:#27463a;
+  --fg:#eef4f0; --mut:#a3b8ad; --dim:#6a8479;
+  --lime:#b0e000; --gold:#d6b25e; --green:#6fdc8c; --blue:#5b95f9; --amber:#f2b33d; --red:#f07a6a;
+  --rad:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.6;font-size:16px;
+}
+img{display:block;max-width:100%}
+::selection{background:var(--lime);color:#000}
+.wrap{max-width:1060px;margin:0 auto;padding:0 28px}
+
+/* barra */
+.bar{position:sticky;top:0;z-index:5;background:rgba(5,13,9,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:16px;height:60px}
+.bar img{height:26px;width:auto}
+.bar .bn{height:32px;width:32px;border-radius:7px;background:#f4f1e8;padding:3px;object-fit:contain}
+.bar span{font-size:13px;font-weight:700;color:var(--dim);letter-spacing:.3px;padding-left:16px;border-left:1px solid var(--line2)}
+.bar button{margin-left:auto;background:var(--lime);color:#000;border:0;border-radius:8px;font:inherit;font-size:13.5px;font-weight:800;padding:9px 16px;cursor:pointer}
+.bar button:hover{filter:brightness(1.1)}
+
+/* capa */
+.capa{
+  padding:76px 0 60px;border-bottom:1px solid var(--line);
+  background:radial-gradient(900px 480px at 88% 0%,rgba(176,224,0,.08),transparent 62%),radial-gradient(700px 420px at 0% 100%,rgba(214,178,94,.06),transparent 60%);
+}
+.capa .wrap{display:grid;grid-template-columns:1fr 280px;gap:48px;align-items:center}
+.eyebrow{display:inline-block;font-size:13px;font-weight:800;letter-spacing:2.2px;text-transform:uppercase;color:var(--lime);border-left:3px solid var(--lime);padding:2px 0 2px 13px}
+h1{font-size:54px;line-height:1.05;letter-spacing:-1.6px;font-weight:800;margin:22px 0 18px}
+.hl{color:var(--lime)}
+.lead{font-size:19px;color:var(--mut);max-width:60ch}
+.meta{display:flex;gap:40px;flex-wrap:wrap;margin-top:40px;padding-top:22px;border-top:1px solid var(--line)}
+.meta b{display:block;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:var(--dim);font-weight:800;margin-bottom:3px}
+.meta span{font-size:17px;font-weight:650}
+.selo{background:linear-gradient(160deg,#f6f3ea,#ece6d6);border-radius:20px;padding:34px;display:flex;align-items:center;justify-content:center;aspect-ratio:1}
+
+/* sumario */
+.sum{padding:34px 0;border-bottom:1px solid var(--line)}
+.sum ol{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:8px 28px;counter-reset:s}
+.sum li{counter-increment:s}
+.sum a{display:flex;gap:12px;color:var(--mut);text-decoration:none;font-size:15px;padding:6px 0;border-bottom:1px solid var(--line)}
+.sum a::before{content:counter(s,decimal-leading-zero);color:var(--lime);font-weight:800;font-size:13px;padding-top:1px}
+.sum a:hover{color:var(--fg)}
+
+/* secoes */
+section{padding:56px 0 8px;scroll-margin-top:60px}
+.sec{display:flex;align-items:baseline;gap:16px;margin-bottom:14px}
+.sec i{font-style:normal;font-size:14px;font-weight:800;color:var(--bg);background:var(--lime);min-width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;transform:translateY(-4px)}
+h2{font-size:34px;line-height:1.12;letter-spacing:-.9px;font-weight:800}
+h3{font-size:19px;font-weight:750;letter-spacing:-.2px;margin:34px 0 12px}
+p{color:var(--mut);margin-bottom:14px;max-width:78ch}
+p.pt{font-size:18px;color:var(--fg);max-width:74ch}
+b.w{color:var(--fg);font-weight:700}
+.nota{font-size:14px;color:var(--dim)}
+
+.grid{display:grid;gap:16px;margin:20px 0}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:22px 24px}
+.card h3{margin:0 0 8px}
+.card p{font-size:15px;margin:0}
+.num b{display:block;font-size:44px;font-weight:800;letter-spacing:-1.4px;line-height:1.05}
+.num span{display:block;font-size:12.5px;color:var(--dim);font-weight:800;letter-spacing:.8px;text-transform:uppercase;margin-top:6px}
+
+.tw{overflow-x:auto;margin:16px 0 18px;border:1px solid var(--line);border-radius:var(--rad);background:var(--card)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{text-align:left;font-size:12px;letter-spacing:1.3px;text-transform:uppercase;color:var(--dim);font-weight:800;padding:13px 16px;border-bottom:1px solid var(--line2);background:var(--bg2)}
+td{padding:11px 16px;border-bottom:1px solid var(--line);color:var(--mut);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--fg);font-weight:700}
+th.c,td.c{text-align:center}
+tr.tot td{color:var(--lime);font-weight:800;border-top:1px solid var(--line2)}
+.pill{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.9px;padding:3px 9px;border-radius:6px;text-transform:uppercase;white-space:nowrap}
+.pill.ok{background:rgba(111,220,140,.13);color:var(--green)}
+.pill.at{background:rgba(242,179,61,.14);color:var(--amber)}
+.pill.cr{background:rgba(240,122,106,.14);color:var(--red)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
+
+ul.l{list-style:none;margin:10px 0 18px}
+ul.l li{position:relative;padding:7px 0 7px 24px;color:var(--mut);max-width:80ch}
+ul.l li::before{content:"";position:absolute;left:2px;top:17px;width:8px;height:8px;border-radius:2px;background:var(--lime)}
+ol.e{list-style:none;counter-reset:e;margin:10px 0 18px}
+ol.e li{counter-increment:e;position:relative;padding:9px 0 9px 44px;color:var(--mut);border-bottom:1px solid var(--line);max-width:84ch}
+ol.e li:last-child{border-bottom:0}
+ol.e li::before{content:counter(e);position:absolute;left:0;top:9px;width:28px;height:28px;border-radius:50%;background:rgba(176,224,0,.1);border:1px solid rgba(176,224,0,.4);color:var(--lime);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+
+.topo{background:#fff;border-radius:var(--rad);padding:14px;margin:18px 0 8px}
+.leg{display:flex;gap:26px;flex-wrap:wrap;font-size:14px;color:var(--mut);margin-bottom:8px}
+.leg i{display:inline-block;width:24px;height:4px;border-radius:3px;margin-right:9px;vertical-align:middle}
+
+.flow{display:flex;align-items:stretch;gap:8px;margin:10px 0 22px}
+.flow .fb{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.flow .fb.hi{border-color:rgba(176,224,0,.55)}
+.flow.or .fb.hi{border-color:rgba(242,179,61,.55)}
+.flow .fb b{display:block;font-size:16px;font-weight:750}
+.flow .fb span{font-size:13.5px;color:var(--mut)}
+.flow .ar{display:flex;align-items:center;color:var(--lime);font-size:24px;font-weight:800}
+.flow.or .ar{color:var(--amber)}
+.camada{font-size:12.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;margin:18px 0 0;color:var(--lime)}
+.barra{height:40px;border-radius:10px;overflow:hidden;display:flex;border:1px solid var(--line2);margin:14px 0 10px}
+.barra div{display:flex;align-items:center;padding-left:14px;font-size:13.5px;font-weight:800;color:#06110c}
+
+footer{margin-top:64px;border-top:1px solid var(--line);padding:30px 0 50px;font-size:13.5px;color:var(--dim)}
+footer .wrap{display:flex;align-items:center;gap:18px}
+footer img{height:26px;width:auto}
+
+@media (max-width:820px){
+  .capa .wrap{grid-template-columns:1fr}.selo{display:none}
+  h1{font-size:38px}h2{font-size:27px}
+  .g2,.g3,.g4,.sum ol{grid-template-columns:1fr}
+  .flow{flex-direction:column}.flow .ar{justify-content:center;transform:rotate(90deg)}
+  .bar span{display:none}
+}
+@media print{
+  @page{size:A4;margin:12mm 0}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html,body{background:var(--bg)}
+  .bar{display:none}
+  .capa{padding-top:30px}
+  section{padding-top:30px}
+  .tw{overflow:visible}
+  tr,.card,.flow,.topo,li{break-inside:avoid}
+  .sec,h3{break-after:avoid}
+  .quebra{break-before:page}
+}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <img src="img/logo-amais.png" alt="A+.com Engenharia e Tecnologia">
+  <img class="bn" src="img/logo-binatural.png" alt="Binatural">
+  <span>Projeto técnico · Rede Óptica GPON · Binatural Formosa, GO</span>
+  <button id="bPdf" type="button">Baixar PDF</button>
+</div></div>
+
+<header class="capa"><div class="wrap">
+  <div>
+    <div class="eyebrow">Projeto técnico</div>
+    <h1>Rede Óptica Corporativa <span class="hl">GPON + 10G</span></h1>
+    <p class="lead">Projeto da rede óptica passiva que interliga as 8 áreas da planta a partir do CPD, com OLT Intelbras 8820i, 11 caixas XFTTA, backbone em fibra monomodo de 12FO e núcleo Ubiquiti de 10G.</p>
+    <div class="meta">
+      <div><b>Cliente</b><span>Binatural</span></div>
+      <div><b>Unidade</b><span>Formosa, GO</span></div>
+      <div><b>Documento</b><span>Projeto técnico · Rev. 00</span></div>
+      <div><b>Data</b><span>Outubro de 2026</span></div>
+    </div>
+  </div>
+  <div class="selo"><img src="img/logo-binatural.png" alt="Binatural"></div>
+</div></header>
+
+<nav class="sum"><div class="wrap"><ol>
+  <li><a href="#resumo">Resumo executivo</a></li>
+  <li><a href="#topologia">Topologia da rede</a></li>
+  <li><a href="#arquitetura">Arquitetura da solução</a></li>
+  <li><a href="#backbone">Backbone óptico e DIOs</a></li>
+  <li><a href="#caixas">Caixas XFTTA e pontos reserva</a></li>
+  <li><a href="#switches">Switches existentes</a></li>
+  <li><a href="#cpd">Núcleo no CPD</a></li>
+  <li><a href="#potencia">Orçamento de potência óptica</a></li>
+  <li><a href="#comparativo">Comparativo de tecnologias</a></li>
+  <li><a href="#expansao">Vantagens e expansão futura</a></li>
+  <li><a href="#materiais">Lista de materiais</a></li>
+  <li><a href="#testes">Testes e pendências</a></li>
+</ol></div></nav>
+
+<main class="wrap">
+
+<section id="resumo">
+  <div class="sec"><i>01</i><h2>Resumo executivo</h2></div>
+  <p class="pt">A rede interliga 8 áreas da planta da Binatural em Formosa/GO com uma OLT Intelbras 8820i, 11 caixas XFTTA e 4 uplinks de 10G, usando 19% dos pontos GPON instalados. Toda a infraestrutura passiva e os equipamentos de núcleo já ficam dimensionados para o crescimento da empresa.</p>
+  <div class="grid g4">
+    <div class="card num"><b class="hl">8</b><span>Áreas interligadas</span></div>
+    <div class="card num"><b style="color:var(--gold)">11</b><span>Caixas XFTTA 1x8</span></div>
+    <div class="card num"><b style="color:var(--green)">88</b><span>Pontos GPON</span></div>
+    <div class="card num"><b style="color:var(--blue)">10G</b><span>Uplink por switch</span></div>
+  </div>
+  <div class="tw"><table>
+    <tr><th style="width:44%">Item</th><th style="width:16%">Quantidade</th><th>Observação</th></tr>
+    <tr><td>Áreas atendidas</td><td>8</td><td>CPD, Almoxarifado, PCM, Caldeira/CCM, Administração, Laboratório, Supervisório e Carregamento</td></tr>
+    <tr><td>DIOs</td><td>8</td><td>1 no CPD e 7 remotos</td></tr>
+    <tr><td>Lances de cabo óptico SM 12FO</td><td>7</td><td>Um cabo de 12FO chegando em cada DIO remoto</td></tr>
+    <tr><td>Fibras em SC/APC por DIO remoto</td><td>4</td><td>28 no total: 15 em uso e 13 de reserva já fusionadas</td></tr>
+    <tr><td>Caixas XFTTA 2008 com splitter 1x8</td><td>11</td><td>88 pontos GPON disponíveis</td></tr>
+    <tr><td>ONTs na fase inicial</td><td>17</td><td>71 pontos de reserva nas caixas</td></tr>
+    <tr><td>Portas PON da OLT em uso</td><td>6 de 8</td><td>2 portas livres para novas áreas</td></tr>
+    <tr><td>Uplinks 10G WDM para switches</td><td>4</td><td>PCM, Laboratório, Supervisório e Carregamento</td></tr>
+    <tr><td>Links 10G Switch Aggregation e OLT</td><td>2</td><td>LACP ativo</td></tr>
+    <tr><td>Portas SFP+ livres no Switch Aggregation</td><td>22 de 28</td><td>Reserva para novos uplinks</td></tr>
+  </table></div>
+</section>
+
+<section id="topologia">
+  <div class="sec"><i>02</i><h2>Topologia da rede</h2></div>
+  <p class="pt">A topologia abaixo é a base do projeto: 8 DIOs, 11 caixas XFTTA 2008, 17 ONTs e 4 switches existentes, todos atendidos a partir do CPD.</p>
+  <div class="topo"><img src="img/topologia.png" alt="Topologia da rede óptica GPON da Binatural"></div>
+  <div class="leg"><span><i style="background:#3faa35"></i>Cabo óptico SM 12FO</span><span><i style="background:#a02b93"></i>Cabo óptico drop / line cord</span><span><i style="background:#ed7d31"></i>Cabo Cat6</span></div>
+  <h3>Conferência da topologia</h3>
+  <ul class="l">
+    <li>Todos os switches são da linha Pro (USW-Pro-48-PoE e USW-Pro-24-PoE), com portas SFP+ de 10G.</li>
+    <li>Cada switch recebe 1 ONT por Cat6 e 1 uplink óptico direto do DIO local.</li>
+    <li>Todas as ONTs são atendidas por caixa XFTTA, sem drop direto de DIO.</li>
+    <li>PCM e Caldeira são atendidos pelo DIO Almoxarifado; Carregamento, pelo DIO Supervisório.</li>
+  </ul>
+  <h3>Pontos tratados no projeto</h3>
+  <div class="tw"><table>
+    <tr><th style="width:34%">Ponto</th><th>Tratamento</th></tr>
+    <tr><td>11 caixas XFTTA para 8 portas PON</td><td>Splitter 1x2 de primeiro nível no CPD: 6 portas PON atendem as 11 caixas e 2 ficam livres. O 1x2 também evita saturação óptica das ONTs em lances curtos.</td></tr>
+    <tr><td>Cabo CPD–Almoxarifado alimenta três DIOs</td><td>Com 4 fibras por DIO, as 12 fibras desse cabo ficam ocupadas (4 locais e 8 de passagem). Avaliar cabo de 24FO somente nesse lance.</td></tr>
+    <tr><td>LACP entre ONT e uplink de 10G</td><td>O LACP não agrega enlaces de velocidades diferentes nem atravessa ONT e OLT. Fica ativo no uplink de 10G e no par OLT–Aggregation; a ONT opera como contingência.</td></tr>
+    <tr><td>Segunda caixa do Almoxarifado sem ONT</td><td>Tratada como caixa 100% reserva, com 8 pontos livres.</td></tr>
+  </table></div>
+</section>
+
+<section id="arquitetura">
+  <div class="sec"><i>03</i><h2>Arquitetura da solução</h2></div>
+  <p class="pt">A rede tem duas camadas sobre a mesma planta de fibras: GPON para os pontos distribuídos e 10G ponto a ponto para os 4 switches existentes.</p>
+  <p class="camada">GPON · pontos distribuídos</p>
+  <div class="flow">
+    <div class="fb hi"><b>OLT 8820i</b><span>6 de 8 portas PON</span></div><div class="ar">›</div>
+    <div class="fb"><b>Splitter 1x2</b><span>No rack do CPD</span></div><div class="ar">›</div>
+    <div class="fb"><b>Cabo 12FO + DIO</b><span>4 fibras em SC/APC</span></div><div class="ar">›</div>
+    <div class="fb"><b>Caixa XFTTA</b><span>Splitter 1x8</span></div><div class="ar">›</div>
+    <div class="fb"><b>ONT</b><span>Drop de 1 fibra</span></div>
+  </div>
+  <p class="camada" style="color:var(--amber)">10G ponto a ponto · switches existentes</p>
+  <div class="flow or">
+    <div class="fb hi"><b>Switch Aggregation</b><span>2 × 10G em LACP com a OLT</span></div><div class="ar">›</div>
+    <div class="fb"><b>1 fibra WDM (BiDi)</b><span>10G com LACP ativo</span></div><div class="ar">›</div>
+    <div class="fb"><b>Switch USW-Pro da área</b><span>PCM, LAB, Supervisório e Carregamento</span></div><div class="ar">+</div>
+    <div class="fb"><b>ONT local</b><span>Segundo caminho de 1G por Cat6</span></div>
+  </div>
+  <ul class="l">
+    <li><b class="w">GPON:</b> cada porta PON passa por um splitter 1x2 no CPD e alimenta duas caixas XFTTA, em divisão 1:16. Da caixa, um drop de 1 fibra SC/APC chega a cada ONT.</li>
+    <li><b class="w">10G:</b> cada switch usa 1 fibra do DIO local com módulos BiDi (WDM) até o Switch Aggregation, em LACP ativo.</li>
+    <li><b class="w">Núcleo:</b> o Switch Aggregation liga-se à OLT por 2 links de 10G em LACP ativo.</li>
+  </ul>
+</section>
+
+<section id="backbone" class="quebra">
+  <div class="sec"><i>04</i><h2>Backbone óptico e DIOs</h2></div>
+  <p class="pt">Cada DIO remoto recebe um cabo monomodo de 12FO e entrega 4 fibras fusionadas em pigtail SC/APC. Das 28 fibras entregues, 15 entram em uso e 13 ficam de reserva já prontas no painel.</p>
+  <h3>Descritivo de fibras por DIO</h3>
+  <div class="tw"><table>
+    <tr><th>DIO</th><th>Cabo que chega</th><th class="c">Fusionadas SC/APC</th><th class="c">Em uso</th><th class="c">Reserva fusionada</th><th class="c">Fusão de passagem</th><th class="c">Apagadas</th></tr>
+    <tr><td>Almoxarifado</td><td>CPD → Almoxarifado</td><td class="c">4</td><td class="c">2</td><td class="c">2</td><td class="c">8</td><td class="c">0</td></tr>
+    <tr><td>PCM</td><td>Almoxarifado → PCM</td><td class="c">4</td><td class="c">2</td><td class="c">2</td><td class="c">0</td><td class="c">8</td></tr>
+    <tr><td>Caldeira</td><td>Almoxarifado → Caldeira</td><td class="c">4</td><td class="c">1</td><td class="c">3</td><td class="c">0</td><td class="c">8</td></tr>
+    <tr><td>Administração</td><td>CPD → Administração</td><td class="c">4</td><td class="c">4</td><td class="c">0</td><td class="c">0</td><td class="c">8</td></tr>
+    <tr><td>Laboratório</td><td>CPD → Laboratório</td><td class="c">4</td><td class="c">2</td><td class="c">2</td><td class="c">0</td><td class="c">8</td></tr>
+    <tr><td>Supervisório</td><td>CPD → Supervisório</td><td class="c">4</td><td class="c">2</td><td class="c">2</td><td class="c">4</td><td class="c">4</td></tr>
+    <tr><td>Carregamento</td><td>Supervisório → Carregamento</td><td class="c">4</td><td class="c">2</td><td class="c">2</td><td class="c">0</td><td class="c">8</td></tr>
+    <tr class="tot"><td>Total</td><td>7 cabos · 84 fibras</td><td class="c">28</td><td class="c">15</td><td class="c">13</td><td class="c">12</td><td class="c">44</td></tr>
+  </table></div>
+  <ul class="l">
+    <li><b class="w">Fusionadas em SC/APC:</b> fibras emendadas em pigtail e disponíveis no painel frontal do DIO.</li>
+    <li><b class="w">Fusão de passagem:</b> fibras emendadas direto para o cabo seguinte, sem conector, para atender o DIO adiante.</li>
+    <li><b class="w">Apagadas:</b> fibras acomodadas e identificadas na bandeja, sem fusão, disponíveis para ativação futura.</li>
+  </ul>
+  <h3>Função de cada fibra entregue</h3>
+  <div class="tw"><table>
+    <tr><th>DIO</th><th>Fibra 1</th><th>Fibra 2</th><th>Fibra 3</th><th>Fibra 4</th></tr>
+    <tr><td>Almoxarifado</td><td><span class="dot" style="background:var(--green)"></span>XFTTA ALMOX-01</td><td><span class="dot" style="background:var(--green)"></span>XFTTA ALMOX-02</td><td>Reserva</td><td>Reserva</td></tr>
+    <tr><td>PCM</td><td><span class="dot" style="background:var(--green)"></span>XFTTA PCM-01</td><td><span class="dot" style="background:var(--amber)"></span>Uplink 10G do switch</td><td>Reserva · 2º uplink</td><td>Reserva</td></tr>
+    <tr><td>Caldeira</td><td><span class="dot" style="background:var(--green)"></span>XFTTA CALD-01</td><td>Reserva</td><td>Reserva</td><td>Reserva</td></tr>
+    <tr><td>Administração</td><td><span class="dot" style="background:var(--green)"></span>XFTTA ADM-01</td><td><span class="dot" style="background:var(--green)"></span>XFTTA ADM-02</td><td><span class="dot" style="background:var(--green)"></span>XFTTA ADM-03</td><td><span class="dot" style="background:var(--green)"></span>XFTTA ADM-04</td></tr>
+    <tr><td>Laboratório</td><td><span class="dot" style="background:var(--green)"></span>XFTTA LAB-01</td><td><span class="dot" style="background:var(--amber)"></span>Uplink 10G do switch</td><td>Reserva · 2º uplink</td><td>Reserva</td></tr>
+    <tr><td>Supervisório</td><td><span class="dot" style="background:var(--green)"></span>XFTTA SUP-01</td><td><span class="dot" style="background:var(--amber)"></span>Uplink 10G do switch</td><td>Reserva · 2º uplink</td><td>Reserva</td></tr>
+    <tr><td>Carregamento</td><td><span class="dot" style="background:var(--green)"></span>XFTTA CARR-01</td><td><span class="dot" style="background:var(--amber)"></span>Uplink 10G do switch</td><td>Reserva · 2º uplink</td><td>Reserva</td></tr>
+  </table></div>
+  <p class="nota"><span class="dot" style="background:var(--green)"></span>GPON &nbsp;&nbsp; <span class="dot" style="background:var(--amber)"></span>10G ponto a ponto</p>
+  <h3>DIO CPD</h3>
+  <p>O DIO do CPD concentra as 28 fibras entregues nos DIOs remotos, todas em SC/APC, em um painel de 48 posições.</p>
+  <div class="tw"><table>
+    <tr><th style="width:22%">Posições</th><th>Destino</th><th class="c">Em uso</th><th class="c">Reserva</th></tr>
+    <tr><td>01 a 04</td><td>Almoxarifado</td><td class="c">2</td><td class="c">2</td></tr>
+    <tr><td>05 a 08</td><td>PCM</td><td class="c">2</td><td class="c">2</td></tr>
+    <tr><td>09 a 12</td><td>Caldeira</td><td class="c">1</td><td class="c">3</td></tr>
+    <tr><td>13 a 16</td><td>Administração</td><td class="c">4</td><td class="c">0</td></tr>
+    <tr><td>17 a 20</td><td>Laboratório</td><td class="c">2</td><td class="c">2</td></tr>
+    <tr><td>21 a 24</td><td>Supervisório</td><td class="c">2</td><td class="c">2</td></tr>
+    <tr><td>25 a 28</td><td>Carregamento</td><td class="c">2</td><td class="c">2</td></tr>
+    <tr><td>29 a 48</td><td>Livres para expansão</td><td class="c">0</td><td class="c">20</td></tr>
+  </table></div>
+  <h3>Regras de montagem</h3>
+  <ul class="l">
+    <li>Toda a planta óptica em conector SC/APC (verde), inclusive as fibras dos uplinks de 10G.</li>
+    <li>Nos DIOs intermediários (Almoxarifado e Supervisório), as fibras de passagem são fusionadas direto, sem conector, economizando cerca de 0,5 dB por junção.</li>
+    <li>Sequência de cores das fibras, padrão ABNT: 1 verde, 2 amarela, 3 branca, 4 azul, 5 vermelha, 6 violeta, 7 marrom, 8 rosa, 9 preta, 10 cinza, 11 laranja, 12 água-marinha. Confirmar na folha de dados do cabo adquirido.</li>
+    <li>Administração usa as 4 fibras entregues. Uma quinta caixa nessa área exige fusionar uma das 8 fibras apagadas.</li>
+    <li>Estimativa de fusões no backbone: 68 (28 nos DIOs remotos, 28 no CPD e 12 de passagem), mais 11 nas entradas dos splitters das caixas XFTTA.</li>
+  </ul>
+</section>
+
+<section id="caixas" class="quebra">
+  <div class="sec"><i>05</i><h2>Caixas XFTTA e pontos reserva</h2></div>
+  <p class="pt">As 11 caixas XFTTA 2008 Intelbras, cada uma com splitter 1x8 e saídas SC/APC, somam 88 pontos GPON: 17 atendem as ONTs da fase inicial e 71 ficam de reserva.</p>
+  <div class="tw"><table>
+    <tr><th>Caixa</th><th>Local</th><th>Porta PON</th><th>ONTs atendidas</th><th class="c">Pontos</th><th class="c">Em uso</th><th class="c">Reserva</th></tr>
+    <tr><td>ADM-01</td><td>Administração</td><td>PON 1</td><td>ONT ADM 01 e 02</td><td class="c">8</td><td class="c">2</td><td class="c">6</td></tr>
+    <tr><td>ADM-02</td><td>Administração</td><td>PON 1</td><td>ONT ADM 03 e 04</td><td class="c">8</td><td class="c">2</td><td class="c">6</td></tr>
+    <tr><td>ADM-03</td><td>Administração</td><td>PON 2</td><td>ONT ADM 05 e 06</td><td class="c">8</td><td class="c">2</td><td class="c">6</td></tr>
+    <tr><td>ADM-04</td><td>Administração</td><td>PON 2</td><td>ONT ADM 07 e 08</td><td class="c">8</td><td class="c">2</td><td class="c">6</td></tr>
+    <tr><td>ALMOX-01</td><td>Almoxarifado</td><td>PON 3</td><td>ONT ALMOX 01 a 03</td><td class="c">8</td><td class="c">3</td><td class="c">5</td></tr>
+    <tr><td>ALMOX-02</td><td>Almoxarifado</td><td>PON 3</td><td>Caixa reserva</td><td class="c">8</td><td class="c">0</td><td class="c">8</td></tr>
+    <tr><td>PCM-01</td><td>PCM</td><td>PON 4</td><td>ONT PCM</td><td class="c">8</td><td class="c">1</td><td class="c">7</td></tr>
+    <tr><td>CALD-01</td><td>Caldeira</td><td>PON 4</td><td>ONT CCM e ONT Caldeira</td><td class="c">8</td><td class="c">2</td><td class="c">6</td></tr>
+    <tr><td>LAB-01</td><td>Laboratório</td><td>PON 5</td><td>ONT LAB</td><td class="c">8</td><td class="c">1</td><td class="c">7</td></tr>
+    <tr><td>SUP-01</td><td>Supervisório</td><td>PON 6</td><td>ONT Supervisório</td><td class="c">8</td><td class="c">1</td><td class="c">7</td></tr>
+    <tr><td>CARR-01</td><td>Carregamento</td><td>PON 6</td><td>ONT Carregamento</td><td class="c">8</td><td class="c">1</td><td class="c">7</td></tr>
+    <tr class="tot"><td>Total</td><td>11 caixas</td><td>6 portas</td><td>17 ONTs</td><td class="c">88</td><td class="c">17</td><td class="c">71</td></tr>
+  </table></div>
+  <div class="card">
+    <h3>Ocupação inicial dos pontos GPON</h3>
+    <div class="barra"><div style="width:19.3%;background:var(--lime)">17 em uso</div><div style="width:80.7%;background:#27463a;color:var(--mut)">71 pontos de reserva</div></div>
+  </div>
+  <ul class="l">
+    <li>Cada porta PON passa por um splitter 1x2 no CPD e alimenta duas caixas, resultando em divisão 1:16 por porta.</li>
+    <li>A PON 5 usa uma saída do splitter 1x2; a segunda saída fica livre no CPD para uma nova caixa.</li>
+    <li>Ativar um ponto reserva exige apenas lançar um drop de 1 fibra SC/APC da caixa até a nova ONT e provisioná-la na OLT.</li>
+    <li>Saídas reserva permanecem com tampa protetora e identificadas na caixa.</li>
+  </ul>
+</section>
+
+<section id="switches">
+  <div class="sec"><i>06</i><h2>Switches existentes</h2></div>
+  <p class="pt">Cada um dos 4 switches existentes recebe dois caminhos até o CPD: um uplink de 10G em fibra WDM (BiDi, 1 fibra) com LACP ativo e uma ONT GPON de 1G ligada por cabo Cat6.</p>
+  <div class="tw"><table>
+    <tr><th>Switch</th><th>Modelo</th><th>Fibra do uplink 10G</th><th>Porta no Aggregation</th><th>ONT local</th><th>Fibra reserva · 2º uplink</th></tr>
+    <tr><td>PCM</td><td>USW-Pro-48-PoE</td><td>DIO PCM · fibra 2</td><td>SFP+ 1 · 2 reservada</td><td>ONT PCM</td><td>DIO PCM · fibra 3</td></tr>
+    <tr><td>Laboratório</td><td>USW-Pro-24-PoE</td><td>DIO LAB · fibra 2</td><td>SFP+ 3 · 4 reservada</td><td>ONT LAB</td><td>DIO LAB · fibra 3</td></tr>
+    <tr><td>Supervisório</td><td>USW-Pro-24-PoE</td><td>DIO SUP · fibra 2</td><td>SFP+ 5 · 6 reservada</td><td>ONT Supervisório</td><td>DIO SUP · fibra 3</td></tr>
+    <tr><td>Carregamento</td><td>USW-Pro-24-PoE</td><td>DIO CARR · fibra 2</td><td>SFP+ 7 · 8 reservada</td><td>ONT Carregamento</td><td>DIO CARR · fibra 3</td></tr>
+  </table></div>
+  <div class="grid g2">
+    <div class="card" style="border-color:rgba(214,178,94,.45)">
+      <h3>Uplink 10G em fibra WDM</h3>
+      <ul class="l" style="margin:0">
+        <li>Um par de módulos SFP+ BiDi 10G monomodo por enlace, transmitindo e recebendo na mesma fibra.</li>
+        <li>Cordão simplex SC/APC–LC/UPC entre o DIO e o módulo, nas duas pontas.</li>
+        <li>Porta em grupo de agregação com LACP ativo nas duas pontas, desde a entrega.</li>
+        <li>Para 20G, basta um segundo par de módulos na fibra 3 e incluir a porta no mesmo grupo, sem parada.</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:rgba(91,149,249,.45)">
+      <h3>ONT do switch</h3>
+      <ul class="l" style="margin:0">
+        <li>Opera em modo bridge e entrega 1G ao switch por Cat6, em caminho independente do uplink.</li>
+        <li>O LACP só agrega enlaces de mesma velocidade no mesmo equipamento, por isso a ONT não entra no grupo do uplink.</li>
+        <li>Função: contingência de 1G. O RSTP mantém a porta bloqueada e a libera se o uplink cair.</li>
+        <li>Depende do repasse de BPDU pela OLT e ONT, validado em bancada antes da implantação.</li>
+      </ul>
+    </div>
+  </div>
+  <p>RSTP ativo em todos os switches, com o Switch Aggregation como raiz. Proteção contra laço e controle de broadcast habilitados nas portas de acesso.</p>
+</section>
+
+<section id="cpd" class="quebra">
+  <div class="sec"><i>07</i><h2>Núcleo no CPD</h2></div>
+  <p class="pt">O CPD concentra o Switch Aggregation Ubiquiti, a OLT Intelbras 8820i com duas fontes AC redundantes, os 6 splitters 1x2 e o DIO CPD de 48 posições.</p>
+  <div class="grid g2">
+    <div class="card">
+      <h3>OLT Intelbras 8820i</h3>
+      <ul class="l" style="margin:0">
+        <li>8 portas GPON: 6 em uso e 2 livres.</li>
+        <li>2 uplinks de 10G SFP+ ao Switch Aggregation por cabos DAC de 1 m, em LACP ativo.</li>
+        <li>2 fontes AC redundantes, cada uma em circuito elétrico distinto.</li>
+        <li>Módulos GPON classe C+, com cordão SC/UPC–SC/APC até o splitter.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Switch Aggregation Ubiquiti</h3>
+      <ul class="l" style="margin:0">
+        <li>USW-Pro-Aggregation: 28 portas SFP+ de 10G e 4 SFP28 de 25G.</li>
+        <li>6 portas SFP+ em uso e 22 livres.</li>
+        <li>Portas pares 2 a 8 reservadas para o segundo uplink de cada switch.</li>
+        <li>Portas de 25G para firewall e servidores.</li>
+      </ul>
+    </div>
+  </div>
+  <h3>Portas do Switch Aggregation</h3>
+  <div class="tw"><table>
+    <tr><th style="width:30%">Portas</th><th>Uso</th></tr>
+    <tr><td>SFP+ 1, 3, 5 e 7</td><td>Uplinks 10G BiDi: PCM, Laboratório, Supervisório e Carregamento</td></tr>
+    <tr><td>SFP+ 2, 4, 6 e 8</td><td>Reservadas para o segundo membro LACP de cada uplink</td></tr>
+    <tr><td>SFP+ 9 e 10</td><td>OLT 8820i, 2 × 10G em LACP ativo</td></tr>
+    <tr><td>SFP+ 11 a 28</td><td>Livres para novos switches e áreas</td></tr>
+    <tr><td>SFP28 29 a 32</td><td>Firewall e servidores, em 25G</td></tr>
+  </table></div>
+  <h3>Alocação das portas PON</h3>
+  <div class="tw"><table>
+    <tr><th>Porta PON</th><th>Splitter 1x2</th><th>Saída A</th><th>Saída B</th><th class="c">ONTs</th></tr>
+    <tr><td>PON 1</td><td>SPL-01</td><td>XFTTA ADM-01</td><td>XFTTA ADM-02</td><td class="c">4</td></tr>
+    <tr><td>PON 2</td><td>SPL-02</td><td>XFTTA ADM-03</td><td>XFTTA ADM-04</td><td class="c">4</td></tr>
+    <tr><td>PON 3</td><td>SPL-03</td><td>XFTTA ALMOX-01</td><td>XFTTA ALMOX-02</td><td class="c">3</td></tr>
+    <tr><td>PON 4</td><td>SPL-04</td><td>XFTTA PCM-01</td><td>XFTTA CALD-01</td><td class="c">3</td></tr>
+    <tr><td>PON 5</td><td>SPL-05</td><td>XFTTA LAB-01</td><td><span class="pill ok">Livre</span></td><td class="c">1</td></tr>
+    <tr><td>PON 6</td><td>SPL-06</td><td>XFTTA SUP-01</td><td>XFTTA CARR-01</td><td class="c">2</td></tr>
+    <tr><td>PON 7</td><td><span class="pill ok">Reserva</span></td><td>Livre</td><td>Livre</td><td class="c">0</td></tr>
+    <tr><td>PON 8</td><td><span class="pill ok">Reserva</span></td><td>Livre</td><td>Livre</td><td class="c">0</td></tr>
+  </table></div>
+  <h3>Segmentação lógica (VLANs)</h3>
+  <ul class="l">
+    <li>A rede é segmentada em VLANs por função, por exemplo: gerência dos equipamentos, corporativo, automação e supervisório, CFTV, voz e visitantes.</li>
+    <li>As VLANs trafegam marcadas (802.1Q) nos uplinks de 10G, no par OLT–Aggregation e nas portas PON; cada ONT entrega a VLAN do seu ponto ao equipamento final.</li>
+    <li>A mesma VLAN fica disponível em qualquer área da planta, por ONT ou por porta de switch.</li>
+    <li>A lista final de VLANs é definida com a TI da Binatural.</li>
+  </ul>
+</section>
+
+<section id="potencia">
+  <div class="sec"><i>08</i><h2>Orçamento de potência óptica</h2></div>
+  <p class="pt">Os dois piores enlaces fecham com folga: 8,7 dB de margem no GPON e 3,1 dB no uplink de 10G, considerando percurso de até 4 km.</p>
+  <div class="tw"><table>
+    <tr><th style="width:30%">Componente</th><th>GPON · OLT → ONT Caldeira</th><th>10G BiDi · CPD → switch Carregamento</th></tr>
+    <tr><td>Splitter 1x2 no CPD</td><td>3,8 dB</td><td>Não se aplica</td></tr>
+    <tr><td>Splitter 1x8 na caixa XFTTA</td><td>10,5 dB</td><td>Não se aplica</td></tr>
+    <tr><td>Conectores · 0,5 dB por par</td><td>6 pares · 3,0 dB</td><td>2 pares · 1,0 dB</td></tr>
+    <tr><td>Fusões · 0,1 dB cada</td><td>6 fusões · 0,6 dB</td><td>3 fusões · 0,3 dB</td></tr>
+    <tr><td>Fibra · 4 km</td><td>1,4 dB</td><td>1,6 dB</td></tr>
+    <tr><td>Perda total</td><td>19,3 dB</td><td>2,9 dB</td></tr>
+    <tr><td>Orçamento do enlace</td><td>28 dB · classe B+</td><td>6 dB · módulo BiDi 10 km, típico</td></tr>
+    <tr class="tot"><td>Margem</td><td>8,7 dB</td><td>3,1 dB</td></tr>
+  </table></div>
+  <ul class="l">
+    <li>O splitter 1x2 no CPD garante perda mínima acima de 13 dB mesmo nos lances curtos, evitando saturação do receptor das ONTs.</li>
+    <li>Potência esperada na ONT: entre −10 e −18 dBm em 1490 nm; aceitável entre −8 e −27 dBm.</li>
+    <li>As distâncias reais não constam na topologia e substituem a premissa de 4 km após o levantamento em campo.</li>
+  </ul>
+</section>
+
+<section id="comparativo" class="quebra">
+  <div class="sec"><i>09</i><h2>Comparativo de tecnologias</h2></div>
+  <p class="pt">O GPON é a única das alternativas que cobre toda a planta sem equipamento energizado em campo e com uma fibra atendendo vários pontos.</p>
+  <div class="tw"><table>
+    <tr><th>Critério</th><th>Cabo metálico Cat6</th><th>Fibra ponto a ponto</th><th><span class="hl">GPON · proposto</span></th><th>XGS-PON · evolução</th></tr>
+    <tr><td>Alcance por enlace</td><td>100 m</td><td>10 km ou mais</td><td><b class="w">Até 20 km</b></td><td>Até 20 km</td></tr>
+    <tr><td>Ativos em campo</td><td>Switch a cada 100 m</td><td>Switch em cada área</td><td><b class="w">Nenhum</b></td><td>Nenhum</td></tr>
+    <tr><td>Fibras por área</td><td>Não se aplica</td><td>1 a 2 por switch</td><td><b class="w">1 para até 16 pontos</b></td><td>Igual ao GPON</td></tr>
+    <tr><td>Banda</td><td>1G por ponto</td><td>1 a 10G dedicados</td><td><b class="w">2,5G / 1,25G por porta PON</b></td><td>10G / 10G por porta PON</td></tr>
+    <tr><td>Ruído elétrico e descargas</td><td>Sensível</td><td>Imune</td><td><b class="w">Imune</b></td><td>Imune</td></tr>
+    <tr><td>Energia e climatização em campo</td><td>Em vários pontos</td><td>Em cada área</td><td><b class="w">Dispensadas</b></td><td>Dispensadas</td></tr>
+    <tr><td>Novo ponto de rede</td><td>Novo cabo até o switch</td><td>Porta livre ou novo switch</td><td><b class="w">Drop até a caixa</b></td><td>Igual ao GPON</td></tr>
+    <tr><td>Gerência</td><td>Switch a switch</td><td>Switch a switch</td><td><b class="w">Central, na OLT</b></td><td>Central, na OLT</td></tr>
+    <tr><td>Reaproveitamento</td><td>Baixo</td><td>Alto</td><td><b class="w">Alto</b></td><td>Usa a rede passiva do GPON</td></tr>
+  </table></div>
+  <p>A solução é híbrida: GPON para os pontos distribuídos e 10G ponto a ponto, na mesma planta de fibras, para os 4 switches existentes.</p>
+</section>
+
+<section id="expansao">
+  <div class="sec"><i>10</i><h2>Vantagens do GPON e expansão futura</h2></div>
+  <p class="pt">A rede entregue comporta mais de 5 vezes a quantidade inicial de pontos sem troca de equipamento de núcleo e sem novo cabo de backbone: são 88 pontos instalados para 17 ONTs.</p>
+  <div class="grid g3">
+    <div class="card"><h3>Rede passiva em campo</h3><p>Entre o CPD e a ONT não há equipamento energizado. As caixas dispensam energia, nobreak e climatização.</p></div>
+    <div class="card"><h3>Imunidade elétrica</h3><p>A fibra não sofre interferência de motores, inversores e descargas atmosféricas.</p></div>
+    <div class="card"><h3>Alcance</h3><p>Até 20 km por porta PON, contra 100 m do cabo metálico. Novas áreas entram sem sala técnica.</p></div>
+    <div class="card"><h3>Economia de fibras</h3><p>Uma fibra do backbone atende uma caixa de 8 pontos; uma porta PON atende 16.</p></div>
+    <div class="card"><h3>Gerência centralizada</h3><p>Todas as ONTs são provisionadas e monitoradas pela OLT, com nível de sinal por ponto.</p></div>
+    <div class="card"><h3>Crescimento simples</h3><p>Novo ponto: um drop de fibra até a caixa mais próxima e o cadastro da ONT.</p></div>
+  </div>
+  <h3>Reserva de capacidade já instalada</h3>
+  <div class="tw"><table>
+    <tr><th>Camada</th><th class="c">Instalado</th><th class="c">Em uso</th><th class="c">Reserva</th><th>Como se ativa</th></tr>
+    <tr><td>Pontos GPON nas caixas XFTTA</td><td class="c">88</td><td class="c">17</td><td class="c">71</td><td>Drop de 1 fibra e ONT</td></tr>
+    <tr><td>Saídas de splitter 1x2 no CPD</td><td class="c">12</td><td class="c">11</td><td class="c">1</td><td>Nova caixa XFTTA, mais 8 pontos</td></tr>
+    <tr><td>Portas PON da OLT</td><td class="c">8</td><td class="c">6</td><td class="c">2</td><td>2 splitters 1x2 e até 4 novas caixas</td></tr>
+    <tr><td>Fibras fusionadas nos DIOs remotos</td><td class="c">28</td><td class="c">15</td><td class="c">13</td><td>Cordão óptico no painel</td></tr>
+    <tr><td>Fibras apagadas nos cabos</td><td class="c">44</td><td class="c">0</td><td class="c">44</td><td>Fusão de pigtail no DIO</td></tr>
+    <tr><td>Portas SFP+ do Switch Aggregation</td><td class="c">28</td><td class="c">6</td><td class="c">22</td><td>Novo uplink de 10G</td></tr>
+  </table></div>
+  <h3>Etapas de crescimento</h3>
+  <ol class="e">
+    <li><b class="w">Novos pontos nas áreas atuais:</b> até 71 ONTs adicionais usando as saídas livres das caixas.</li>
+    <li><b class="w">Novas caixas e áreas:</b> até 5 caixas adicionais (40 pontos) com as portas PON e a saída de splitter livres, chegando a 128 pontos com a mesma OLT.</li>
+    <li><b class="w">Mais banda nos switches:</b> segundo uplink de 10G em LACP nas fibras reserva já fusionadas, chegando a 20G.</li>
+    <li><b class="w">Evolução para XGS-PON:</b> cabos, DIOs, splitters e caixas são reaproveitados; a troca se limita à OLT e às ONTs que precisarem de mais banda.</li>
+  </ol>
+</section>
+
+<section id="materiais" class="quebra">
+  <div class="sec"><i>11</i><h2>Lista de materiais</h2></div>
+  <p class="pt">Quantitativos extraídos da topologia. As metragens de cabo dependem do levantamento em campo.</p>
+  <div class="tw"><table>
+    <tr><th class="c" style="width:9%">Qtd</th><th style="width:40%">Item</th><th>Observação</th></tr>
+    <tr><td class="c">1</td><td>OLT Intelbras 8820i com 2 fontes AC</td><td>Referência do projeto</td></tr>
+    <tr><td class="c">7</td><td>Módulo GPON SFP classe C+</td><td>6 em uso e 1 reserva</td></tr>
+    <tr><td class="c">1</td><td>Switch Ubiquiti USW-Pro-Aggregation</td><td>28 SFP+ e 4 SFP28</td></tr>
+    <tr><td class="c">2</td><td>Cabo DAC SFP+ 10G de 1 m</td><td>OLT e Switch Aggregation</td></tr>
+    <tr><td class="c">5</td><td>Par de módulos SFP+ BiDi 10G monomodo</td><td>4 uplinks e 1 par reserva</td></tr>
+    <tr><td class="c">17</td><td>ONT GPON modo bridge, 1 porta Gigabit</td><td>Modelo a definir</td></tr>
+    <tr><td class="c">6</td><td>Splitter óptico PLC 1x2 SC/APC</td><td>Primeiro nível, no rack do CPD</td></tr>
+    <tr><td class="c">11</td><td>Caixa XFTTA 2008 Intelbras com splitter 1x8</td><td>Segundo nível</td></tr>
+    <tr><td class="c">1</td><td>DIO 48FO para rack, SC/APC</td><td>CPD</td></tr>
+    <tr><td class="c">7</td><td>DIO 12FO, SC/APC</td><td>4 posições equipadas, expansível a 12</td></tr>
+    <tr><td class="c">56</td><td>Pigtail SC/APC monomodo</td><td>28 no CPD e 28 nos DIOs remotos</td></tr>
+    <tr><td class="c">6</td><td>Cordão SC/UPC–SC/APC simplex</td><td>OLT até splitter 1x2</td></tr>
+    <tr><td class="c">11</td><td>Cordão SC/APC–SC/APC simplex</td><td>Splitter 1x2 até DIO CPD</td></tr>
+    <tr><td class="c">8</td><td>Cordão SC/APC–LC/UPC simplex</td><td>DIO até módulo BiDi, nas duas pontas</td></tr>
+    <tr><td class="c">7</td><td>Lance de cabo óptico monomodo 12FO</td><td>Metragem a levantar</td></tr>
+    <tr><td class="c">11</td><td>Lance de cabo óptico DIO até caixa XFTTA</td><td>Metragem a levantar</td></tr>
+    <tr><td class="c">17</td><td>Cabo drop 1FO com conectores SC/APC</td><td>Caixa XFTTA até ONT</td></tr>
+    <tr><td class="c">4</td><td>Patch cord Cat6</td><td>ONT até switch</td></tr>
+  </table></div>
+  <p class="nota">Os 4 switches de acesso (1 USW-Pro-48-PoE e 3 USW-Pro-24-PoE) são existentes e não entram na lista. Recomenda-se nobreak dedicado ao rack do CPD.</p>
+</section>
+
+<section id="testes">
+  <div class="sec"><i>12</i><h2>Testes, comissionamento e pendências</h2></div>
+  <p class="pt">A rede só é entregue após a certificação das 40 fibras fusionadas e a medição de potência em todos os 88 pontos das caixas.</p>
+  <ol class="e">
+    <li><b class="w">Certificação do backbone:</b> OTDR em 1310 e 1550 nm em cada fibra fusionada, com perda por fusão de até 0,1 dB.</li>
+    <li><b class="w">Potência GPON:</b> medição em 1490 nm em cada saída de caixa XFTTA, usada ou reserva; aceite entre −10 e −25 dBm.</li>
+    <li><b class="w">Ativação das ONTs:</b> provisionamento das 17 ONTs na OLT e registro do nível de sinal de cada uma.</li>
+    <li><b class="w">Uplinks de 10G:</b> verificação de potência nos módulos BiDi e do LACP ativo em cada grupo.</li>
+    <li><b class="w">OLT e Aggregation:</b> retirada de um dos links de 10G com tráfego para comprovar o LACP.</li>
+    <li><b class="w">Fontes da OLT:</b> desligamento de uma fonte por vez, sem interrupção do serviço.</li>
+    <li><b class="w">Contingência por ONT:</b> desconexão do uplink de 10G de cada switch e verificação da comutação para a ONT.</li>
+    <li><b class="w">Identificação e as-built:</b> etiquetas em cabos, DIOs, caixas e saídas; entrega dos relatórios de OTDR, tabela de fibras e topologia final.</li>
+  </ol>
+  <h3>Pendências antes da execução</h3>
+  <div class="tw"><table>
+    <tr><th style="width:32%">Pendência</th><th style="width:13%">Impacto</th><th>O que definir</th></tr>
+    <tr><td>Metragens dos cabos</td><td><span class="pill at">Médio</span></td><td>Comprimento dos 7 lances de 12FO, dos 11 lances até as caixas e dos 17 drops.</td></tr>
+    <tr><td>Lance CPD–Almoxarifado</td><td><span class="pill at">Médio</span></td><td>Decidir sobre cabo de 24FO nesse trecho, que fica sem fibra apagada com 12FO.</td></tr>
+    <tr><td>Modelo das ONTs</td><td><span class="pill ok">Baixo</span></td><td>Definir o modelo GPON em modo bridge a ser fornecido.</td></tr>
+    <tr><td>Folha de dados da OLT 8820i</td><td><span class="pill at">Médio</span></td><td>Confirmar portas, LACP nos uplinks e módulos GPON inclusos na versão adquirida.</td></tr>
+    <tr><td>Contingência pela ONT</td><td><span class="pill at">Médio</span></td><td>Teste de bancada do repasse de BPDU pela OLT e ONT.</td></tr>
+    <tr><td>Energia do CPD</td><td><span class="pill cr">Alto</span></td><td>Potência e autonomia do nobreak do rack, com as fontes da OLT em circuitos distintos.</td></tr>
+    <tr><td>Borda da rede</td><td><span class="pill ok">Baixo</span></td><td>Firewall e link de internet a conectar no Switch Aggregation.</td></tr>
+  </table></div>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  <img src="img/logo-amais.png" alt="A+.com Engenharia e Tecnologia">
+  <span>Projeto técnico · Rede Óptica GPON · Binatural Formosa, GO · A+.com Engenharia e Tecnologia</span>
+</div></footer>
+
+<script>
+/* PDF: o navegador salva o documento em A4 (Imprimir › Salvar como PDF) */
+function baixarPdf(){document.fonts.ready.then(()=>setTimeout(()=>print(),150))}
+document.getElementById('bPdf').onclick=baixarPdf;
+if(new URLSearchParams(location.search).has('pdf'))baixarPdf();
+</script>
+</body>
+</html>

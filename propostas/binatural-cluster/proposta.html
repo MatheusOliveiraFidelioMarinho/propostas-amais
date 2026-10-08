@@ -775,7 +775,7 @@ table.mat tr.gp td{font-size:.76em}
   <div class="foot"><img src="img/logo-amais.png" alt=""><img class="bn" src="img/logo-binatural.png" alt=""><span>Proposta comercial · Binatural <span data-f="local"></span></span></div>
 </section>
 
-<section class="slide">
+<section class="slide" data-inv>
   <div class="top"><div class="eyebrow">Investimento</div><div class="num"></div></div>
   <h2>Investimento da <span class="hl">solução</span></h2>
   <p class="lead" style="margin-bottom:26px">Fornecimento dos materiais da planilha e serviço de instalação, configuração e migração para a Binatural <span data-f="local"></span>.</p>
@@ -869,7 +869,8 @@ fit();
 go((parseInt(location.hash.slice(1),10)||1)-1);
 
 /* numeração automática */
-slides.forEach((el,k)=>{const n=el.querySelector('.num');if(n)n.textContent=String(k+1).padStart(2,'0')});
+function numerar(){slides.forEach((el,k)=>{const n=el.querySelector('.num');if(n)n.textContent=String(k+1).padStart(2,'0')})}
+numerar();
 
 /* dados da proposta salvos no painel */
 const BRL=v=>v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
@@ -904,13 +905,18 @@ function caber(){
 const pronto=fetch('dados.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{
   document.title=d.titulo;
   document.body.classList.toggle('precos',d.exibirPrecos);
+  // sem valor fechado (ou desligado no painel), o slide de investimento sai do deck
+  if(d.exibirInvestimento===false){
+    document.querySelectorAll('.slide[data-inv]').forEach(el=>{slides.splice(slides.indexOf(el),1);el.remove()});
+    numerar();go(cur);
+  }
   document.querySelectorAll('[data-f]').forEach(el=>{el.textContent=d.campos[el.dataset.f]??''});
   document.querySelectorAll('[data-show]').forEach(el=>{el.hidden=!d.campos[el.dataset.show]});
   document.querySelectorAll('[data-lista]').forEach(el=>{el.innerHTML=linhas(el.dataset.lista,d.listas[el.dataset.lista]||[],d.exibirPrecos)});
   caber();
   document.querySelectorAll('[data-t]').forEach(el=>{const t=d.totais[el.dataset.t];el.textContent=t?BRL(t.valor):'R$ ______';el.classList.toggle('parcial',!!t?.parcial)});
   document.querySelectorAll('[data-x]').forEach(el=>{const t=d.totais[el.dataset.x];
-    el.textContent=!t?'( ____________________________ )':t.parcial?`Prévia da equipe · ${t.pendentes} ${t.pendentes===1?'item':'itens'} sem preço · o cliente vê em branco`:'( '+t.extenso+' )';
+    el.textContent=!t?'( ____________________________ )':t.parcial?`Prévia da equipe · ${t.pendentes} ${t.pendentes===1?'item':'itens'} sem preço · o cliente não vê este slide`:'( '+t.extenso+' )';
     el.classList.toggle('parcial',!!t?.parcial)});
 }).catch(e=>console.warn('dados indisponíveis',e));
 
