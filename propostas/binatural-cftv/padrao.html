@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Padrão Técnico Corporativo de CFTV · Binatural</title>
+<style>
+:root{
+  --bg:#050d09; --bg2:#08150f; --card:#0b1b14; --line:#1a3328; --line2:#27463a;
+  --fg:#eef4f0; --mut:#a3b8ad; --dim:#6a8479;
+  --lime:#b0e000; --gold:#d6b25e; --green:#6fdc8c; --blue:#5b95f9; --amber:#f2b33d; --red:#f07a6a;
+  --rad:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.6;font-size:16px;
+}
+img{display:block;max-width:100%}
+::selection{background:var(--lime);color:#000}
+.wrap{max-width:1060px;margin:0 auto;padding:0 28px}
+
+/* barra */
+.bar{position:sticky;top:0;z-index:5;background:rgba(5,13,9,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:16px;height:60px}
+.bar img{height:26px;width:auto}
+.bar .bn{height:32px;width:32px;border-radius:7px;background:#f4f1e8;padding:3px;object-fit:contain}
+.bar span{font-size:13px;font-weight:700;color:var(--dim);letter-spacing:.3px;padding-left:16px;border-left:1px solid var(--line2)}
+.bar button{margin-left:auto;background:var(--lime);color:#000;border:0;border-radius:8px;font:inherit;font-size:13.5px;font-weight:800;padding:9px 16px;cursor:pointer}
+.bar button:hover{filter:brightness(1.1)}
+
+/* capa */
+.capa{
+  padding:76px 0 60px;border-bottom:1px solid var(--line);
+  background:radial-gradient(900px 480px at 88% 0%,rgba(176,224,0,.08),transparent 62%),radial-gradient(700px 420px at 0% 100%,rgba(214,178,94,.06),transparent 60%);
+}
+.capa .wrap{display:grid;grid-template-columns:1fr 280px;gap:48px;align-items:center}
+.eyebrow{display:inline-block;font-size:13px;font-weight:800;letter-spacing:2.2px;text-transform:uppercase;color:var(--lime);border-left:3px solid var(--lime);padding:2px 0 2px 13px}
+h1{font-size:54px;line-height:1.05;letter-spacing:-1.6px;font-weight:800;margin:22px 0 18px}
+.hl{color:var(--lime)}
+.lead{font-size:19px;color:var(--mut);max-width:60ch}
+.meta{display:flex;gap:40px;flex-wrap:wrap;margin-top:40px;padding-top:22px;border-top:1px solid var(--line)}
+.meta b{display:block;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:var(--dim);font-weight:800;margin-bottom:3px}
+.meta span{font-size:17px;font-weight:650}
+.selo{background:linear-gradient(160deg,#f6f3ea,#ece6d6);border-radius:20px;padding:34px;display:flex;align-items:center;justify-content:center;aspect-ratio:1}
+
+/* sumario */
+.sum{padding:34px 0;border-bottom:1px solid var(--line)}
+.sum ol{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:8px 28px;counter-reset:s}
+.sum li{counter-increment:s}
+.sum a{display:flex;gap:12px;color:var(--mut);text-decoration:none;font-size:15px;padding:6px 0;border-bottom:1px solid var(--line)}
+.sum a::before{content:counter(s,decimal-leading-zero);color:var(--lime);font-weight:800;font-size:13px;padding-top:1px}
+.sum a:hover{color:var(--fg)}
+
+/* secoes */
+section{padding:56px 0 8px;scroll-margin-top:60px}
+.sec{display:flex;align-items:baseline;gap:16px;margin-bottom:14px}
+.sec i{font-style:normal;font-size:14px;font-weight:800;color:var(--bg);background:var(--lime);min-width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;transform:translateY(-4px)}
+h2{font-size:34px;line-height:1.12;letter-spacing:-.9px;font-weight:800}
+h3{font-size:19px;font-weight:750;letter-spacing:-.2px;margin:34px 0 12px}
+p{color:var(--mut);margin-bottom:14px;max-width:78ch}
+p.pt{font-size:18px;color:var(--fg);max-width:74ch}
+b.w{color:var(--fg);font-weight:700}
+.nota{font-size:14px;color:var(--dim)}
+
+.grid{display:grid;gap:16px;margin:20px 0}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:22px 24px}
+.card h3{margin:0 0 8px}
+.card p{font-size:15px;margin:0;max-width:none}
+.card.aviso{border-color:rgba(242,179,61,.45);margin:18px 0}
+.card.aviso h3{color:var(--amber);font-size:14px;letter-spacing:1.2px;text-transform:uppercase}
+.num b{display:block;font-size:44px;font-weight:800;letter-spacing:-1.4px;line-height:1.05}
+.num span{display:block;font-size:12.5px;color:var(--dim);font-weight:800;letter-spacing:.8px;text-transform:uppercase;margin-top:6px}
+
+.tw{overflow-x:auto;margin:16px 0 18px;border:1px solid var(--line);border-radius:var(--rad);background:var(--card)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{text-align:left;font-size:12px;letter-spacing:1.3px;text-transform:uppercase;color:var(--dim);font-weight:800;padding:13px 16px;border-bottom:1px solid var(--line2);background:var(--bg2)}
+td{padding:11px 16px;border-bottom:1px solid var(--line);color:var(--mut);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--fg);font-weight:700}
+th.c,td.c{text-align:center}
+tr.tot td{color:var(--lime);font-weight:800;border-top:1px solid var(--line2)}
+.pill{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.9px;padding:3px 9px;border-radius:6px;text-transform:uppercase;white-space:nowrap}
+.pill.ok{background:rgba(111,220,140,.13);color:var(--green)}
+.pill.at{background:rgba(242,179,61,.14);color:var(--amber)}
+.pill.cr{background:rgba(240,122,106,.14);color:var(--red)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
+
+ul.l{list-style:none;margin:10px 0 18px}
+ul.l li{position:relative;padding:7px 0 7px 24px;color:var(--mut);max-width:80ch}
+ul.l li::before{content:"";position:absolute;left:2px;top:17px;width:8px;height:8px;border-radius:2px;background:var(--lime)}
+ol.e{list-style:none;counter-reset:e;margin:10px 0 18px}
+ol.e li{counter-increment:e;position:relative;padding:9px 0 9px 44px;color:var(--mut);border-bottom:1px solid var(--line);max-width:84ch}
+ol.e li:last-child{border-bottom:0}
+ol.e li::before{content:counter(e);position:absolute;left:0;top:9px;width:28px;height:28px;border-radius:50%;background:rgba(176,224,0,.1);border:1px solid rgba(176,224,0,.4);color:var(--lime);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+
+.topo{background:#fff;border-radius:var(--rad);padding:14px;margin:18px 0 8px}
+.leg{display:flex;gap:26px;flex-wrap:wrap;font-size:14px;color:var(--mut);margin-bottom:8px}
+.leg i{display:inline-block;width:24px;height:4px;border-radius:3px;margin-right:9px;vertical-align:middle}
+
+.flow{display:flex;align-items:stretch;gap:8px;margin:10px 0 22px}
+.flow .fb{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.flow .fb.hi{border-color:rgba(176,224,0,.55)}
+.flow.or .fb.hi{border-color:rgba(242,179,61,.55)}
+.flow .fb b{display:block;font-size:16px;font-weight:750}
+.flow .fb span{font-size:13.5px;color:var(--mut)}
+.flow .ar{display:flex;align-items:center;color:var(--lime);font-size:24px;font-weight:800}
+.flow.or .ar{color:var(--amber)}
+.camada{font-size:12.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;margin:18px 0 0;color:var(--lime)}
+.barra{height:40px;border-radius:10px;overflow:hidden;display:flex;border:1px solid var(--line2);margin:14px 0 10px}
+.barra div{display:flex;align-items:center;padding-left:14px;font-size:13.5px;font-weight:800;color:#06110c}
+
+footer{margin-top:64px;border-top:1px solid var(--line);padding:30px 0 50px;font-size:13.5px;color:var(--dim)}
+footer .wrap{display:flex;align-items:center;gap:18px}
+footer img{height:26px;width:auto}
+
+@media (max-width:820px){
+  .capa .wrap{grid-template-columns:1fr}.selo{display:none}
+  h1{font-size:38px}h2{font-size:27px}
+  .g2,.g3,.g4,.sum ol{grid-template-columns:1fr}
+  .flow{flex-direction:column}.flow .ar{justify-content:center;transform:rotate(90deg)}
+  .bar span{display:none}
+}
+@media print{
+  @page{size:A4;margin:12mm 0}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html,body{background:var(--bg)}
+  .bar{display:none}
+  .capa{padding-top:30px}
+  section{padding-top:30px}
+  .tw{overflow:visible}
+  tr,.card,.flow,.topo,li{break-inside:avoid}
+  .sec,h3{break-after:avoid}
+  .quebra{break-before:page}
+}
+
+/* documento técnico (CFTV) */
+.sum a::before{content:attr(data-n)}
+.sum a[data-n=""]::before{content:"·"}
+h4{font-size:16px;font-weight:750;color:var(--fg);margin:26px 0 10px}
+ol.al{list-style:none;counter-reset:a;margin:6px 0 18px}
+ol.al li{counter-increment:a;position:relative;padding:5px 0 5px 34px;color:var(--mut);max-width:80ch}
+ol.al li::before{content:counter(a,lower-alpha) ")";position:absolute;left:4px;top:5px;color:var(--lime);font-weight:800}
+p.cap{margin:26px 0 0;color:var(--fg);font-size:14.5px;max-width:none}
+p.cap b{color:var(--lime);font-weight:800}
+p.fonte{font-size:12.5px;color:var(--dim);margin:-8px 0 18px}
+p.ref{font-size:14.5px;padding-left:0;margin-bottom:10px}
+.tw.sm table{font-size:13px}
+.tw.sm th,.tw.sm td{padding:9px 8px}
+tr.grp td{background:var(--bg2);color:var(--lime);font-size:12px;letter-spacing:1.3px;text-transform:uppercase;font-weight:800}
+.fig{margin:16px 0 18px;border:1px solid var(--line);border-radius:var(--rad);overflow:hidden;background:var(--card)}
+.fig img{width:100%;height:auto}
+.resumo .chave{font-size:14.5px;color:var(--dim)}
+.resumo .chave b{color:var(--fg)}
+@media print{.fig{break-inside:avoid}p.cap{break-after:avoid}}
+</style>
+<script src="protecao.js"></script>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <img src="img/logo-amais.png" alt="A+.com Engenharia e Tecnologia">
+  <img class="bn" src="img/logo-binatural.png" alt="Binatural">
+  <span>Padrão técnico corporativo de CFTV · Binatural</span>
+  <button id="bPdf" type="button">Baixar PDF</button>
+</div></div>
+
+<header class="capa"><div class="wrap">
+  <div>
+    <div class="eyebrow">Padrão técnico corporativo · BIN-PTC-CFTV-001</div>
+    <h1>Padrão Técnico de CFTV <span class="hl">Binatural · Corporativo</span></h1>
+    <p class="lead">Diretrizes de projeto, especificação, implantação e manutenção de sistemas de videomonitoramento para as unidades industriais da Binatural</p>
+    <div class="meta">
+      <div><b>Cliente</b><span>Binatural</span></div>
+      <div><b>Abrangência</b><span>Todas as unidades</span></div>
+      <div><b>Documento</b><span>BIN-PTC-CFTV-001 · Rev. 00</span></div>
+      <div><b>Data</b><span>Outubro de 2026</span></div>
+    </div>
+  </div>
+  <div class="selo"><img src="img/logo-binatural.png" alt="Binatural"></div>
+</div></header>
+
+<nav class="sum"><div class="wrap"><ol>
+  <li><a href="#resumo" data-n="">Resumo</a></li>
+  <li><a href="#s1" data-n="01">Introdução</a></li><li><a href="#s2" data-n="02">Referências normativas</a></li><li><a href="#s3" data-n="03">Termos e definições</a></li><li><a href="#s4" data-n="04">Diretrizes gerais</a></li><li><a href="#s5" data-n="05">Critérios de classificação dos ambientes</a></li><li><a href="#s6" data-n="06">Padrões de câmera</a></li><li><a href="#s7" data-n="07">Especificação por tipologia de área</a></li><li><a href="#s8" data-n="08">Áreas classificadas</a></li><li><a href="#s9" data-n="09">Segurança perimetral, analíticos e termografia</a></li><li><a href="#s10" data-n="10">Gravação e armazenamento</a></li><li><a href="#s11" data-n="11">Infraestrutura de rede</a></li><li><a href="#s12" data-n="12">Energia, aterramento e proteção contra surtos</a></li><li><a href="#s13" data-n="13">CPD, monitoramento e visualização</a></li><li><a href="#s14" data-n="14">Segurança da informação e privacidade</a></li><li><a href="#s15" data-n="15">Identificação e nomenclatura</a></li><li><a href="#s16" data-n="16">Instalação, comissionamento e aceitação</a></li><li><a href="#s17" data-n="17">Operação e manutenção</a></li><li><a href="#s18" data-n="18">Roteiro de aplicação nas unidades</a></li><li><a href="#s19" data-n="19">Considerações finais</a></li><li><a href="#sreferências" data-n="">Referências</a></li><li><a href="#siglas" data-n="">Abreviaturas e siglas</a></li>
+</ol></div></nav>
+
+<main class="wrap">
+
+<section id="resumo" class="resumo">
+  <div class="sec"><h2>Resumo</h2></div>
+  <p class="pt">Este documento estabelece o padrão técnico corporativo dos sistemas de circuito fechado de televisão (CFTV) das unidades da Binatural, empresa produtora de biodiesel. O padrão define critérios de classificação dos ambientes por criticidade, condição de iluminação e risco, sete padrões de câmera com requisitos mínimos de desempenho e a especificação aplicável a cada tipologia de área encontrada nas unidades, das salas administrativas e do setor de recursos humanos às áreas de calor, à subestação e às áreas classificadas com risco de atmosfera explosiva. Estabelece também as diretrizes de segurança perimetral com analíticos de vídeo e câmeras termográficas, o método de dimensionamento da gravação para retenção mínima de 30 dias, os requisitos de rede, energia e proteção contra surtos, as regras de privacidade conforme a Lei Geral de Proteção de Dados Pessoais, a nomenclatura dos equipamentos e os procedimentos de comissionamento, operação e manutenção. O corpo do padrão não contém quantitativos: a aplicação a cada unidade é registrada em apêndice próprio, com diagnóstico, enquadramento dos setores, quantidades e dimensionamento.</p>
+  <p class="chave"><b class="w">Palavras-chave:</b> CFTV; videomonitoramento; padrão técnico; biodiesel; áreas classificadas; segurança perimetral.</p>
+  <div class="grid g4"><div class="card num"><b style="color:var(--lime)">7</b><span>Padrões de câmera</span></div><div class="card num"><b style="color:var(--gold)">19</b><span>Tipologias de área</span></div><div class="card num"><b style="color:var(--green)">4</b><span>Níveis de criticidade</span></div><div class="card num"><b style="color:var(--blue)">30 dias</b><span>Retenção mínima</span></div></div>
+</section>
+
+<section id="s1">
+<div class="sec"><i>01</i><h2>Introdução</h2></div>
+<p>A Binatural opera unidades industriais de produção de biodiesel que compartilham características construtivas e operacionais: portarias com controle de acesso de pessoas e veículos, pátios de caminhões, balanças, áreas administrativas, utilidades térmicas, subestações, laboratórios, salas de controle e áreas de processo, armazenagem e carregamento que manipulam substâncias inflamáveis. Essa semelhança permite que o videomonitoramento de todas as unidades seja projetado com os mesmos critérios, os mesmos padrões de equipamento e a mesma forma de operação.</p>
+<p>Este documento consolida esses critérios em um padrão técnico corporativo. Sua adoção garante o mesmo nível de proteção para riscos equivalentes em unidades diferentes, simplifica a compra e a reposição de equipamentos, permite que as equipes de segurança e de tecnologia operem qualquer unidade da mesma forma e cria uma base comum para auditorias, expansões e integração futura do monitoramento.</p>
+<h3>1.1 Objetivo</h3>
+<p>Estabelecer os requisitos técnicos mínimos para o projeto, a especificação, a instalação, o comissionamento, a operação e a manutenção dos sistemas de CFTV das unidades da Binatural.</p>
+<h3>1.2 Campo de aplicação</h3>
+<p>Este padrão aplica-se:</p>
+<ol class="al"><li>às novas implantações de CFTV em qualquer unidade da Binatural;</li><li>à modernização e à expansão de sistemas existentes;</li><li>à substituição de equipamentos em manutenção corretiva, que deve seguir o padrão vigente e não reproduzir o equipamento retirado;</li><li>à contratação de projetos, fornecimentos e serviços de terceiros, que devem atender integralmente a este documento.</li></ol>
+<p>Sistemas existentes que não atendem ao padrão podem permanecer em operação até a modernização da unidade, desde que a não conformidade seja registrada no apêndice correspondente, com plano de adequação. A exceção são as câmeras comuns instaladas dentro de zona classificada: por constituírem fonte de ignição, devem ser retiradas ou substituídas de imediato.</p>
+<h3>1.3 Estrutura do documento e aplicação nas unidades</h3>
+<p>O documento é dividido em duas partes. O corpo do padrão, nas seções 1 a 19, é corporativo e não contém quantitativos: define critérios, especificações e procedimentos válidos para qualquer unidade. A aplicação a cada unidade é registrada em apêndice próprio, identificado por letra (Apêndice A, B, C e assim por diante), que segue o roteiro da seção 18 e reúne o diagnóstico, o enquadramento dos setores nas tipologias, as quantidades e o dimensionamento da unidade.</p>
+<p>As revisões do corpo do padrão são controladas pela Binatural e valem para todas as unidades a partir da data de emissão; as revisões de um apêndice afetam apenas a unidade correspondente.</p>
+</section>
+<section id="s2">
+<div class="sec"><i>02</i><h2>Referências normativas</h2></div>
+<p>Os documentos a seguir são indispensáveis à aplicação deste padrão. Considera-se sempre a edição vigente na data do projeto, incluindo emendas. As referências completas constam ao final do documento.</p>
+<p class="cap"><b>Quadro 1</b> – Referências normativas e aplicação no padrão</p>
+<div class="tw"><table><tr><th>Norma ou documento</th><th>Aplicação no padrão</th></tr><tr class="grp"><td colspan="2"><b class="w">CFTV, segurança da informação e privacidade</b></td></tr><tr><td>IEC 62676-4</td><td>Sistemas de vigilância por vídeo: diretrizes de aplicação. Base dos critérios de densidade de pixels (DORI).</td></tr><tr><td>ABNT NBR ISO/IEC 27002</td><td>Controles de segurança da informação; controle 7.4, monitoramento da segurança física.</td></tr><tr><td>ANSI/TIA-942</td><td>Infraestrutura de data centers; referência para o monitoramento do CPD.</td></tr><tr><td>ONVIF Perfis S e T</td><td>Interoperabilidade entre câmeras, gravadores e software de gestão.</td></tr><tr><td>Lei nº 13.709/2018 (LGPD)</td><td>Tratamento de dados pessoais, incluindo imagens de pessoas identificáveis.</td></tr><tr class="grp"><td colspan="2"><b class="w">Áreas classificadas</b></td></tr><tr><td>ABNT NBR IEC 60079-0</td><td>Atmosferas explosivas: equipamentos, requisitos gerais.</td></tr><tr><td>ABNT NBR IEC 60079-1</td><td>Proteção de equipamento por invólucro à prova de explosão “d”.</td></tr><tr><td>ABNT NBR IEC 60079-10-1</td><td>Classificação de áreas: atmosferas explosivas de gás.</td></tr><tr><td>ABNT NBR IEC 60079-14</td><td>Projeto, seleção e montagem de instalações elétricas em atmosferas explosivas.</td></tr><tr><td>ABNT NBR IEC 60079-17</td><td>Inspeção e manutenção de instalações elétricas em atmosferas explosivas.</td></tr><tr><td>Portaria INMETRO nº 115/2022</td><td>Certificação compulsória de equipamentos para atmosferas explosivas.</td></tr><tr><td>NR-20</td><td>Segurança e saúde no trabalho com inflamáveis e combustíveis.</td></tr><tr class="grp"><td colspan="2"><b class="w">Infraestrutura, instalações elétricas e segurança do trabalho</b></td></tr><tr><td>ABNT NBR 14565</td><td>Cabeamento estruturado; limite de 90 m no enlace permanente.</td></tr><tr><td>ABNT NBR 16415</td><td>Caminhos e espaços para cabeamento estruturado.</td></tr><tr><td>ABNT NBR 5410</td><td>Instalações elétricas de baixa tensão.</td></tr><tr><td>ABNT NBR 5419 (partes 1 a 4)</td><td>Proteção contra descargas atmosféricas; parte 4, sistemas elétricos e eletrônicos (DPS).</td></tr><tr><td>ABNT NBR 14039</td><td>Instalações elétricas de média tensão (subestações).</td></tr><tr><td>ABNT NBR IEC 60529</td><td>Graus de proteção providos por invólucros (código IP).</td></tr><tr><td>ABNT NBR 17240</td><td>Sistemas de detecção e alarme de incêndio; o CFTV não os substitui.</td></tr><tr><td>NR-10 e NR-35</td><td>Segurança em eletricidade e trabalho em altura.</td></tr><tr class="grp"><td colspan="2"><b class="w">Apresentação do documento</b></td></tr><tr><td>ABNT NBR 10719, NBR 14724, NBR 6023, NBR 6024, NBR 6027 e NBR 6028</td><td>Estrutura e apresentação de relatórios técnicos, referências, numeração progressiva, sumário e resumo.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+</section>
+<section id="s3">
+<div class="sec"><i>03</i><h2>Termos e definições</h2></div>
+<p>Para os efeitos deste documento, aplicam-se os seguintes termos e definições.</p>
+<p><b class="w">3.1 Área classificada</b>: Área na qual uma atmosfera explosiva de gás está presente, ou pode estar presente, em quantidade que exija precauções especiais para a construção, a instalação e a utilização de equipamentos (ABNT NBR IEC 60079-10-1).</p>
+<p><b class="w">3.2 Analítico de vídeo</b>: Função de software, embarcada na câmera ou no gravador, que interpreta a imagem e gera eventos automaticamente, como intrusão em área, cruzamento de linha ou classificação de pessoas e veículos.</p>
+<p><b class="w">3.3 Cerca virtual</b>: Analítico que gera alarme quando um alvo entra ou permanece em uma região definida da imagem.</p>
+<p><b class="w">3.4 Criticidade</b>: Grau de consequência de um evento não detectado ou não registrado no ambiente, classificado de C1 a C4 (seção 5.1).</p>
+<p><b class="w">3.5 DORI</b>: Classificação da finalidade da imagem em detecção, observação, reconhecimento e identificação, associada a uma densidade mínima de pixels sobre o alvo (IEC 62676-4).</p>
+<p><b class="w">3.6 EPL (nível de proteção de equipamento)</b>: Nível de proteção atribuído ao equipamento conforme a probabilidade de se tornar fonte de ignição (ABNT NBR IEC 60079-0).</p>
+<p><b class="w">3.7 Full Color</b>: Tecnologia de câmera que mantém imagem colorida à noite por meio de sensor de alta sensibilidade e iluminação branca auxiliar integrada.</p>
+<p><b class="w">3.8 Super Color</b>: Tecnologia de câmera que mantém imagem colorida em baixa iluminação principalmente pelo sensor de alta sensibilidade e pela lente de grande abertura, com pouca ou nenhuma iluminação auxiliar.</p>
+<p><b class="w">3.9 Câmera termográfica</b>: Câmera que forma imagem a partir da radiação infravermelha térmica emitida pelos corpos, sem depender de iluminação.</p>
+<p><b class="w">3.10 Padrão de câmera</b>: Conjunto de requisitos mínimos de tecnologia e desempenho identificado pelos códigos T1 a T7 (seção 6).</p>
+<p><b class="w">3.11 Tipologia de área</b>: Conjunto de ambientes com função, risco e condição de iluminação semelhantes, que recebem a mesma especificação de CFTV (seção 7).</p>
+<p><b class="w">3.12 Unidade</b>: Filial industrial ou administrativa da Binatural na qual o padrão é aplicado.</p>
+<p><b class="w">3.13 WDR (faixa dinâmica ampla)</b>: Capacidade da câmera de registrar ao mesmo tempo regiões muito claras e muito escuras da cena, como em contraluz de portas e janelas.</p>
+<p><b class="w">3.14 Zona</b>: Subdivisão da área classificada conforme a frequência e a duração da atmosfera explosiva: zona 0, zona 1 e zona 2.</p>
+</section>
+<section id="s4">
+<div class="sec"><i>04</i><h2>Diretrizes gerais</h2></div>
+<p>Os sistemas de CFTV das unidades da Binatural devem atender às seguintes diretrizes:</p>
+<ol class="al"><li><b class="w">Arquitetura 100% IP:</b> Não se admitem câmeras analógicas nem gravadores híbridos em novas instalações; os existentes são substituídos na modernização da unidade;</li><li><b class="w">Padrão mínimo:</b> Nenhuma câmera do sistema tem especificação inferior ao padrão T1, e nenhuma câmera externa tem especificação inferior ao padrão T3;</li><li><b class="w">Seleção pelo risco:</b> A tecnologia de cada câmera é definida pela tipologia da área (seção 7) e pela matriz de seleção (seção 5.3), e não pelo menor custo do ponto;</li><li><b class="w">Precedência da área classificada:</b> Dentro de zona classificada prevalece sempre o padrão T7, independentemente das demais características do ambiente;</li><li><b class="w">Gravação centralizada:</b> Gravadores instalados no CPD da unidade, com energia estabilizada e nobreak, e retenção mínima de 30 dias em gravação contínua;</li><li><b class="w">Detecção ativa:</b> Perímetro e áreas externas críticas usam analíticos com classificação de alvos, para que o sistema alerte o operador em vez de apenas registrar;</li><li><b class="w">Rede segregada:</b> O CFTV opera em VLAN própria, isolada da rede corporativa e da rede de automação industrial;</li><li><b class="w">Privacidade desde o projeto:</b> Posicionamento e enquadramento respeitam a LGPD já na concepção (seção 14);</li><li><b class="w">Interoperabilidade:</b> Equipamentos da linha de referência adotada pela Binatural ou equivalentes técnicos, compatíveis com ONVIF e com o software de gestão padrão, para permitir a intercambialidade entre unidades;</li><li><b class="w">Rastreabilidade:</b> Todo equipamento identificado conforme a nomenclatura da seção 15 e registrado na documentação como construído (as built).</li></ol>
+</section>
+<section id="s5">
+<div class="sec"><i>05</i><h2>Critérios de classificação dos ambientes</h2></div>
+<p>A especificação de cada câmera resulta de quatro perguntas, aplicadas nesta ordem: o ponto está dentro de zona classificada? O ambiente é interno ou externo? Qual é a criticidade do ambiente? Como é a iluminação? As respostas são combinadas na matriz de seleção da seção 5.3.</p>
+<h3>5.1 Criticidade</h3>
+<p>A criticidade expressa a consequência de um evento não detectado ou não registrado. É atribuída a cada setor no apêndice da unidade, com base no quadro a seguir.</p>
+<p class="cap"><b>Quadro 2</b> – Níveis de criticidade dos ambientes</p>
+<div class="tw"><table><tr><th>Nível</th><th>Definição</th><th>Exemplos</th></tr><tr><td><b class="w">C1 – Baixa</b></td><td>Ambientes internos administrativos, sem ativos de valor nem risco operacional, com iluminação controlada.</td><td>Escritórios, RH, diretoria, coordenação, salas de reunião</td></tr><tr><td><b class="w">C2 – Média</b></td><td>Áreas internas de apoio e de circulação, com fluxo de pessoas e ativos de valor moderado.</td><td>Recepções, circulações, oficina, refeitório</td></tr><tr><td><b class="w">C3 – Alta</b></td><td>Acessos, áreas externas, ativos de valor e pontos de controle fiscal ou logístico.</td><td>Portaria, estacionamentos, pátio, balança, almoxarifado, laboratório, perímetro</td></tr><tr><td><b class="w">C4 – Crítica</b></td><td>Infraestrutura essencial e áreas com risco de processo, cuja falha ou sinistro interrompe a operação ou expõe pessoas a risco.</td><td>CPD, subestação, sala de controle, caldeiras, processo, tancagem, carregamento</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<h3>5.2 Condição de iluminação</h3>
+<p class="cap"><b>Quadro 3</b> – Condições de iluminação e efeito na escolha da câmera</p>
+<div class="tw"><table><tr><th>Condição</th><th>Característica</th><th>Efeito na escolha</th></tr><tr><td><b class="w">I1 – Controlada</b></td><td>Iluminação artificial uniforme e permanente.</td><td>Admite os padrões T1 e T2.</td></tr><tr><td><b class="w">I2 – Contraluz</b></td><td>Portas e fachadas de vidro, docas abertas, grandes diferenças de luminosidade na mesma cena.</td><td>Exige WDR real: padrão T2 ou superior.</td></tr><tr><td><b class="w">I3 – Deficiente</b></td><td>Iluminação irregular, sombras, galpões de pé-direito alto, áreas operacionais com pouca luz.</td><td>Padrão T4.</td></tr><tr><td><b class="w">I4 – Noturna externa</b></td><td>Área externa com iluminação variável ou ausente no período noturno.</td><td>Padrão T3 como mínimo; T5 em perímetro extenso.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<h3>5.3 Matriz de seleção da câmera</h3>
+<p>A matriz define o padrão mínimo de cada ponto. Quando um ponto se enquadra em mais de uma condição, adota-se a de menor ordem. O projetista pode especificar padrão superior, com justificativa, mas nunca inferior.</p>
+<p class="cap"><b>Quadro 4</b> – Matriz de seleção do padrão de câmera</p>
+<div class="tw"><table><tr><th class="c">Ordem</th><th>Condição do ponto</th><th class="c">Padrão</th><th>Observação</th></tr><tr><td class="c">1</td><td>Dentro de zona classificada</td><td class="c">T7</td><td>Prevalece sobre todas as demais condições.</td></tr><tr><td class="c">2</td><td>Área externa, qualquer criticidade</td><td class="c">T3</td><td>Mínimo obrigatório; T5 complementar em perímetro extenso, fontes de calor e ativos elétricos.</td></tr><tr><td class="c">3</td><td>Área interna ou coberta com iluminação deficiente e alta densidade de pessoas ou equipamentos</td><td class="c">T4</td><td>Dispensa iluminação auxiliar que ofuscaria operadores.</td></tr><tr><td class="c">4</td><td>Área interna de criticidade C2, C3 ou C4</td><td class="c">T2</td><td>Padrão das áreas internas operacionais.</td></tr><tr><td class="c">5</td><td>Área interna de criticidade C1 com iluminação controlada</td><td class="c">T1</td><td>Uso restrito e justificado.</td></tr><tr><td class="c">6</td><td>Ambiente amplo com necessidade de visão geral a partir do teto</td><td class="c">T6</td><td>Complementar; não substitui a câmera de identificação do acesso.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<h3>5.4 Critério de densidade de pixels (DORI)</h3>
+<p>O posicionamento e a lente de cada câmera seguem a finalidade da imagem, conforme a IEC 62676-4. A densidade de pixels é a resolução horizontal da câmera dividida pela largura da cena no plano do alvo. A última coluna da tabela indica a largura máxima da cena que uma câmera de 2 MP (1.920 pixels horizontais) cobre em cada nível; para larguras maiores, aumenta-se a resolução, reduz-se o campo de visão ou acrescenta-se uma câmera.</p>
+<p class="cap"><b>Tabela 1</b> – Níveis DORI e largura máxima de cena para câmera de 2 MP</p>
+<div class="tw"><table><tr><th>Nível</th><th class="c">Densidade mínima</th><th>Finalidade</th><th class="c">Largura máx. (2 MP)</th><th>Aplicação típica</th></tr><tr><td>Detecção</td><td class="c">25 px/m</td><td>Perceber a presença de pessoa ou veículo</td><td class="c">76,8 m</td><td>Perímetro, cerca virtual, termografia</td></tr><tr><td>Observação</td><td class="c">62 px/m</td><td>Acompanhar ações e movimentação</td><td class="c">31,0 m</td><td>Pátios, galpões, vias internas</td></tr><tr><td>Reconhecimento</td><td class="c">125 px/m</td><td>Reconhecer pessoa conhecida</td><td class="c">15,4 m</td><td>Circulações, áreas operacionais</td></tr><tr><td>Identificação</td><td class="c">250 px/m</td><td>Identificar pessoa desconhecida</td><td class="c">7,7 m</td><td>Portarias, portões, CPD, balança</td></tr></table></div>
+<p class="fonte">Fonte: adaptado de IEC 62676-4; largura máxima calculada pela A+.com Engenharia e Tecnologia (2026).</p>
+</section>
+<section id="s6">
+<div class="sec"><i>06</i><h2>Padrões de câmera</h2></div>
+<p>O padrão define sete níveis de câmera, identificados de T1 a T7. Os modelos citados são referências de mercado da linha Intelbras, adotada pela Binatural; modelos equivalentes de qualquer fabricante podem ser especificados desde que atendam a todos os requisitos desta seção e sejam compatíveis com os gravadores e o software de gestão.</p>
+<h3>6.1 Requisitos comuns a todos os padrões</h3>
+<p>Todas as câmeras do sistema devem atender, no mínimo, aos seguintes requisitos:</p>
+<ol class="al"><li>Sensor CMOS de varredura progressiva e resolução mínima de 2 MP (1.920 × 1.080 pixels), exceto no canal térmico do padrão T5;</li><li>Compressão H.265 com modo de codificação inteligente, além de H.264, e no mínimo dois fluxos de vídeo simultâneos;</li><li>Conformidade com os perfis ONVIF S e T;</li><li>Sincronismo de horário por NTP;</li><li>Acesso por HTTPS, gestão de usuários com níveis de permissão e firmware atualizável com suporte ativo do fabricante;</li><li>Alimentação PoE conforme IEEE 802.3af ou 802.3at, exceto quando a folha de dados exigir fonte dedicada;</li><li>Grau de proteção mínimo IP67 nas câmeras externas e IK10 nas câmeras dome sujeitas a vandalismo ou impacto (ABNT NBR IEC 60529);</li><li>Faixa de temperatura de operação compatível com o local de instalação.</li></ol>
+<h3>6.2 Quadro-resumo dos padrões</h3>
+<p class="cap"><b>Quadro 5</b> – Padrões de câmera adotados</p>
+<div class="tw"><table><tr><th class="c">Padrão</th><th>Tecnologia</th><th>Referência de mercado</th><th>Uso principal</th></tr><tr><td class="c">T1</td><td>IR convencional 2 MP</td><td>Intelbras VIP 1230 (B/D)</td><td>Ambientes internos C1 com iluminação controlada</td></tr><tr><td class="c">T2</td><td>Série 3000 · IR 2 MP</td><td>Intelbras VIP 3230 (B/D)</td><td>Áreas internas operacionais (C2 a C4)</td></tr><tr><td class="c">T3</td><td>Full Color 2 MP com IA</td><td>Intelbras VIP 3230 FC+ IA (B/D)</td><td>Todas as áreas externas</td></tr><tr><td class="c">T4</td><td>Super Color 2 MP</td><td>Intelbras VIP 3230 SC IA (B/D)</td><td>Ambientes com iluminação deficiente e muitas pessoas ou equipamentos</td></tr><tr><td class="c">T5</td><td>Termográfica</td><td>Intelbras VIP 5203</td><td>Perímetro, fontes de calor, ativos elétricos e inflamáveis</td></tr><tr><td class="c">T6</td><td>Fisheye 360°</td><td>Intelbras fisheye VIP5500 F IA</td><td>Visão geral de ambientes amplos a partir do teto</td></tr><tr><td class="c">T7</td><td>Antiexplosão (Ex)</td><td>Câmera Ex certificada ou câmera IP em invólucro Ex d certificado</td><td>Pontos dentro de zona classificada</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<h3>6.3 Especificação dos padrões</h3>
+<h4>6.3.1 Padrão T1 – IR convencional 2 MP</h4>
+<p>Câmera IP de entrada, com imagem colorida de dia e monocromática à noite por infravermelho. Atende ambientes internos de baixa criticidade e iluminação controlada, nos quais tecnologia superior não traria ganho proporcional ao custo. Requisitos adicionais:</p>
+<ol class="al"><li>alcance de infravermelho de no mínimo 20 m;</li><li>WDR digital;</li><li>formato dome ou bullet compacto;</li><li>uso exclusivamente interno, em ambientes de criticidade C1.</li></ol>
+<h4>6.3.2 Padrão T2 – VIP 3230 (B/D) - 2 MP</h4>
+<p>Padrão das áreas internas operacionais. Diferencia-se do T1 pelo WDR real, que preserva rostos e detalhes em contraluz, pela compressão mais eficiente e pelo processamento de imagem superior. Requisitos adicionais:</p>
+<ol class="al"><li>WDR real de no mínimo 120 dB;</li><li>alcance de infravermelho de no mínimo 30 m;</li><li>codificação H.265 inteligente;</li><li>gravação local em cartão de memória, desejável, para preservar imagens em falha de rede.</li></ol>
+<h4>6.3.3 Padrão T3 – VIP 3230 FC+ IA (B/D) – 2MP</h4>
+<p>Padrão mínimo de todas as áreas externas. A iluminação branca auxiliar mantém a imagem colorida 24 horas e preserva a cor de veículos e vestimentas, informação decisiva na investigação de ocorrências noturnas e perdida pelas câmeras de infravermelho. Requisitos adicionais:</p>
+<ol class="al"><li>iluminação branca auxiliar com alcance de no mínimo 30 m e acionamento inteligente por evento ou por luminosidade;</li><li>analíticos embarcados de intrusão em área, cruzamento de linha e classificação de pessoas e veículos;</li><li>WDR real de no mínimo 120 dB e grau de proteção IP67;</li></ol>
+<p>Junto a vias públicas e vizinhança residencial, avalia-se o ofuscamento causado pela luz branca e ajustam-se a intensidade e o ângulo da iluminação.</p>
+<h4>6.3.4 Padrão T4 – VIP 3230 SC IA (B/D) - 2 MP</h4>
+<p>Padrão dos ambientes internos ou cobertos com iluminação deficiente e grande circulação de pessoas, veículos ou equipamentos. Mantém a imagem colorida com pouca luz sem depender de iluminação branca, que ofuscaria operadores de empilhadeiras e máquinas. Requisitos adicionais:</p>
+<ol class="al"><li>sensor de alta sensibilidade e lente de grande abertura (f/1,0 ou equivalente);</li><li>WDR real de no mínimo 120 dB;</li><li>grau de proteção IP67 em ambientes com poeira, umidade ou névoa de óleo.</li></ol>
+<h4>6.3.5 Padrão T5 – Termográfica VIP 5203</h4>
+<p>Forma imagem pela radiação térmica emitida pelos corpos, sem depender de luz, e não é afetada por escuridão, fumaça leve, neblina ou faróis. Em plantas que manipulam inflamáveis, cumpre duas funções: detecção perimetral a longa distância e prevenção de incêndio pela detecção de pontos quentes. Requisitos adicionais:</p>
+<ol class="al"><li>sensor térmico não refrigerado (microbolômetro de óxido de vanádio) com NETD de no máximo 50 mK;</li><li>canal visível de no mínimo 2 MP (câmera bi-espectral), recomendado para identificar o evento detectado;</li><li>analíticos de intrusão no canal térmico;</li><li>medição de temperatura com alarme por limiar nas aplicações de prevenção de incêndio e de pontos quentes;</li><li>lente definida pela distância de detecção requerida e grau de proteção IP67.</li></ol>
+<p>Câmeras bi-espectrais geram dois fluxos de vídeo e normalmente ocupam dois canais no gravador. Essa condição deve ser verificada na folha de dados e considerada na alocação de canais e no cálculo de armazenamento.</p>
+<h4>6.3.6 Padrão T6 – Fisheye 360° VIP 5500 F IA</h4>
+<p>Cobre um ambiente inteiro a partir de um único ponto no teto. A correção de distorção (dewarping), no gravador ou no software, gera vistas planas independentes. Requisitos adicionais:</p>
+<ol class="al"><li>resolução de no mínimo 5 MP, preferencialmente 8 MP;</li><li>visão de 360° em montagem de teto ou de 180° em parede;</li><li>correção de distorção suportada pelo gravador ou pelo software de gestão;</li><li>bitrate de referência superior ao das câmeras de 2 MP (seção 10.2).</li></ol>
+<h4>6.3.7 Padrão T7 – Antiexplosão (Ex)</h4>
+<p>Obrigatório em todo ponto situado dentro de zona classificada. Pode ser uma câmera certificada para atmosfera explosiva ou uma câmera IP instalada em invólucro Ex d certificado, respeitados os limites de potência dissipada e de classe de temperatura do certificado. Requisitos adicionais:</p>
+<ol class="al"><li>certificado de conformidade INMETRO para atmosfera explosiva, com marcação Ex visível;</li><li>nível de proteção EPL Gb, no mínimo, adequado às zonas 1 e 2;</li><li>grupo de gás IIB e classe de temperatura T4, no mínimo, o que cobre o metanol (grupo IIA, classe T1) com margem;</li><li>tipo de proteção preferencial à prova de explosão (Ex d);</li><li>invólucro em aço inoxidável AISI 316L, com grau de proteção IP66 ou superior;</li><li>módulo de câmera com desempenho mínimo equivalente ao padrão T2;</li><li>prensa-cabos, unidades seladoras e acessórios com certificação Ex.</li></ol>
+</section>
+<section id="s7">
+<div class="sec"><i>07</i><h2>Especificação por tipologia de área</h2></div>
+<p>Esta seção define a especificação de CFTV de cada tipologia de área encontrada nas unidades da Binatural. Na aplicação do padrão, cada setor levantado na unidade é enquadrado em uma ou mais tipologias e recebe a especificação correspondente. Setores sem tipologia correspondente são especificados pela matriz da seção 5.3 e propostos para inclusão na revisão seguinte deste padrão.</p>
+<h3>7.1 Quadro-resumo das tipologias</h3>
+<p class="cap"><b>Quadro 6</b> – Resumo da especificação por tipologia de área</p>
+<div class="tw"><table><tr><th class="c">Seção</th><th>Tipologia</th><th class="c">Crit.</th><th>Padrão principal</th><th>Padrão complementar</th></tr><tr><td class="c">7.2</td><td>Áreas administrativas: escritórios, RH, diretoria, coordenação e salas de reunião</td><td class="c">C1</td><td>T1</td><td>T2 nos acessos com contraluz</td></tr><tr><td class="c">7.3</td><td>Recepções e circulações internas</td><td class="c">C2</td><td>T2</td><td>T6 em halls amplos</td></tr><tr><td class="c">7.4</td><td>Portaria, guarita e controle de acesso</td><td class="c">C3</td><td>T3 nos portões, na cancela e na guarita; T2 na sala de vigilância</td><td>Câmera de leitura de placas (LPR) no acesso de veículos, recomendada</td></tr><tr><td class="c">7.5</td><td>CPD e salas de TI e telecomunicações</td><td class="c">C4</td><td>T2</td><td>Não se aplica</td></tr><tr><td class="c">7.6</td><td>Estacionamento de funcionários</td><td class="c">C3</td><td>T3 com analíticos de IA</td><td>LPR no acesso de veículos (opcional); T5 em limites extensos sem iluminação</td></tr><tr><td class="c">7.7</td><td>Pátio de caminhões e sala de motoristas</td><td class="c">C3</td><td>T3 nas vias, nas vagas e na fachada; T2 no interior da sala de motoristas</td><td>T5 no perímetro do pátio</td></tr><tr><td class="c">7.8</td><td>Balança</td><td class="c">C3</td><td>T3</td><td>LPR na entrada da plataforma e câmera de vista superior da carroceria</td></tr><tr><td class="c">7.9</td><td>Almoxarifado</td><td class="c">C3</td><td>T4 no galpão; T3 nas docas e nos acessos externos</td><td>Não se aplica</td></tr><tr><td class="c">7.10</td><td>Oficina de manutenção</td><td class="c">C2</td><td>T4</td><td>Não se aplica</td></tr><tr><td class="c">7.11</td><td>Caldeiras e geração de vapor (áreas de calor)</td><td class="c">C4</td><td>T4 nas áreas operacionais</td><td>T5 na fornalha e no estoque de combustível; T3 no entorno externo</td></tr><tr><td class="c">7.12</td><td>Utilidades gerais: compressores, geradores, torres de resfriamento, ETA e ETE</td><td class="c">C2 a C4</td><td>T4 nas salas internas; T3 nas áreas externas</td><td>T5 em geradores e compressores de grande porte</td></tr><tr><td class="c">7.13</td><td>Subestação e salas elétricas</td><td class="c">C4</td><td>T2 no interior; T3 no exterior, com cerca virtual</td><td>T5 sobre transformadores, barramentos e conexões</td></tr><tr><td class="c">7.14</td><td>Laboratório de controle de qualidade</td><td class="c">C3</td><td>T2</td><td>T7 na sala de reagentes e solventes, se classificada</td></tr><tr><td class="c">7.15</td><td>Sala de controle e supervisório</td><td class="c">C4</td><td>T6 no teto</td><td>T2 no acesso à sala</td></tr><tr><td class="c">7.16</td><td>Área de processo industrial</td><td class="c">C4</td><td>T7 dentro de zona classificada</td><td>T3 (externo) ou T4 (coberto) posicionadas fora da zona, observando a área a partir do limite</td></tr><tr><td class="c">7.17</td><td>Parque de tanques e recebimento de insumos</td><td class="c">C4</td><td>T7 dentro de zona; T3 fora da zona</td><td>T5 sobre o parque de tanques e as bacias de contenção, instalada fora das zonas</td></tr><tr><td class="c">7.18</td><td>Carregamento e descarregamento de produtos</td><td class="c">C4</td><td>T7 na plataforma, se em zona classificada</td><td>T4 (coberto) ou T3 (externo) fora da zona; LPR na entrada da plataforma</td></tr><tr><td class="c">7.19</td><td>Perímetro da planta</td><td class="c">C3</td><td>T3 com analíticos de IA ao longo do muro ou da cerca</td><td>T5 em trechos extensos, sem iluminação ou de difícil acesso</td></tr><tr><td class="c">7.20</td><td>Áreas de vivência e saúde ocupacional</td><td class="c">C2</td><td>T2 nas circulações e no acesso ao refeitório</td><td>Não se aplica</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<h3>7.2 Áreas administrativas: escritórios, RH, diretoria, coordenação e salas de reunião</h3>
+<p class="cap"><b>Quadro 7</b> – Especificação – Áreas administrativas: escritórios, RH, diretoria, coordenação e salas de reunião</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C1 – Baixa</td></tr><tr><td><b class="w">Ambiente</b></td><td>Interno, com iluminação artificial controlada (I1).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T1</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>T2 nos acessos com contraluz</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Reconhecimento (125 px/m) nos acessos; observação (62 px/m) nas circulações.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Acesso a cada conjunto de salas; circulação principal; acesso ao arquivo de documentos do RH.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Enquadrar acessos e circulações, nunca telas, documentos ou estações de trabalho; câmeras sem captação de áudio; nenhuma câmera no interior das salas de entrevista e de atendimento individual do RH.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Ambientes de baixa criticidade e iluminação estável, nos quais o padrão mínimo T1 é suficiente para registrar quem entra e quem sai. A função da câmera nessas áreas é o controle de acesso, e não a vigilância do trabalho, e tecnologia superior não traz ganho proporcional ao custo.</p>
+<p>O RH concentra dados pessoais e dados pessoais sensíveis dos empregados, como prontuários, atestados e informações de saúde e de dependentes. Por isso a câmera do RH registra o acesso ao setor e ao arquivo físico, mas não o interior das salas de entrevista e de atendimento, onde a captação de imagens seria desproporcional à finalidade de segurança (LGPD, art. 6º, inciso III, princípio da necessidade).</p>
+<h3>7.3 Recepções e circulações internas</h3>
+<p class="cap"><b>Quadro 8</b> – Especificação – Recepções e circulações internas</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C2 – Média</td></tr><tr><td><b class="w">Ambiente</b></td><td>Interno, com contraluz frequente em portas e fachadas de vidro (I2).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T2</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>T6 em halls amplos</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Identificação (250 px/m) no balcão e na porta de entrada; reconhecimento (125 px/m) nas circulações.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Porta de entrada, com a câmera voltada para o interior do prédio; balcão de recepção; corredores e escadas; acessos a áreas restritas.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Evitar a porta de vidro como fundo da cena; instalar a câmera de entrada entre 2,5 m e 3,0 m de altura, para captar rostos sem ângulo vertical excessivo.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>A recepção é o ponto em que visitantes e prestadores de serviço são identificados. A contraluz das portas de vidro escurece os rostos em câmeras sem WDR real, o que justifica o padrão T2 mesmo em ambiente interno de criticidade média.</p>
+<h3>7.4 Portaria, guarita e controle de acesso</h3>
+<p class="cap"><b>Quadro 9</b> – Especificação – Portaria, guarita e controle de acesso</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C3 – Alta</td></tr><tr><td><b class="w">Ambiente</b></td><td>Externo nos portões e na cancela (I4); interno na sala de vigilância (I1 ou I2).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T3 nos portões, na cancela e na guarita; T2 na sala de vigilância</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>Câmera de leitura de placas (LPR) no acesso de veículos, recomendada</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Identificação (250 px/m) nos portões de pedestres, na cancela e nas catracas.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Portão de pedestres, na entrada e na saída; portão de veículos, nos dois sentidos; cancela; fachada da guarita; interior da sala de vigilância; catracas, quando houver.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Estação de monitoramento na portaria, com recebimento dos alarmes dos analíticos; câmeras dos portões com cobertura mútua, de modo que cada câmera veja a posição da outra.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>A portaria controla todo o fluxo de pessoas e veículos da unidade e é o primeiro ponto de resposta a ocorrências. A imagem de identificação nos portões é a evidência mais consultada em investigações, e a tecnologia Full Color preserva a cor de veículos e vestimentas no período noturno. A leitura de placas automatiza o registro de entrada e saída de veículos e pode ser integrada ao controle da balança.</p>
+<h3>7.5 CPD e salas de TI e telecomunicações</h3>
+<p class="cap"><b>Quadro 10</b> – Especificação – CPD e salas de TI e telecomunicações</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C4 – Crítica</td></tr><tr><td><b class="w">Ambiente</b></td><td>Interno, com iluminação controlada (I1).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T2</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>Não se aplica</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Identificação (250 px/m) na porta; observação (62 px/m) no corredor dos racks.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>No mínimo duas câmeras no CPD: uma voltada para a porta de acesso e outra cobrindo o corredor dos racks. Salas de telecomunicações remotas: uma câmera no acesso.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Não enquadrar teclados e telas de console; associar a gravação aos eventos de abertura da porta, quando houver controle de acesso eletrônico.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Não há norma brasileira de cumprimento obrigatório que fixe a quantidade de câmeras em um CPD. A ABNT NBR ISO/IEC 27002, no controle 7.4 (monitoramento da segurança física), e a ANSI/TIA-942 recomendam o monitoramento por vídeo do acesso e do interior das salas de TI. O padrão adota duas câmeras como mínimo: uma identifica quem entra e a outra registra o que é feito junto aos equipamentos. Como o CPD abriga os gravadores, é também o local que protege as evidências de todo o sistema.</p>
+<h3>7.6 Estacionamento de funcionários</h3>
+<p class="cap"><b>Quadro 11</b> – Especificação – Estacionamento de funcionários</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C3 – Alta</td></tr><tr><td><b class="w">Ambiente</b></td><td>Externo, com iluminação noturna variável (I4).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T3 com analíticos de IA</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>LPR no acesso de veículos (opcional); T5 em limites extensos sem iluminação</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Observação (62 px/m) nas vagas e circulações; identificação no acesso de pedestres; detecção (25 px/m) no limite do terreno.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Acessos de veículos e de pedestres; corredores de circulação; fileiras de vagas; limite do terreno, com cerca virtual.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Postes metálicos galvanizados dedicados, de 4 m a 6 m, aterrados e com DPS; switch de campo em rack outdoor (seção 11); uplink até o CPD em fibra óptica, preferencialmente, ou por enlace de rádio ponto a ponto.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Área externa com circulação de pessoas e veículos também à noite. A tecnologia Full Color registra a cor dos veículos e das roupas, informação perdida pelas câmeras de infravermelho, e os analíticos com classificação de alvos permitem configurar cerca virtual no limite do terreno com baixa taxa de falsos alarmes.</p>
+<h3>7.7 Pátio de caminhões e sala de motoristas</h3>
+<p class="cap"><b>Quadro 12</b> – Especificação – Pátio de caminhões e sala de motoristas</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C3 – Alta</td></tr><tr><td><b class="w">Ambiente</b></td><td>Pátio externo de grande extensão, com operação noturna (I4); sala de motoristas interna, com contraluz (I2).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T3 nas vias, nas vagas e na fachada; T2 no interior da sala de motoristas</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>T5 no perímetro do pátio</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Observação (62 px/m) nas vias e vagas; identificação no acesso e no balcão de atendimento; detecção no perímetro.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Entrada e saída do pátio; vias de manobra; fileiras de vagas; acesso e balcão da sala de motoristas; perímetro do pátio.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Postes dedicados ao CFTV ou adequação da posteação de iluminação, com caixa hermética, circuito elétrico próprio, DPS e aterramento; iluminação LED de distribuição homogênea, recomendada; lances acima de 90 m em fibra óptica até switch de campo (ABNT NBR 14565).</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>O pátio recebe veículos carregados de produto e de insumos, opera à noite e tem grande área aberta, o que dificulta a cobertura apenas com câmeras de espectro visível. A combinação de Full Color nas vias com câmeras termográficas no perímetro garante detecção independente da iluminação e imune ao ofuscamento por faróis. A sala de motoristas recebe terceiros em fluxo intenso e rotativo e exige imagem de identificação no atendimento.</p>
+<h3>7.8 Balança</h3>
+<p class="cap"><b>Quadro 13</b> – Especificação – Balança</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C3 – Alta (controle fiscal)</td></tr><tr><td><b class="w">Ambiente</b></td><td>Externo, com operação noturna (I4).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T3</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>LPR na entrada da plataforma e câmera de vista superior da carroceria</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Identificação (250 px/m) da placa e da cabine; observação da plataforma completa.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Plataforma inteira, com o veículo em pesagem; placas dianteira e traseira; vista superior da carga; cabine de operação da balança.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Integração recomendada com o software de pesagem, gravando placa, data, hora e peso associados à imagem.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>A balança é ponto de controle fiscal e de faturamento. A associação entre imagem, placa, horário e peso inibe fraudes como a pesagem parcial do veículo, a troca de placas e a presença de pessoas na cabine durante a pesagem, e permite auditar qualquer pesagem.</p>
+<h3>7.9 Almoxarifado</h3>
+<p class="cap"><b>Quadro 14</b> – Especificação – Almoxarifado</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C3 – Alta</td></tr><tr><td><b class="w">Ambiente</b></td><td>Galpão de pé-direito alto, com iluminação irregular entre as prateleiras (I3); docas com contraluz (I2).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T4 no galpão; T3 nas docas e nos acessos externos</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>Não se aplica</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Reconhecimento (125 px/m) no balcão de entrega e na área de separação; observação (62 px/m) nos corredores.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Balcão de atendimento e de retirada; corredores de prateleiras, no eixo de cada corredor; área de separação; docas; acessos.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Câmeras acima da altura de empilhamento, sem obstrução por prateleiras e cargas; proteção mecânica onde houver risco de impacto de empilhadeira.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Galpão com ativos de valor, circulação de pessoas e empilhadeiras e iluminação irregular entre os corredores. A tecnologia Super Color mantém a imagem colorida com pouca luz e dispensa a iluminação branca auxiliar, que ofuscaria os operadores de empilhadeira.</p>
+<h3>7.10 Oficina de manutenção</h3>
+<p class="cap"><b>Quadro 15</b> – Especificação – Oficina de manutenção</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C2 – Média</td></tr><tr><td><b class="w">Ambiente</b></td><td>Interno, com sombras, iluminação localizada, poeira e óleo (I3).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T4</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>Não se aplica</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Observação (62 px/m).</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Bancadas; área de máquinas; acesso de veículos e equipamentos; guarda de ferramentas.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Grau de proteção IP67 contra poeira e névoa de óleo; limpeza das lentes incluída na manutenção preventiva.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Ambiente com alta densidade de equipamentos e ferramentas, muitos pontos de sombra e iluminação concentrada nas bancadas. A tecnologia Super Color atende à baixa iluminação sem ofuscar quem opera máquinas.</p>
+<h3>7.11 Caldeiras e geração de vapor (áreas de calor)</h3>
+<p class="cap"><b>Quadro 16</b> – Especificação – Caldeiras e geração de vapor (áreas de calor)</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C4 – Crítica</td></tr><tr><td><b class="w">Ambiente</b></td><td>Interno ou coberto, com temperatura elevada, poeira, vapor e iluminação deficiente (I3).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T4 nas áreas operacionais</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>T5 na fornalha e no estoque de combustível; T3 no entorno externo</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Observação (62 px/m) na frente da caldeira e no painel local; detecção de calor no estoque de combustível.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Frente da caldeira e painel local; alimentação de combustível; pátio ou silo de combustível; acessos; entorno externo da casa de caldeira.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Medir a temperatura ambiente no ponto e respeitar a faixa de operação da câmera; manter distância de superfícies quentes, chaminés e saídas de vapor; caixas de proteção com blindagem térmica, quando necessário; cabos com isolação compatível com a temperatura do local.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>As caldeiras são utilidade crítica: sua parada interrompe o processo, e o ambiente reúne equipamentos de grande porte, calor, poeira e iluminação deficiente. A tecnologia Super Color atende às áreas operacionais.</p>
+<p>Quando a caldeira opera com biomassa, o autoaquecimento das pilhas de cavaco ou de bagaço é um risco de incêndio conhecido. A câmera termográfica com medição de temperatura acompanha as superfícies e o estoque de combustível e alarma antes do surgimento da chama.</p>
+<h3>7.12 Utilidades gerais: compressores, geradores, torres de resfriamento, ETA e ETE</h3>
+<p class="cap"><b>Quadro 17</b> – Especificação – Utilidades gerais: compressores, geradores, torres de resfriamento, ETA e ETE</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C2 a C4, conforme a redundância da utilidade</td></tr><tr><td><b class="w">Ambiente</b></td><td>Salas internas com iluminação deficiente (I3) ou áreas externas (I4).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T4 nas salas internas; T3 nas áreas externas</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>T5 em geradores e compressores de grande porte</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Observação (62 px/m).</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Acessos às salas e casas de utilidades; equipamentos principais; tanques e reatores da ETE.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Verificar no estudo de classificação de áreas se há zonas na ETE e na armazenagem de combustível dos geradores; havendo, aplicar o padrão T7.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>As utilidades sustentam a operação contínua da planta. A cobertura registra os acessos e o estado dos equipamentos principais; a criticidade é definida no apêndice da unidade, conforme a redundância existente.</p>
+<h3>7.13 Subestação e salas elétricas</h3>
+<p class="cap"><b>Quadro 18</b> – Especificação – Subestação e salas elétricas</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C4 – Crítica</td></tr><tr><td><b class="w">Ambiente</b></td><td>Interno na sala de painéis (I1); externo nos transformadores e no portão (I4).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T2 no interior; T3 no exterior, com cerca virtual</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>T5 sobre transformadores, barramentos e conexões</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Identificação no portão de acesso; observação no pátio e na sala de painéis; detecção na cerca.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Portão e porta de acesso; interior da sala de painéis e cubículos; transformadores; cerca do pátio externo.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Instalação somente por profissionais habilitados e autorizados (NR-10), com a área desenergizada ou fora da zona de risco e respeitadas as distâncias de segurança da ABNT NBR 14039; uplink obrigatório em fibra óptica; DPS na alimentação e nos dados.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>A subestação é ponto único de falha da planta. Além da segurança patrimonial, a câmera termográfica acompanha o aquecimento de transformadores e conexões, sintoma que costuma anteceder falhas. A fibra óptica garante isolamento galvânico e evita que elevações de potencial de terra durante faltas e surtos sejam conduzidas pelo cabo de dados até o CPD.</p>
+<h3>7.14 Laboratório de controle de qualidade</h3>
+<p class="cap"><b>Quadro 19</b> – Especificação – Laboratório de controle de qualidade</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C3 – Alta</td></tr><tr><td><b class="w">Ambiente</b></td><td>Interno, com iluminação controlada (I1).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T2</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>T7 na sala de reagentes e solventes, se classificada</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Identificação no acesso; reconhecimento (125 px/m) nas bancadas.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Acesso; bancadas de análise; recebimento de amostras; guarda de amostras-testemunho.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Confirmar no estudo de classificação de áreas se a sala de reagentes e solventes é classificada; câmeras compatíveis com a limpeza química do ambiente, quando aplicável.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>O laboratório certifica a qualidade do biodiesel e guarda as amostras-testemunho exigidas na comercialização do produto. O registro de vídeo apoia a rastreabilidade das análises e a cadeia de custódia das amostras.</p>
+<h3>7.15 Sala de controle e supervisório</h3>
+<p class="cap"><b>Quadro 20</b> – Especificação – Sala de controle e supervisório</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C4 – Crítica</td></tr><tr><td><b class="w">Ambiente</b></td><td>Interno, com iluminação controlada e telas emissoras de luz (I1 ou I2).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T6 no teto</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>T2 no acesso à sala</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Identificação no acesso; observação do ambiente e das estações.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Acesso à sala; teto central, cobrindo as estações de supervisão.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>A câmera registra o contexto da operação: presença, ações do operador e alarmes visíveis; a leitura de detalhes das telas exige gravação pelo próprio sistema supervisório.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>A sala de controle concentra a operação do processo. Uma câmera fisheye no teto cobre a sala inteira com um único equipamento e permite gerar vistas planas independentes por correção de distorção, enquanto a câmera do acesso garante a identificação de quem entra.</p>
+<h3>7.16 Área de processo industrial</h3>
+<p class="cap"><b>Quadro 21</b> – Especificação – Área de processo industrial</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C4 – Crítica</td></tr><tr><td><b class="w">Ambiente</b></td><td>Externo ou coberto, com zonas classificadas por atmosfera explosiva de gás.</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T7 dentro de zona classificada</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>T3 (externo) ou T4 (coberto) posicionadas fora da zona, observando a área a partir do limite</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Observação (62 px/m).</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Reatores e decantadores; colunas de recuperação de metanol; bombas e válvulas principais; rotas de fuga e acessos da área.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Preferir câmeras fora da zona classificada, com lente varifocal ou motorizada; usar T7 somente onde não houver posição externa à zona com cobertura adequada; switches, fontes e DPS sempre fora da zona; montagem conforme ABNT NBR IEC 60079-14.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>O biodiesel tem ponto de fulgor elevado, de no mínimo 100 °C pela especificação da ANP, mas o processo utiliza metanol, com ponto de fulgor próximo de 11 °C, além de catalisadores em solução metanólica. As áreas de reação, de recuperação de álcool e de purificação são candidatas típicas a classificação.</p>
+<p>Posicionar as câmeras fora da zona, sempre que possível, reduz o custo e simplifica a manutenção, pois os equipamentos Ex exigem inspeção periódica e intervenção com permissão de trabalho.</p>
+<h3>7.17 Parque de tanques e recebimento de insumos</h3>
+<p class="cap"><b>Quadro 22</b> – Especificação – Parque de tanques e recebimento de insumos</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C4 – Crítica</td></tr><tr><td><b class="w">Ambiente</b></td><td>Externo, com zonas classificadas junto a respiros, bocais e bombas de metanol.</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T7 dentro de zona; T3 fora da zona</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>T5 sobre o parque de tanques e as bacias de contenção, instalada fora das zonas</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Observação das bacias e das plataformas de descarga; identificação do veículo na descarga.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Plataformas de descarga de metanol e de óleo vegetal; bacias de contenção; bombas de transferência; acessos ao parque.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Zonas definidas exclusivamente pelo estudo de classificação de áreas; câmeras termográficas posicionadas fora das zonas, com visada sobre os tanques.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>A chama do metanol é pouco luminosa e praticamente invisível à luz do dia, o que dificulta a percepção de um incêndio incipiente por câmeras de espectro visível e até por observação direta. A câmera termográfica detecta a chama e o aquecimento anormal independentemente da luz, e por isso é o complemento recomendado nas áreas de armazenagem e de transferência de metanol.</p>
+<h3>7.18 Carregamento e descarregamento de produtos</h3>
+<p class="cap"><b>Quadro 23</b> – Especificação – Carregamento e descarregamento de produtos</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C4 – Crítica</td></tr><tr><td><b class="w">Ambiente</b></td><td>Externo ou coberto, potencialmente classificado.</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T7 na plataforma, se em zona classificada</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>T4 (coberto) ou T3 (externo) fora da zona; LPR na entrada da plataforma</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Identificação do veículo; observação da operação de carregamento.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Plataforma e braços de carregamento; posição do caminhão-tanque; ponto de aterramento do veículo; acesso à plataforma.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Revisar todas as câmeras existentes à luz do estudo de classificação: câmeras comuns dentro de zona devem ser retiradas ou substituídas.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>O carregamento é a interface entre a planta e o transporte do produto. A imagem registra a conformidade da operação, como a posição do veículo, a conexão do aterramento e o uso dos braços de carga, e apoia a investigação de derramamentos e de não conformidades na expedição.</p>
+<h3>7.19 Perímetro da planta</h3>
+<p class="cap"><b>Quadro 24</b> – Especificação – Perímetro da planta</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C3 – Alta</td></tr><tr><td><b class="w">Ambiente</b></td><td>Externo, extenso, com iluminação ausente ou irregular (I4).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T3 com analíticos de IA ao longo do muro ou da cerca</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>T5 em trechos extensos, sem iluminação ou de difícil acesso</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Detecção (25 px/m) em toda a extensão; observação nos portões secundários.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Faixa interna do muro ou da cerca, sem pontos cegos; portões secundários e de emergência; cantos do terreno.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Câmeras com cobertura mútua; cerca virtual e linha de travessia com classificação de pessoas e veículos; zona de detecção afastada de vegetação e de vias públicas, para reduzir falsos alarmes; agenda de armação conforme a operação.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Detectar a intrusão no perímetro, e não apenas registrá-la, é o que dá tempo de resposta à vigilância. Em uma planta que armazena inflamáveis, a intrusão é também risco de sinistro. Por isso o perímetro combina analíticos com classificação de alvos e câmeras termográficas, que detectam pessoas a distâncias maiores e sem iluminação.</p>
+<h3>7.20 Áreas de vivência e saúde ocupacional</h3>
+<p class="cap"><b>Quadro 25</b> – Especificação – Áreas de vivência e saúde ocupacional</p>
+<div class="tw"><table><tr><td><b class="w">Criticidade</b></td><td>C2 – Média</td></tr><tr><td><b class="w">Ambiente</b></td><td>Interno, com iluminação controlada (I1).</td></tr><tr><td><b class="w">Padrão principal</b></td><td>T2 nas circulações e no acesso ao refeitório</td></tr><tr><td><b class="w">Padrão complementar</b></td><td>Não se aplica</td></tr><tr><td><b class="w">Nível DORI</b></td><td>Reconhecimento (125 px/m) nos acessos.</td></tr><tr><td><b class="w">Posições obrigatórias</b></td><td>Acesso ao refeitório e área de distribuição; circulações externas aos vestiários e ao ambulatório.</td></tr><tr><td><b class="w">Requisitos de instalação</b></td><td>Proibida a instalação no interior de sanitários, vestiários, áreas de descanso e consultórios do ambulatório; placas de aviso nos acessos.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Nessas áreas a expectativa de privacidade é máxima. O CFTV limita-se aos acessos e às circulações, em atendimento aos princípios de finalidade e de necessidade da LGPD e à inviolabilidade da intimidade assegurada pela Constituição Federal (art. 5º, inciso X).</p>
+</section>
+<section id="s8">
+<div class="sec"><i>08</i><h2>Áreas classificadas</h2></div>
+<p>As unidades da Binatural manipulam substâncias inflamáveis e possuem áreas classificadas, nas quais pode haver atmosfera explosiva. Nessas áreas, uma câmera comum é fonte de ignição e não pode ser instalada.</p>
+<h3>8.1 Responsabilidades</h3>
+<p>A definição das zonas é feita pelo estudo de classificação de áreas de cada unidade, elaborado conforme a ABNT NBR IEC 60079-10-1 e mantido pela Binatural. O projeto de CFTV não define zonas: posiciona os equipamentos com base no estudo vigente. Enquanto o estudo não estiver disponível, o projeto executivo das áreas de processo, tancagem e carregamento permanece pendente, e nenhuma câmera nova é instalada nessas áreas.</p>
+<h3>8.2 Requisitos</h3>
+<p>Todo equipamento de CFTV associado a área classificada deve atender aos seguintes requisitos:</p>
+<ol class="al"><li><b class="w">Certificação:</b> Certificado INMETRO para atmosfera explosiva (Portaria INMETRO nº 115/2022), com marcação Ex visível;</li><li><b class="w">Adequação à zona:</b> EPL, grupo de gás e classe de temperatura compatíveis com a zona e com as substâncias presentes, conforme a tabela a seguir;</li><li><b class="w">Tipo de proteção:</b> Preferencialmente à prova de explosão (Ex d, ABNT NBR IEC 60079-1); em invólucro certificado, respeitar os limites de potência dissipada e de classe de temperatura do certificado;</li><li><b class="w">Montagem:</b> Conforme ABNT NBR IEC 60079-14, com prensa-cabos Ex certificados, eletrodutos com unidades seladoras, equipotencialização e aterramento;</li><li><b class="w">Equipamentos de apoio:</b> Switches, fontes e DPS instalados fora da zona classificada;</li><li><b class="w">Execução e manutenção:</b> Por profissionais qualificados, com permissão de trabalho, conforme NR-10, NR-20 e ABNT NBR IEC 60079-17;</li><li><b class="w">Documentação:</b> Dossiê Ex de cada ponto, com certificados, folhas de dados e registros de inspeção.</li></ol>
+<p class="cap"><b>Tabela 2</b> – Zonas, nível de proteção mínimo e padrão de câmera</p>
+<div class="tw"><table><tr><th>Zona</th><th>Presença de atmosfera explosiva</th><th class="c">EPL mínimo</th><th>Diretriz do padrão</th></tr><tr><td>Zona 0</td><td>Contínua ou por longos períodos</td><td class="c">Ga</td><td>Não se instala câmera; reposicionar fora da zona</td></tr><tr><td>Zona 1</td><td>Provável em operação normal</td><td class="c">Gb</td><td>Padrão T7 com EPL Gb</td></tr><tr><td>Zona 2</td><td>Improvável; se ocorrer, por curto período</td><td class="c">Gc</td><td>Padrão T7 (o padrão adota Gb como mínimo)</td></tr><tr><td>Não classificada</td><td>Ausente</td><td class="c">–</td><td>Especificação da tipologia (seção 7)</td></tr></table></div>
+<p class="fonte">Fonte: adaptado de ABNT NBR IEC 60079-0 e ABNT NBR IEC 60079-10-1.</p>
+</section>
+<section id="s9">
+<div class="sec"><i>09</i><h2>Segurança perimetral, analíticos e termografia</h2></div>
+<p>As unidades armazenam e movimentam produtos inflamáveis em áreas extensas. A segurança perimetral combina detecção automática por analíticos e câmeras termográficas, para que o operador seja alertado do evento e não dependa de estar olhando a tela certa no momento certo.</p>
+<h3>9.1 Analíticos de vídeo</h3>
+<p>Os analíticos são configurados nas câmeras externas e nas áreas restritas, com as seguintes funções:</p>
+<ol class="al"><li><b class="w">Intrusão em área (cerca virtual):</b> Alarme quando pessoa ou veículo entra em região proibida, como a faixa interna do muro ou o pátio da subestação;</li><li><b class="w">Linha de travessia:</b> Alarme quando um alvo cruza uma linha em sentido definido, por exemplo de fora para dentro do terreno;</li><li><b class="w">Permanência:</b> Alarme quando um alvo permanece além do tempo definido em área restrita;</li><li><b class="w">Classificação de alvos por IA:</b> O alarme é disparado apenas por pessoas e veículos, descartando animais, vegetação e variações de luz, principal causa de falsos alarmes e do abandono dos analíticos;</li><li><b class="w">Agenda:</b> Regras ativas fora do horário de operação ou permanentemente nas áreas restritas;</li><li><b class="w">Tratamento:</b> Todo alarme é encaminhado à estação de monitoramento da portaria com a imagem do evento.</li></ol>
+<p>Após a ativação, os analíticos devem passar por um período de ajuste assistido de no mínimo 15 dias, com registro dos falsos alarmes e calibração das regras, antes da aceitação.</p>
+<h3>9.2 Câmeras termográficas</h3>
+<p>As câmeras termográficas formam imagem pela radiação térmica dos corpos e cumprem duas funções nas unidades. Na detecção perimetral, identificam pessoas a distâncias muito maiores que as câmeras de espectro visível, à noite, com fumaça, neblina ou contraluz de faróis, e, combinadas com a cerca virtual, geram alarmes com baixa taxa de falsos positivos. Na prevenção de incêndio, as versões com medição de temperatura alarmam quando uma superfície ultrapassa o limite configurado, como transformadores, conexões elétricas, fornalhas, pilhas de biomassa e áreas de metanol.</p>
+<p>As figuras a seguir mostram a mesma cena noturna registrada por uma câmera convencional e por uma câmera termográfica com regra de cerca virtual.</p>
+<div class="grid g2">
+<div>
+<p class="cap"><b>Figura 1</b> – Câmera convencional à noite</p>
+<figure class="fig"><img src="img/padrao-1.jpg" alt=""></figure>
+<p class="fonte">Fonte: acervo A+.com Engenharia e Tecnologia (2026).</p>
+</div>
+<div>
+<p class="cap"><b>Figura 2</b> – Câmera termográfica na mesma cena, com cerca virtual</p>
+<figure class="fig"><img src="img/padrao-2.jpg" alt=""></figure>
+<p class="fonte">Fonte: acervo A+.com Engenharia e Tecnologia (2026).</p>
+</div>
+</div>
+<p>As câmeras termográficas complementam, mas não substituem, o sistema de detecção e alarme de incêndio (ABNT NBR 17240) nem as medidas exigidas pelo Corpo de Bombeiros Militar do estado da unidade.</p>
+</section>
+<section id="s10">
+<div class="sec"><i>10</i><h2>Gravação e armazenamento</h2></div>
+<h3>10.1 Gravadores</h3>
+<p>Os gravadores das unidades devem atender aos seguintes requisitos:</p>
+<ol class="al"><li>Gravador de vídeo em rede (NVR) exclusivamente IP, de 32 canais, série 5000 ou superior, com referência Intelbras iNVD 5232;</li><li>Inteligência artificial embarcada, complementar aos analíticos das câmeras;</li><li>No mínimo duas baias SATA, sendo preferível o modelo de quatro baias, que permite ampliar a retenção ou adotar RAID sem trocar o equipamento;</li><li>Discos rígidos da linha de vigilância (surveillance), especificados para operação contínua 24/7;</li><li>Reserva mínima de 10% dos canais do conjunto de gravadores para expansões;</li><li>Taxa de entrada total das câmeras inferior ao limite de banda de gravação do modelo;</li><li>Instalação no CPD da unidade, em rack fechado, com energia estabilizada e nobreak;</li><li>DVRs e gravadores híbridos não são admitidos; os retirados na modernização são entregues à Binatural.</li></ol>
+<h3>10.2 Método de cálculo do armazenamento</h3>
+<p>O armazenamento é dimensionado para gravação contínua, 24 horas por dia, durante o período mínimo de 30 dias. O espaço necessário por câmera é obtido pela expressão a seguir, em que E é o espaço em gigabytes, b é o bitrate em megabits por segundo e D é o número de dias de retenção:</p>
+<p><b class="w">E = (b × 86.400 × D) ÷ (8 × 1.000)</b></p>
+<p>O total da unidade é a soma dos valores de todas as câmeras, acrescida de margem de 20% para picos de bitrate variável, como cenas com movimento, chuva e ruído noturno, para a sobrecarga do sistema de arquivos e para a reserva de eventos. Considera-se como capacidade útil 90% da capacidade nominal dos discos. A tabela a seguir apresenta os bitrates de referência adotados no projeto.</p>
+<p class="cap"><b>Tabela 3</b> – Bitrates de referência para dimensionamento</p>
+<div class="tw"><table><tr><th>Câmera</th><th class="c">Bitrate</th><th class="c">Em 30 dias</th><th>Observação</th></tr><tr><td>2 MP (padrões T1 a T4 e T7)</td><td class="c">1.024 kbps</td><td class="c">331,78 GB</td><td>Referência do padrão</td></tr><tr><td>Termográfica (T5), por canal</td><td class="c">1.024 kbps</td><td class="c">331,78 GB</td><td>Bi-espectral: dois canais</td></tr><tr><td>4 MP</td><td class="c">2.048 kbps</td><td class="c">663,55 GB</td><td>Quando especificada no apêndice</td></tr><tr><td>Fisheye 8 MP (T6)</td><td class="c">4.096 kbps</td><td class="c">1.327,10 GB</td><td>Imagem panorâmica de alta resolução</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Exemplo de aplicação para uma câmera de 2 MP: 1,024 Mb/s × 86.400 s ÷ 8 = 11.059 MB, ou 11,06 GB por dia; em 30 dias, 331,78 GB. Os bitrates são de referência para projeto. No comissionamento, mede-se o bitrate real de cada câmera e o cálculo é refeito; se a retenção prevista ficar abaixo de 30 dias, a capacidade de disco é ampliada.</p>
+<h3>10.3 Distribuição das câmeras entre gravadores</h3>
+<p>A distribuição das câmeras entre os gravadores segue os seguintes critérios:</p>
+<ol class="al"><li>Agrupamento por região física da unidade, para facilitar a operação e a manutenção;</li><li>Câmeras do perímetro distribuídas em pelo menos dois gravadores, para que a falha de um equipamento não deixe todo o perímetro sem gravação;</li><li>Ocupação máxima de 32 canais por gravador, contando dois canais por câmera bi-espectral;</li><li>Capacidade de disco de cada gravador suficiente para 30 dias com a ocupação total de seus canais, quando possível, para absorver expansões sem troca de discos.</li></ol>
+</section>
+<section id="s11">
+<div class="sec"><i>11</i><h2>Infraestrutura de rede</h2></div>
+<h3>11.1 Rede de dados do CFTV</h3>
+<p>A rede que atende ao CFTV deve observar os seguintes requisitos:</p>
+<ol class="al"><li><b class="w">VLAN dedicada ao CFTV</b>, isolada da rede corporativa e da rede de automação, integrada à rede óptica corporativa da unidade (GPON ou outra) quando existir;</li><li><b class="w">Switches PoE</b> IEEE 802.3af/at por setor, com orçamento de potência igual à soma das câmeras mais 30% de folga; câmeras termográficas e Ex podem exigir PoE+ ou fonte dedicada;</li><li><b class="w">Cabo UTP categoria 6</b>, com enlace permanente de no máximo 90 m (ABNT NBR 14565); em trechos externos, cabo próprio para uso externo, em eletroduto galvanizado, com conduletes vedados e pingadeira na entrada das câmeras;</li><li><b class="w">Fibra óptica monomodo</b> para distâncias acima de 90 m, para uplinks entre prédios e, obrigatoriamente, na subestação;</li><li><b class="w">Caminhos</b> conforme ABNT NBR 16415, com separação entre cabos de dados e de energia;</li><li><b class="w">Plano de endereçamento IP</b> com faixa exclusiva do CFTV por unidade, definida no apêndice;</li><li><b class="w">Sincronismo de horário (NTP)</b> em câmeras e gravadores, para que as gravações tenham valor de prova.</li></ol>
+<h3>11.2 Rack outdoor</h3>
+<p>Os setores externos distantes do CPD são atendidos por rack outdoor com grau de proteção mínimo IP65 (ABNT NBR IEC 60529), em aço ou alumínio com pintura para intempérie, ventilação forçada com termostato e filtro, switch PoE industrial de temperatura estendida, DPS de energia e de dados, barramento de aterramento, nobreak com autonomia mínima de 30 minutos e circuito elétrico dedicado protegido por dispositivo DR (ABNT NBR 5410).</p>
+<h3>11.3 Enlaces de rádio</h3>
+<p>A fibra óptica é o meio preferencial para uplinks, por ser imune a interferências e a descargas e por comportar expansões. Quando a fibra for inviável, admite-se enlace de rádio ponto a ponto na faixa de 5 GHz, com referência Ubiquiti LiteBeam 5AC Gen2 (LBE-5AC-Gen2-BR), padrão já adotado pela Binatural, desde que haja visada direta, zona de Fresnel desobstruída, criptografia habilitada e capacidade de no mínimo o dobro do tráfego das câmeras atendidas.</p>
+</section>
+<section id="s12">
+<div class="sec"><i>12</i><h2>Energia, aterramento e proteção contra surtos</h2></div>
+<p>A alimentação e a proteção do sistema devem atender aos seguintes requisitos:</p>
+<ol class="al"><li>Gravadores e switch alimentados por rede estabilizada e nobreak online de dupla conversão, com autonomia mínima de 30 minutos e bypass de manutenção; se o CPD já tiver nobreak, verificar a carga disponível antes de ligar os gravadores;</li><li>Switches de campo também protegidos por nobreak, pois sem eles as câmeras deixam de transmitir na queda de energia, ainda que o gravador permaneça ligado;</li><li>DPS de energia e de dados em todos os pontos externos, postes e racks, com aterramento equipotencializado (ABNT NBR 5419-4);</li><li>Postes metálicos aterrados e câmeras em postes protegidas pelo SPDA existente ou por captor próprio, quando aplicável;</li><li>Circuitos elétricos dedicados ao CFTV, identificados no quadro de distribuição e protegidos conforme ABNT NBR 5410.</li></ol>
+</section>
+<section id="s13">
+<div class="sec"><i>13</i><h2>CPD, monitoramento e visualização</h2></div>
+<p>O monitoramento das unidades é organizado da seguinte forma:</p>
+<ol class="al"><li><b class="w">CPD:</b> Gravadores e switch em rack fechado, com identificação de cabos e portas;</li><li><b class="w">Portaria:</b> Estação de monitoramento na sala de vigilância, com recebimento dos alarmes de cerca virtual e das câmeras termográficas;</li><li><b class="w">Visualização para a gestão:</b> Quando prevista no apêndice, TV de no mínimo 43 polegadas com resolução 4K (3.840 × 2.160), que mantém a nitidez em mosaicos de 16 câmeras ou mais;</li><li><b class="w">Alimentação de imagem:</b> Decodificador IP ou mini-PC com o software de gestão ligado à VLAN do CFTV, o que dispensa extensores HDMI longos a partir do CPD;</li><li><b class="w">Mosaicos:</b> Organizados por função, como perímetro e pátios, acessos e portaria, áreas operacionais e alarmes em tela cheia;</li><li><b class="w">Perfis de acesso:</b> Visualização ao vivo, reprodução e exportação separadas por perfil de usuário, com registro de auditoria;</li><li><b class="w">Monitoramento corporativo:</b> A arquitetura permite o acesso remoto por VPN, preparando as unidades para uma central de monitoramento corporativa.</li></ol>
+</section>
+<section id="s14">
+<div class="sec"><i>14</i><h2>Segurança da informação e privacidade</h2></div>
+<h3>14.1 Privacidade e LGPD</h3>
+<p>Imagens de pessoas identificáveis são dados pessoais (Lei nº 13.709/2018). O sistema deve observar os seguintes requisitos:</p>
+<ol class="al"><li>Placas de aviso de ambiente monitorado nos acessos da unidade e dos setores;</li><li>Finalidade definida, de segurança patrimonial, das pessoas e da operação, registrada no inventário de dados pessoais da Binatural;</li><li>Retenção limitada ao necessário: 30 dias, salvo imagens preservadas por incidente, que seguem procedimento próprio;</li><li>Nenhuma câmera em sanitários, vestiários, áreas de descanso, consultórios ou salas de atendimento individual;</li><li>Em áreas administrativas, diretoria, coordenação e RH, enquadramento de acessos e circulações, sem captar telas, documentos ou estações de trabalho;</li><li>Câmeras não devem captar áudio;</li><li>Acesso às gravações restrito a pessoas autorizadas, com registro de quem visualizou e exportou imagens;</li><li>Fornecimento de imagens a terceiros e a autoridades somente mediante solicitação formal, com registro.</li></ol>
+<h3>14.2 Segurança cibernética</h3>
+<p>Câmeras e gravadores são dispositivos de rede e devem ser protegidos como tal:</p>
+<ol class="al"><li>Senhas únicas e fortes por equipamento, contas nominais para operadores e eliminação de contas padrão;</li><li>Firmware atualizado, com avaliação trimestral das atualizações do fabricante;</li><li>Serviços de nuvem P2P, UPnP e portas não utilizadas desabilitados;</li><li>Nenhuma porta do CFTV exposta diretamente à internet; acesso remoto somente por VPN;</li><li>Cópia de segurança das configurações de gravadores e câmeras antes e após cada alteração.</li></ol>
+</section>
+<section id="s15">
+<div class="sec"><i>15</i><h2>Identificação e nomenclatura</h2></div>
+<p>Todo equipamento recebe um nome único, no formato UUU-SSSS-TN-NNN, em que UUU é o código da unidade, SSSS é o código do setor, TN é o padrão da câmera e NNN é o número sequencial no setor. Por exemplo, FSA-PORT-T3-001 identifica a câmera Full Color número 001 da portaria da unidade de Formosa. Gravadores, switches e racks seguem a mesma lógica: UUU-NVR-NN, UUU-SW-SSSS-NN e UUU-RK-SSSS-NN.</p>
+<p>O mesmo nome é aplicado na etiqueta da câmera, nas duas pontas do cabo, na porta do switch, no canal do gravador e na documentação como construído. O código da unidade é definido no seu apêndice; os códigos de setor estão no quadro a seguir.</p>
+<p class="cap"><b>Quadro 26</b> – Códigos de setor</p>
+<div class="tw"><table><tr><th class="c">Código</th><th>Setor</th><th class="c">Código</th><th>Setor</th></tr><tr><td class="c">ADM</td><td>Administração e escritórios</td><td class="c">OFI</td><td>Oficina de manutenção</td></tr><tr><td class="c">RH</td><td>Recursos humanos</td><td class="c">CALD</td><td>Caldeiras</td></tr><tr><td class="c">DIR</td><td>Diretoria</td><td class="c">UTIL</td><td>Utilidades gerais</td></tr><tr><td class="c">COO</td><td>Coordenação</td><td class="c">SUB</td><td>Subestação e salas elétricas</td></tr><tr><td class="c">REC</td><td>Recepção e circulações</td><td class="c">LAB</td><td>Laboratório</td></tr><tr><td class="c">PORT</td><td>Portaria e controle de acesso</td><td class="c">SUP</td><td>Sala de controle e supervisório</td></tr><tr><td class="c">CPD</td><td>CPD e salas de TI</td><td class="c">PROC</td><td>Área de processo</td></tr><tr><td class="c">ESTF</td><td>Estacionamento de funcionários</td><td class="c">TANQ</td><td>Parque de tanques</td></tr><tr><td class="c">PATC</td><td>Pátio de caminhões</td><td class="c">CARR</td><td>Carregamento e descarregamento</td></tr><tr><td class="c">MOT</td><td>Sala de motoristas</td><td class="c">PERI</td><td>Perímetro</td></tr><tr><td class="c">BAL</td><td>Balança</td><td class="c">VIV</td><td>Áreas de vivência</td></tr><tr><td class="c">ALM</td><td>Almoxarifado</td><td class="c">PCM</td><td>Planejamento e controle da manutenção</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+</section>
+<section id="s16">
+<div class="sec"><i>16</i><h2>Instalação, comissionamento e aceitação</h2></div>
+<h3>16.1 Instalação</h3>
+<p>A instalação deve observar os seguintes requisitos:</p>
+<ol class="al"><li>Fixações e ferragens em aço inoxidável ou galvanizado a fogo nas áreas externas;</li><li>Eletrodutos galvanizados nas áreas externas, com conduletes vedados e pingadeira na entrada das câmeras;</li><li>Trabalho em altura conforme NR-35 e intervenções em áreas operacionais com permissão de trabalho emitida pela unidade;</li><li>Montagem em áreas classificadas conforme a seção 8;</li><li>Identificação de todos os equipamentos e cabos conforme a seção 15.</li></ol>
+<h3>16.2 Comissionamento</h3>
+<p>Antes da aceitação, cada ponto e o sistema como um todo passam pelos seguintes testes, registrados em relatório:</p>
+<ol class="al"><li>Verificação do enquadramento e do nível DORI com alvo de teste no plano de interesse;</li><li>Avaliação da imagem nos períodos diurno e noturno;</li><li>Teste dos analíticos com caminhada e passagem de veículo nas áreas configuradas;</li><li>Verificação do sincronismo NTP em câmeras e gravadores;</li><li>Gravação contínua por no mínimo 72 horas, com medição do bitrate real e recálculo da retenção;</li><li>Teste de queda de energia, com comutação para o nobreak no CPD e nos racks de campo;</li><li>Teste de acesso remoto por VPN e dos perfis de usuário;</li><li>Exportação de gravação com verificação de data, hora e integridade do arquivo.</li></ol>
+<h3>16.3 Documentação de entrega</h3>
+<p>A entrega do sistema é acompanhada da seguinte documentação:</p>
+<ol class="al"><li>Plantas como construído, com localização e campo de visão de cada câmera;</li><li>Lista de equipamentos com nome, número de série, endereço IP, endereço MAC, versão de firmware e canal de gravação;</li><li>Credenciais entregues de forma segura ao responsável da Binatural;</li><li>Certificados e dossiê Ex dos equipamentos em áreas classificadas;</li><li>Relatório de comissionamento e termo de aceitação;</li><li>Registro do treinamento dos operadores e da equipe de TI.</li></ol>
+</section>
+<section id="s17">
+<div class="sec"><i>17</i><h2>Operação e manutenção</h2></div>
+<p>A manutenção do sistema segue o plano do quadro a seguir. As atividades e os resultados são registrados e ficam disponíveis para auditoria.</p>
+<p class="cap"><b>Quadro 27</b> – Plano de manutenção do sistema de CFTV</p>
+<div class="tw"><table><tr><th>Periodicidade</th><th>Atividades</th></tr><tr><td><b class="w">Diária</b></td><td>Verificação de câmeras sem vídeo e de alarmes de falha dos gravadores, pelo operador.</td></tr><tr><td><b class="w">Mensal</b></td><td>Verificação da retenção real; estado dos discos (SMART); teste de reprodução e exportação.</td></tr><tr><td><b class="w">Trimestral</b></td><td>Avaliação de atualizações de firmware; revisão de usuários e senhas; teste dos nobreaks.</td></tr><tr><td><b class="w">Semestral</b></td><td>Limpeza de lentes e caixas; reaperto de fixações; verificação de vedações, aterramento e DPS; correção de enquadramentos; recalibração dos analíticos.</td></tr><tr><td><b class="w">Anual</b></td><td>Revisão do inventário e do apêndice da unidade; verificação da conformidade com a revisão vigente deste padrão.</td></tr><tr><td><b class="w">Programada</b></td><td>Inspeção dos equipamentos Ex conforme o programa da ABNT NBR IEC 60079-17; substituição preventiva de discos ao primeiro alerta SMART ou ao fim da vida útil indicada pelo fabricante.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+</section>
+<section id="s18">
+<div class="sec"><i>18</i><h2>Roteiro de aplicação nas unidades</h2></div>
+<p>A aplicação do padrão a uma unidade segue as etapas abaixo e resulta em um apêndice próprio deste documento:</p>
+<ol class="al"><li>Levantamento e vistoria técnica: Inventário de câmeras, gravadores e infraestrutura existentes e condições de iluminação de cada setor;</li><li>Obtenção do estudo de classificação de áreas vigente da unidade;</li><li>Enquadramento de cada setor em uma ou mais tipologias da seção 7 e atribuição da criticidade;</li><li>Definição dos pontos de câmera e dos padrões, pela tipologia e pela matriz da seção 5.3;</li><li>Dimensionamento da gravação e alocação das câmeras nos gravadores, conforme a seção 10;</li><li>Definição da infraestrutura de rede, energia e proteção, conforme as seções 11 e 12;</li><li>Elaboração do apêndice da unidade e validação pela Binatural;</li><li>Projeto executivo, implantação, comissionamento e aceitação, conforme a seção 16.</li></ol>
+<p>O apêndice de cada unidade contém, no mínimo, as partes indicadas no quadro a seguir, na mesma ordem, o que permite comparar unidades e consolidar indicadores corporativos.</p>
+<p class="cap"><b>Quadro 28</b> – Conteúdo mínimo do apêndice de aplicação da unidade</p>
+<div class="tw"><table><tr><th class="c">Item</th><th>Conteúdo</th><th>Descrição</th></tr><tr><td class="c">1</td><td>Identificação da unidade</td><td>Endereço, código da unidade, documentos de referência e premissas.</td></tr><tr><td class="c">2</td><td>Diagnóstico</td><td>Gravadores e câmeras existentes por setor, problemas identificados e não conformidades.</td></tr><tr><td class="c">3</td><td>Enquadramento</td><td>Cada setor associado à tipologia, à criticidade e às seções aplicáveis do padrão.</td></tr><tr><td class="c">4</td><td>Memorial por setor</td><td>Situação atual, intervenção, quantidades por padrão e justificativa específica.</td></tr><tr><td class="c">5</td><td>Quadro quantitativo</td><td>Câmeras atuais, substituídas, adicionadas e finais, por setor e por padrão.</td></tr><tr><td class="c">6</td><td>Gravação</td><td>Gravadores, distribuição de canais e cálculo de armazenamento da unidade.</td></tr><tr><td class="c">7</td><td>Infraestrutura</td><td>Racks de campo, uplinks, integração de rede, energia e diagrama de blocos.</td></tr><tr><td class="c">8</td><td>Monitoramento</td><td>Estações de monitoramento e telas de visualização.</td></tr><tr><td class="c">9</td><td>Equipamentos e materiais</td><td>Lista preliminar.</td></tr><tr><td class="c">10</td><td>Pendências</td><td>Pontos a validar antes do projeto executivo.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+</section>
+<section id="s19">
+<div class="sec"><i>19</i><h2>Considerações finais</h2></div>
+<p>Este padrão leva as unidades da Binatural de sistemas formados ao longo do tempo, com tecnologias e critérios diferentes, para uma plataforma 100% IP, padronizada e preparada para crescer. A tecnologia de cada câmera passa a ser escolhida pelo risco e pelas condições do ambiente, e não pelo histórico de cada instalação.</p>
+<p>A combinação de câmeras Full Color com inteligência artificial, analíticos de cerca virtual e câmeras termográficas muda o papel do CFTV: de registro para consulta posterior, ele passa a detectar intrusões e focos de calor enquanto ainda é possível agir. Em plantas que manipulam inflamáveis, essa antecipação é o principal ganho do padrão.</p>
+<p>Por ser independente de quantitativos, o corpo do documento serve a todas as unidades. Cada nova aplicação gera um apêndice que segue o mesmo roteiro, e as lições aprendidas em cada unidade alimentam as revisões do padrão, de modo que todas as unidades evoluam juntas.</p>
+</section>
+<section id="sreferências">
+<div class="sec"><h2>Referências</h2></div>
+<p class="ref">AMERICAN NATIONAL STANDARDS INSTITUTE; TELECOMMUNICATIONS INDUSTRY ASSOCIATION. <b class="w">ANSI/TIA-942</b>: telecommunications infrastructure standard for data centers. Arlington: TIA, [20--].</p>
+<p class="ref">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b class="w">ABNT NBR 5410</b>: instalações elétricas de baixa tensão. Rio de Janeiro: ABNT, 2004.</p>
+<p class="ref">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b class="w">ABNT NBR 5419</b>: proteção contra descargas atmosféricas. Partes 1 a 4. Rio de Janeiro: ABNT, 2015.</p>
+<p class="ref">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b class="w">ABNT NBR 6023</b>: informação e documentação: referências: elaboração. Rio de Janeiro: ABNT, 2018.</p>
+<p class="ref">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b class="w">ABNT NBR 6024</b>: informação e documentação: numeração progressiva das seções de um documento: apresentação. Rio de Janeiro: ABNT, 2012.</p>
+<p class="ref">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b class="w">ABNT NBR 6027</b>: informação e documentação: sumário: apresentação. Rio de Janeiro: ABNT, 2012.</p>
+<p class="ref">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b class="w">ABNT NBR 6028</b>: informação e documentação: resumo, resenha e recensão: apresentação. Rio de Janeiro: ABNT, 2021.</p>
+<p class="ref">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b class="w">ABNT NBR 10719</b>: informação e documentação: relatório técnico e/ou científico: apresentação. Rio de Janeiro: ABNT, 2015.</p>
+<p class="ref">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b class="w">ABNT NBR 14039</b>: instalações elétricas de média tensão de 1,0 kV a 36,2 kV. Rio de Janeiro: ABNT, 2021.</p>
+<p class="ref">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b class="w">ABNT NBR 14565</b>: cabeamento estruturado para edifícios comerciais. Rio de Janeiro: ABNT, 2019.</p>
+<p class="ref">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b class="w">ABNT NBR 14724</b>: informação e documentação: trabalhos acadêmicos: apresentação. Rio de Janeiro: ABNT, 2011.</p>
+<p class="ref">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b class="w">ABNT NBR 16415</b>: caminhos e espaços para cabeamento estruturado. Rio de Janeiro: ABNT, 2021.</p>
+<p class="ref">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b class="w">ABNT NBR 17240</b>: sistemas de detecção e alarme de incêndio: projeto, instalação, comissionamento e manutenção: requisitos. Rio de Janeiro: ABNT, 2010.</p>
+<p class="ref">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b class="w">ABNT NBR IEC 60079</b>: atmosferas explosivas. Partes 0, 1, 10-1, 14 e 17. Rio de Janeiro: ABNT, [20--].</p>
+<p class="ref">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b class="w">ABNT NBR IEC 60529</b>: graus de proteção providos por invólucros (códigos IP). Rio de Janeiro: ABNT, 2017.</p>
+<p class="ref">ASSOCIAÇÃO BRASILEIRA DE NORMAS TÉCNICAS. <b class="w">ABNT NBR ISO/IEC 27002</b>: segurança da informação, segurança cibernética e proteção à privacidade: controles de segurança da informação. Rio de Janeiro: ABNT, 2022.</p>
+<p class="ref">BRASIL. [Constituição (1988)]. <b class="w">Constituição da República Federativa do Brasil de 1988</b>. Brasília, DF: Presidência da República, 1988.</p>
+<p class="ref">BRASIL. Lei nº 13.709, de 14 de agosto de 2018. Lei Geral de Proteção de Dados Pessoais (LGPD). <b class="w">Diário Oficial da União</b>, Brasília, DF, 15 ago. 2018.</p>
+<p class="ref">BRASIL. Ministério do Trabalho e Emprego. <b class="w">NR-10</b>: segurança em instalações e serviços em eletricidade. Brasília, DF: MTE, 2004.</p>
+<p class="ref">BRASIL. Ministério do Trabalho e Emprego. <b class="w">NR-20</b>: segurança e saúde no trabalho com inflamáveis e combustíveis. Brasília, DF: MTE, 2012.</p>
+<p class="ref">BRASIL. Ministério do Trabalho e Emprego. <b class="w">NR-35</b>: trabalho em altura. Brasília, DF: MTE, 2012.</p>
+<p class="ref">INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. <b class="w">Normas de apresentação tabular</b>. 3. ed. Rio de Janeiro: IBGE, 1993.</p>
+<p class="ref">INSTITUTO NACIONAL DE METROLOGIA, QUALIDADE E TECNOLOGIA. <b class="w">Portaria nº 115, de 21 de março de 2022</b>. Aprova os requisitos de avaliação da conformidade para equipamentos elétricos para atmosferas explosivas. Brasília, DF: INMETRO, 2022.</p>
+<p class="ref">INTERNATIONAL ELECTROTECHNICAL COMMISSION. <b class="w">IEC 62676-4</b>: video surveillance systems for use in security applications: part 4: application guidelines. Geneva: IEC, [20--].</p>
+</section>
+<section id="siglas"><div class="sec"><h2>Abreviaturas e siglas</h2></div><div class="tw sig"><table><tr><td>ABNT</td><td>Associação Brasileira de Normas Técnicas</td></tr><tr><td>ANP</td><td>Agência Nacional do Petróleo, Gás Natural e Biocombustíveis</td></tr><tr><td>CFTV</td><td>Circuito fechado de televisão</td></tr><tr><td>CPD</td><td>Centro de processamento de dados</td></tr><tr><td>DORI</td><td>Detecção, observação, reconhecimento e identificação</td></tr><tr><td>DPS</td><td>Dispositivo de proteção contra surtos</td></tr><tr><td>DR</td><td>Dispositivo diferencial-residual</td></tr><tr><td>EPL</td><td>Nível de proteção de equipamento (Equipment Protection Level)</td></tr><tr><td>ETA</td><td>Estação de tratamento de água</td></tr><tr><td>ETE</td><td>Estação de tratamento de efluentes</td></tr><tr><td>Ex</td><td>Equipamento para atmosfera explosiva</td></tr><tr><td>GPON</td><td>Rede óptica passiva com capacidade de gigabit</td></tr><tr><td>IA</td><td>Inteligência artificial</td></tr><tr><td>IEC</td><td>International Electrotechnical Commission</td></tr><tr><td>INMETRO</td><td>Instituto Nacional de Metrologia, Qualidade e Tecnologia</td></tr><tr><td>IP</td><td>Protocolo de internet; também grau de proteção de invólucros (ABNT NBR IEC 60529)</td></tr><tr><td>IR</td><td>Infravermelho</td></tr><tr><td>LGPD</td><td>Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018)</td></tr><tr><td>LPR</td><td>Leitura de placas de veículos (License Plate Recognition)</td></tr><tr><td>NETD</td><td>Diferença de temperatura equivalente ao ruído</td></tr><tr><td>NR</td><td>Norma Regulamentadora do Ministério do Trabalho e Emprego</td></tr><tr><td>NTP</td><td>Protocolo de sincronismo de horário</td></tr><tr><td>NVR</td><td>Gravador de vídeo em rede</td></tr><tr><td>ONVIF</td><td>Fórum de padronização de interoperabilidade de dispositivos de vídeo IP</td></tr><tr><td>PoE</td><td>Alimentação elétrica pelo cabo de rede (Power over Ethernet)</td></tr><tr><td>RAID</td><td>Arranjo redundante de discos</td></tr><tr><td>RH</td><td>Recursos humanos</td></tr><tr><td>SPDA</td><td>Sistema de proteção contra descargas atmosféricas</td></tr><tr><td>UTP</td><td>Cabo de par trançado não blindado</td></tr><tr><td>VLAN</td><td>Rede local virtual</td></tr><tr><td>VPN</td><td>Rede privada virtual</td></tr><tr><td>WDR</td><td>Faixa dinâmica ampla (Wide Dynamic Range)</td></tr></table></div></section>
+</main>
+
+<footer><div class="wrap">
+  <img src="img/logo-amais.png" alt="A+.com Engenharia e Tecnologia">
+  <span>Padrão técnico corporativo de CFTV · Binatural · A+.com Engenharia e Tecnologia</span>
+</div></footer>
+
+<script>
+/* PDF: o navegador salva o documento em A4 (Imprimir › Salvar como PDF) */
+function baixarPdf(){document.fonts.ready.then(()=>setTimeout(()=>print(),150))}
+document.getElementById('bPdf').onclick=baixarPdf;
+if(new URLSearchParams(location.search).has('pdf'))baixarPdf();
+</script>
+</body>
+</html>

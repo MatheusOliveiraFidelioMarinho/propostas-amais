@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Projeto Técnico de CFTV · Binatural Formosa, GO</title>
+<style>
+:root{
+  --bg:#050d09; --bg2:#08150f; --card:#0b1b14; --line:#1a3328; --line2:#27463a;
+  --fg:#eef4f0; --mut:#a3b8ad; --dim:#6a8479;
+  --lime:#b0e000; --gold:#d6b25e; --green:#6fdc8c; --blue:#5b95f9; --amber:#f2b33d; --red:#f07a6a;
+  --rad:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.6;font-size:16px;
+}
+img{display:block;max-width:100%}
+::selection{background:var(--lime);color:#000}
+.wrap{max-width:1060px;margin:0 auto;padding:0 28px}
+
+/* barra */
+.bar{position:sticky;top:0;z-index:5;background:rgba(5,13,9,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:16px;height:60px}
+.bar img{height:26px;width:auto}
+.bar .bn{height:32px;width:32px;border-radius:7px;background:#f4f1e8;padding:3px;object-fit:contain}
+.bar span{font-size:13px;font-weight:700;color:var(--dim);letter-spacing:.3px;padding-left:16px;border-left:1px solid var(--line2)}
+.bar button{margin-left:auto;background:var(--lime);color:#000;border:0;border-radius:8px;font:inherit;font-size:13.5px;font-weight:800;padding:9px 16px;cursor:pointer}
+.bar button:hover{filter:brightness(1.1)}
+
+/* capa */
+.capa{
+  padding:76px 0 60px;border-bottom:1px solid var(--line);
+  background:radial-gradient(900px 480px at 88% 0%,rgba(176,224,0,.08),transparent 62%),radial-gradient(700px 420px at 0% 100%,rgba(214,178,94,.06),transparent 60%);
+}
+.capa .wrap{display:grid;grid-template-columns:1fr 280px;gap:48px;align-items:center}
+.eyebrow{display:inline-block;font-size:13px;font-weight:800;letter-spacing:2.2px;text-transform:uppercase;color:var(--lime);border-left:3px solid var(--lime);padding:2px 0 2px 13px}
+h1{font-size:54px;line-height:1.05;letter-spacing:-1.6px;font-weight:800;margin:22px 0 18px}
+.hl{color:var(--lime)}
+.lead{font-size:19px;color:var(--mut);max-width:60ch}
+.meta{display:flex;gap:40px;flex-wrap:wrap;margin-top:40px;padding-top:22px;border-top:1px solid var(--line)}
+.meta b{display:block;font-size:12px;letter-spacing:1.6px;text-transform:uppercase;color:var(--dim);font-weight:800;margin-bottom:3px}
+.meta span{font-size:17px;font-weight:650}
+.selo{background:linear-gradient(160deg,#f6f3ea,#ece6d6);border-radius:20px;padding:34px;display:flex;align-items:center;justify-content:center;aspect-ratio:1}
+
+/* sumario */
+.sum{padding:34px 0;border-bottom:1px solid var(--line)}
+.sum ol{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:8px 28px;counter-reset:s}
+.sum li{counter-increment:s}
+.sum a{display:flex;gap:12px;color:var(--mut);text-decoration:none;font-size:15px;padding:6px 0;border-bottom:1px solid var(--line)}
+.sum a::before{content:counter(s,decimal-leading-zero);color:var(--lime);font-weight:800;font-size:13px;padding-top:1px}
+.sum a:hover{color:var(--fg)}
+
+/* secoes */
+section{padding:56px 0 8px;scroll-margin-top:60px}
+.sec{display:flex;align-items:baseline;gap:16px;margin-bottom:14px}
+.sec i{font-style:normal;font-size:14px;font-weight:800;color:var(--bg);background:var(--lime);min-width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;transform:translateY(-4px)}
+h2{font-size:34px;line-height:1.12;letter-spacing:-.9px;font-weight:800}
+h3{font-size:19px;font-weight:750;letter-spacing:-.2px;margin:34px 0 12px}
+p{color:var(--mut);margin-bottom:14px;max-width:78ch}
+p.pt{font-size:18px;color:var(--fg);max-width:74ch}
+b.w{color:var(--fg);font-weight:700}
+.nota{font-size:14px;color:var(--dim)}
+
+.grid{display:grid;gap:16px;margin:20px 0}
+.g2{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--rad);padding:22px 24px}
+.card h3{margin:0 0 8px}
+.card p{font-size:15px;margin:0;max-width:none}
+.card.aviso{border-color:rgba(242,179,61,.45);margin:18px 0}
+.card.aviso h3{color:var(--amber);font-size:14px;letter-spacing:1.2px;text-transform:uppercase}
+.num b{display:block;font-size:44px;font-weight:800;letter-spacing:-1.4px;line-height:1.05}
+.num span{display:block;font-size:12.5px;color:var(--dim);font-weight:800;letter-spacing:.8px;text-transform:uppercase;margin-top:6px}
+
+.tw{overflow-x:auto;margin:16px 0 18px;border:1px solid var(--line);border-radius:var(--rad);background:var(--card)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{text-align:left;font-size:12px;letter-spacing:1.3px;text-transform:uppercase;color:var(--dim);font-weight:800;padding:13px 16px;border-bottom:1px solid var(--line2);background:var(--bg2)}
+td{padding:11px 16px;border-bottom:1px solid var(--line);color:var(--mut);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--fg);font-weight:700}
+th.c,td.c{text-align:center}
+tr.tot td{color:var(--lime);font-weight:800;border-top:1px solid var(--line2)}
+.pill{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.9px;padding:3px 9px;border-radius:6px;text-transform:uppercase;white-space:nowrap}
+.pill.ok{background:rgba(111,220,140,.13);color:var(--green)}
+.pill.at{background:rgba(242,179,61,.14);color:var(--amber)}
+.pill.cr{background:rgba(240,122,106,.14);color:var(--red)}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle}
+
+ul.l{list-style:none;margin:10px 0 18px}
+ul.l li{position:relative;padding:7px 0 7px 24px;color:var(--mut);max-width:80ch}
+ul.l li::before{content:"";position:absolute;left:2px;top:17px;width:8px;height:8px;border-radius:2px;background:var(--lime)}
+ol.e{list-style:none;counter-reset:e;margin:10px 0 18px}
+ol.e li{counter-increment:e;position:relative;padding:9px 0 9px 44px;color:var(--mut);border-bottom:1px solid var(--line);max-width:84ch}
+ol.e li:last-child{border-bottom:0}
+ol.e li::before{content:counter(e);position:absolute;left:0;top:9px;width:28px;height:28px;border-radius:50%;background:rgba(176,224,0,.1);border:1px solid rgba(176,224,0,.4);color:var(--lime);font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+
+.topo{background:#fff;border-radius:var(--rad);padding:14px;margin:18px 0 8px}
+.leg{display:flex;gap:26px;flex-wrap:wrap;font-size:14px;color:var(--mut);margin-bottom:8px}
+.leg i{display:inline-block;width:24px;height:4px;border-radius:3px;margin-right:9px;vertical-align:middle}
+
+.flow{display:flex;align-items:stretch;gap:8px;margin:10px 0 22px}
+.flow .fb{flex:1;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.flow .fb.hi{border-color:rgba(176,224,0,.55)}
+.flow.or .fb.hi{border-color:rgba(242,179,61,.55)}
+.flow .fb b{display:block;font-size:16px;font-weight:750}
+.flow .fb span{font-size:13.5px;color:var(--mut)}
+.flow .ar{display:flex;align-items:center;color:var(--lime);font-size:24px;font-weight:800}
+.flow.or .ar{color:var(--amber)}
+.camada{font-size:12.5px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;margin:18px 0 0;color:var(--lime)}
+.barra{height:40px;border-radius:10px;overflow:hidden;display:flex;border:1px solid var(--line2);margin:14px 0 10px}
+.barra div{display:flex;align-items:center;padding-left:14px;font-size:13.5px;font-weight:800;color:#06110c}
+
+footer{margin-top:64px;border-top:1px solid var(--line);padding:30px 0 50px;font-size:13.5px;color:var(--dim)}
+footer .wrap{display:flex;align-items:center;gap:18px}
+footer img{height:26px;width:auto}
+
+@media (max-width:820px){
+  .capa .wrap{grid-template-columns:1fr}.selo{display:none}
+  h1{font-size:38px}h2{font-size:27px}
+  .g2,.g3,.g4,.sum ol{grid-template-columns:1fr}
+  .flow{flex-direction:column}.flow .ar{justify-content:center;transform:rotate(90deg)}
+  .bar span{display:none}
+}
+@media print{
+  @page{size:A4;margin:12mm 0}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html,body{background:var(--bg)}
+  .bar{display:none}
+  .capa{padding-top:30px}
+  section{padding-top:30px}
+  .tw{overflow:visible}
+  tr,.card,.flow,.topo,li{break-inside:avoid}
+  .sec,h3{break-after:avoid}
+  .quebra{break-before:page}
+}
+
+/* documento técnico (CFTV) */
+.sum a::before{content:attr(data-n)}
+.sum a[data-n=""]::before{content:"·"}
+h4{font-size:16px;font-weight:750;color:var(--fg);margin:26px 0 10px}
+ol.al{list-style:none;counter-reset:a;margin:6px 0 18px}
+ol.al li{counter-increment:a;position:relative;padding:5px 0 5px 34px;color:var(--mut);max-width:80ch}
+ol.al li::before{content:counter(a,lower-alpha) ")";position:absolute;left:4px;top:5px;color:var(--lime);font-weight:800}
+p.cap{margin:26px 0 0;color:var(--fg);font-size:14.5px;max-width:none}
+p.cap b{color:var(--lime);font-weight:800}
+p.fonte{font-size:12.5px;color:var(--dim);margin:-8px 0 18px}
+p.ref{font-size:14.5px;padding-left:0;margin-bottom:10px}
+.tw.sm table{font-size:13px}
+.tw.sm th,.tw.sm td{padding:9px 8px}
+tr.grp td{background:var(--bg2);color:var(--lime);font-size:12px;letter-spacing:1.3px;text-transform:uppercase;font-weight:800}
+.fig{margin:16px 0 18px;border:1px solid var(--line);border-radius:var(--rad);overflow:hidden;background:var(--card)}
+.fig img{width:100%;height:auto}
+.resumo .chave{font-size:14.5px;color:var(--dim)}
+.resumo .chave b{color:var(--fg)}
+@media print{.fig{break-inside:avoid}p.cap{break-after:avoid}}
+</style>
+<script src="protecao.js"></script>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <img src="img/logo-amais.png" alt="A+.com Engenharia e Tecnologia">
+  <img class="bn" src="img/logo-binatural.png" alt="Binatural">
+  <span>Projeto técnico de CFTV · Binatural Formosa, GO</span>
+  <button id="bPdf" type="button">Baixar PDF</button>
+</div></div>
+
+<header class="capa"><div class="wrap">
+  <div>
+    <div class="eyebrow">Projeto técnico · Aplicação do padrão BIN-PTC-CFTV-001</div>
+    <h1>Projeto Técnico de CFTV <span class="hl">Binatural · Formosa/GO</span></h1>
+    <p class="lead">Unidade de produção de biodiesel da Binatural em Formosa, Goiás, elaborado com base no Padrão Técnico Corporativo de CFTV</p>
+    <div class="meta">
+      <div><b>Cliente</b><span>Binatural</span></div>
+      <div><b>Unidade</b><span>Formosa, GO</span></div>
+      <div><b>Documento</b><span>AMC-BIN-FSA-CFTV-PT-001 · Rev. 00</span></div>
+      <div><b>Data</b><span>Outubro de 2026</span></div>
+    </div>
+  </div>
+  <div class="selo"><img src="img/logo-binatural.png" alt="Binatural"></div>
+</div></header>
+
+<nav class="sum"><div class="wrap"><ol>
+  <li><a href="#resumo" data-n="">Resumo</a></li>
+  <li><a href="#sapres" data-n="">Apêndice A – Aplicação do padrão na unidade de Formosa/GO</a></li><li><a href="#sa-1" data-n="A.1">Identificação da unidade</a></li><li><a href="#sa-2" data-n="A.2">Diagnóstico da situação atual</a></li><li><a href="#sa-3" data-n="A.3">Enquadramento dos setores nas tipologias</a></li><li><a href="#sa-4" data-n="A.4">Memorial por setor</a></li><li><a href="#sa-5" data-n="A.5">Quadro quantitativo</a></li><li><a href="#sa-6" data-n="A.6">Gravação e armazenamento</a></li><li><a href="#sa-7" data-n="A.7">Infraestrutura da unidade</a></li><li><a href="#sa-8" data-n="A.8">Monitoramento</a></li><li><a href="#sa-9" data-n="A.9">Equipamentos e materiais</a></li>
+</ol></div></nav>
+
+<main class="wrap">
+
+<section id="resumo" class="resumo">
+  <div class="sec"><h2>Resumo</h2></div>
+  <p class="pt">Este documento apresenta o projeto técnico do sistema de circuito fechado de televisão (CFTV) da unidade de produção de biodiesel da Binatural em Formosa, Goiás. O projeto tem como base o Padrão Técnico Corporativo de CFTV da Binatural (BIN-PTC-CFTV-001, revisão 00), que define, para todas as unidades da empresa, os critérios de classificação dos ambientes por criticidade e iluminação, os padrões de câmera, a especificação de cada tipologia de área, o método de dimensionamento da gravação e os requisitos de rede, energia, privacidade, instalação e manutenção. Esses critérios não são repetidos aqui: este documento registra a aplicação do padrão à unidade, com a identificação da unidade, o diagnóstico da situação atual, o enquadramento dos setores nas tipologias, o memorial descritivo por setor, o quadro quantitativo, o dimensionamento da gravação e do armazenamento, a infraestrutura, o monitoramento e a lista preliminar de equipamentos e materiais. O sistema final previsto tem 111 câmeras, das quais 89 novas, com retenção mínima de 30 dias. As seções citadas ao longo do texto referem-se ao padrão BIN-PTC-CFTV-001, que deve ser consultado em conjunto com este projeto.</p>
+  <p class="chave"><b class="w">Palavras-chave:</b> CFTV; videomonitoramento; projeto técnico; biodiesel; Formosa; padrão corporativo.</p>
+  <div class="grid g4"><div class="card num"><b style="color:var(--lime)">111</b><span>Câmeras no sistema final</span></div><div class="card num"><b style="color:var(--gold)">89</b><span>Câmeras novas</span></div><div class="card num"><b style="color:var(--green)">4</b><span>Gravadores</span></div><div class="card num"><b style="color:var(--blue)">45,39 TB</b><span>Armazenamento com margem</span></div></div>
+</section>
+
+<section id="sapres"><div class="sec"><h2>Apêndice A – Aplicação do padrão na unidade de Formosa/GO</h2></div>
+<p>Este apêndice registra a aplicação do Padrão Técnico Corporativo de CFTV (BIN-PTC-CFTV-001) à unidade de produção de biodiesel da Binatural em Formosa, Goiás. Segue o roteiro da seção 18 e constitui o projeto técnico da unidade, código AMC-BIN-FSA-CFTV-PT-001, revisão 00. Os critérios, especificações e justificativas gerais estão no corpo do padrão e não são repetidos; aqui constam apenas as informações específicas da unidade.</p>
+</section>
+<section id="sa-1">
+<div class="sec"><i>A.1</i><h2>Identificação da unidade</h2></div>
+<p class="cap"><b>Quadro 1</b> – Identificação da unidade de Formosa/GO</p>
+<div class="tw"><table><tr><td><b class="w">Unidade</b></td><td>Binatural · Usina de produção de biodiesel</td></tr><tr><td><b class="w">Local</b></td><td>Formosa, Goiás</td></tr><tr><td><b class="w">Código da unidade</b></td><td>FSA</td></tr><tr><td><b class="w">Projeto</b></td><td>AMC-BIN-FSA-CFTV-PT-001 · Revisão 00</td></tr><tr><td><b class="w">Setores levantados</b></td><td>17 setores</td></tr><tr><td><b class="w">Premissas</b></td><td>Retenção mínima de 30 dias; bitrate de referência de 1.024 kbps; gravadores no CPD do prédio da portaria; integração à rede óptica GPON em implantação na unidade, em VLAN dedicada ao CFTV.</td></tr><tr><td><b class="w">Documentos pendentes</b></td><td>Estudo de classificação de áreas da unidade; inventário conciliado do CFTV existente.</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+</section>
+<section id="sa-2">
+<div class="sec"><i>A.2</i><h2>Diagnóstico da situação atual</h2></div>
+<p>O sistema começou analógico e migrou gradualmente para IP. Convivem hoje câmeras analógicas, câmeras IP e gravadores híbridos, sem padrão único de tecnologia e com setores sem cobertura.</p>
+<p class="cap"><b>Tabela 1</b> – Gravadores instalados e destino no projeto</p>
+<div class="tw"><table><tr><th>Equipamento</th><th class="c">Qtd.</th><th>Tipo</th><th class="c">Câmeras</th><th>Destino</th></tr><tr><td>MHDX 3116</td><td class="c">1</td><td>Híbrido (analógico HD e IP)</td><td class="c">16</td><td>Substituir</td></tr><tr><td>MHDX 3116</td><td class="c">1</td><td>Híbrido (analógico HD e IP)</td><td class="c">19</td><td>Substituir</td></tr><tr><td>NVD 7132</td><td class="c">1</td><td>NVR IP, 32 canais</td><td class="c">25</td><td>Manter</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p class="cap"><b>Tabela 2</b> – Câmeras existentes por setor no levantamento</p>
+<div class="tw"><table><tr><th>Setor</th><th>Situação atual</th><th class="c">Câmeras</th></tr><tr><td>Estacionamento de funcionários</td><td>Não há CFTV instalado no setor.</td><td class="c">–</td></tr><tr><td>Sala dos motoristas</td><td>01 rack e 06 câmeras, sendo 01 com defeito.</td><td class="c">6</td></tr><tr><td>Pátio e estacionamento externo de caminhões</td><td>Somente posteação com refletores e 03 câmeras ligadas ao rack da sala dos motoristas.</td><td class="c">3</td></tr><tr><td>Prédio da portaria (vigilantes, CPD, TI e RH)</td><td>06 câmeras analógicas e 02 câmeras IP.</td><td class="c">8</td></tr><tr><td>Almoxarifado</td><td>01 câmera analógica e 02 câmeras IP.</td><td class="c">3</td></tr><tr><td>PCC e sala de reuniões</td><td>Não informada no levantamento.</td><td class="c">–</td></tr><tr><td>Oficina</td><td>02 câmeras.</td><td class="c">2</td></tr><tr><td>Caldeira WAD</td><td>03 câmeras.</td><td class="c">3</td></tr><tr><td>Caldeira SECAMAQ</td><td>01 câmera.</td><td class="c">1</td></tr><tr><td>Administração</td><td>05 câmeras analógicas e 01 câmera IP.</td><td class="c">6</td></tr><tr><td>Diretoria</td><td>Não informada no levantamento.</td><td class="c">–</td></tr><tr><td>Coordenação</td><td>Não informada no levantamento.</td><td class="c">–</td></tr><tr><td>Balança</td><td>01 câmera analógica.</td><td class="c">1</td></tr><tr><td>Subestação</td><td>Não informada no levantamento.</td><td class="c">–</td></tr><tr><td>Laboratório</td><td>Não informada no levantamento.</td><td class="c">–</td></tr><tr><td>Supervisório</td><td>01 câmera analógica.</td><td class="c">1</td></tr><tr><td>Carregamento</td><td>03 câmeras.</td><td class="c">3</td></tr><tr class="tot"><td><b class="w">Total levantado</b></td><td><b class="w">14 analógicas e 47 IP </b></td><td class="c"><b class="w">60</b></td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Foram identificados os seguintes problemas e não conformidades em relação ao padrão:</p>
+<ol class="al"><li>14 câmeras analógicas em operação, em desacordo com a diretriz de arquitetura 100% IP e dependentes dos gravadores híbridos;</li><li>Setores sem cobertura: estacionamento de funcionários, subestação, laboratório, diretoria e coordenação;</li><li>Pátio de caminhões com estrutura precária: posteação de refletores e apenas 03 câmeras;</li><li>Ausência de analíticos de perímetro e de câmeras termográficas em planta que manipula inflamáveis;</li><li>Câmera com defeito na sala dos motoristas;</li></ol>
+</section>
+<section id="sa-3">
+<div class="sec"><i>A.3</i><h2>Enquadramento dos setores nas tipologias</h2></div>
+<p class="cap"><b>Quadro 2</b> – Enquadramento dos setores da unidade nas tipologias do padrão</p>
+<div class="tw"><table><tr><th>Setor</th><th>Tipologia aplicada (seção)</th><th class="c">Criticidade</th></tr><tr><td>Estacionamento de funcionários</td><td>Estacionamento de funcionários (7.6); Perímetro da planta (7.19)</td><td class="c">C3</td></tr><tr><td>Sala dos motoristas</td><td>Pátio de caminhões e sala de motoristas (7.7)</td><td class="c">C3</td></tr><tr><td>Pátio e estacionamento externo de caminhões</td><td>Pátio de caminhões e sala de motoristas (7.7); Perímetro da planta (7.19)</td><td class="c">C3</td></tr><tr><td>Prédio da portaria (vigilantes, CPD, TI e RH)</td><td>Portaria, guarita e controle de acesso (7.4); CPD e salas de TI e telecomunicações (7.5); Áreas administrativas (7.2)</td><td class="c">C3/C4</td></tr><tr><td>Almoxarifado</td><td>Almoxarifado (7.9)</td><td class="c">C3</td></tr><tr><td>PCC e sala de reuniões</td><td>Áreas administrativas (7.2)</td><td class="c">C1/C2</td></tr><tr><td>Oficina</td><td>Oficina de manutenção (7.10)</td><td class="c">C2</td></tr><tr><td>Caldeira WAD</td><td>Caldeiras e geração de vapor (áreas de calor) (7.11)</td><td class="c">C4</td></tr><tr><td>Caldeira SECAMAQ</td><td>Caldeiras e geração de vapor (áreas de calor) (7.11)</td><td class="c">C4</td></tr><tr><td>Administração</td><td>Áreas administrativas (7.2); Recepções e circulações internas (7.3)</td><td class="c">C1/C2</td></tr><tr><td>Diretoria</td><td>Áreas administrativas (7.2)</td><td class="c">C1</td></tr><tr><td>Coordenação</td><td>Áreas administrativas (7.2)</td><td class="c">C1</td></tr><tr><td>Balança</td><td>Balança (7.8)</td><td class="c">C3</td></tr><tr><td>Subestação</td><td>Subestação e salas elétricas (7.13)</td><td class="c">C4</td></tr><tr><td>Laboratório</td><td>Laboratório de controle de qualidade (7.14)</td><td class="c">C3</td></tr><tr><td>Supervisório</td><td>Sala de controle e supervisório (7.15)</td><td class="c">C4</td></tr><tr><td>Carregamento</td><td>Carregamento e descarregamento de produtos (7.18)</td><td class="c">C4</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+</section>
+<section id="sa-4">
+<div class="sec"><i>A.4</i><h2>Memorial por setor</h2></div>
+<p>Para cada setor apresentam-se a situação atual, as quantidades por padrão e a justificativa específica. “Atual” é a quantidade levantada; “final” é a quantidade após a execução; câmeras novas são a soma das substituições e das adições.</p>
+<h3>A.4.1 Estacionamento de funcionários</h3>
+<p><b class="w">Situação atual:</b> Não há CFTV instalado no setor. <b class="w">Atual:</b> 0 · <b class="w">Substituir:</b> 0 · <b class="w">Adicionar:</b> 16 · <b class="w">Final:</b> 16</p>
+<p class="cap"><b>Tabela 3</b> – Câmeras novas – Estacionamento de funcionários</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">12</td><td>T3 · Full Color 2 MP com IA</td><td>Vagas, corredores de circulação e acessos de pedestres</td></tr><tr><td class="c">04</td><td>T3 · Full Color 2 MP com IA</td><td>Limite do terreno, com analítico de cerca virtual</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Setor hoje sem cobertura, com circulação de pessoas e veículos também à noite. Aplica-se integralmente a tipologia de estacionamento: Full Color com IA em todos os pontos e cerca virtual no limite do terreno.</p>
+<p>Observações específicas do setor:</p>
+<ol class="al"><li>Rack outdoor no setor, com switch PoE de temperatura estendida (seção 11.2);</li><li>Uplink até o CPD por fibra óptica (preferencial) ou por enlace de rádio Ubiquiti LiteBeam 5AC Gen2;</li><li>Câmeras em postes metálicos galvanizados dedicados, de 4 m a 6 m, com aterramento e DPS;</li><li>Opcional, não contabilizado: câmera LPR no acesso de veículos.</li></ol>
+<h3>A.4.2 Sala dos motoristas</h3>
+<p><b class="w">Situação atual:</b> 01 rack e 06 câmeras, sendo 01 com defeito. <b class="w">Atual:</b> 6 · <b class="w">Substituir:</b> 1 · <b class="w">Adicionar:</b> 5 · <b class="w">Final:</b> 11</p>
+<p class="cap"><b>Tabela 4</b> – Câmeras novas – Sala dos motoristas</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">01</td><td>T2 · Série 3000 · IR 2 MP</td><td>Substituição da câmera com defeito, na mesma posição</td></tr><tr><td class="c">02</td><td>T2 · Série 3000 · IR 2 MP</td><td>Área de espera e balcão de atendimento</td></tr><tr><td class="c">03</td><td>T3 · Full Color 2 MP com IA</td><td>Fachada, acesso dos motoristas e ligação com o pátio de caminhões</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Ambiente de permanência de motoristas terceiros, com fluxo intenso e rotativo. Internamente adota-se o padrão T2, que trata a contraluz de portas e janelas; nas faces externas, Full Color.</p>
+<p>Observações específicas do setor:</p>
+<ol class="al"><li>O rack da sala concentra também as câmeras do pátio de caminhões: verificar portas PoE livres, orçamento de potência PoE e estado do nobreak;</li><li>A câmera substituída deve ser identificada e entregue à Binatural.</li></ol>
+<h3>A.4.3 Pátio e estacionamento externo de caminhões</h3>
+<p><b class="w">Situação atual:</b> Somente posteação com refletores e 03 câmeras ligadas ao rack da sala dos motoristas. <b class="w">Atual:</b> 3 · <b class="w">Substituir:</b> 0 · <b class="w">Adicionar:</b> 6 · <b class="w">Final:</b> 9</p>
+<p class="cap"><b>Tabela 5</b> – Câmeras novas – Pátio e estacionamento externo de caminhões</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">04</td><td>T3 · Full Color 2 MP com IA</td><td>Vias de manobra, vagas e circulação de caminhões</td></tr><tr><td class="c">02</td><td>T5 · Termográfica</td><td>Perímetro do pátio: intrusão e focos de calor, com cerca virtual</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Estrutura atual deficiente para a extensão do pátio e para a operação noturna. A expansão combina Full Color com IA nas vias e vagas e duas câmeras termográficas no perímetro.</p>
+<p>Observações específicas do setor:</p>
+<ol class="al"><li>Postes metálicos dedicados ao CFTV ou adequação dos postes dos refletores, com caixa hermética, circuito próprio, DPS e aterramento;</li><li>Troca dos refletores por luminárias LED de distribuição homogênea, recomendada;</li><li>Câmeras existentes de infravermelho convencional devem ser padronizadas em Full Color;</li><li>Lances acima de 90 m em fibra óptica até switch de campo;</li></ol>
+<h3>A.4.4 Prédio da portaria (vigilantes, CPD, TI e RH)</h3>
+<p><b class="w">Situação atual:</b> 06 câmeras analógicas e 02 câmeras IP. <b class="w">Atual:</b> 8 · <b class="w">Substituir:</b> 6 · <b class="w">Adicionar:</b> 8 · <b class="w">Final:</b> 16</p>
+<p class="cap"><b>Tabela 6</b> – Câmeras novas – Prédio da portaria</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">02</td><td>T2 · Série 3000 · IR 2 MP</td><td>CPD: 01 no acesso e 01 no corredor de racks</td></tr><tr><td class="c">07</td><td>T2 · Série 3000 · IR 2 MP</td><td>Salas de vigilantes, TI e RH e circulações internas</td></tr><tr><td class="c">05</td><td>T3 · Full Color 2 MP com IA</td><td>Fachada, portões de pedestres e de veículos, guarita e cancela</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Prédio de controle de acesso da planta e sede do CPD, onde ficarão os gravadores. As 06 câmeras analógicas são substituídas por câmeras IP, o que elimina a dependência dos gravadores híbridos. O CPD recebe as duas câmeras mínimas da tipologia; o RH, câmera apenas no acesso e no arquivo, conforme a tipologia de áreas administrativas.</p>
+<p>Observações específicas do setor:</p>
+<ol class="al"><li>Câmeras do RH e da TI enquadram acessos e circulação, sem captar telas e documentos com dados pessoais.</li></ol>
+<h3>A.4.5 Almoxarifado</h3>
+<p><b class="w">Situação atual:</b> 01 câmera analógica e 02 câmeras IP. <b class="w">Atual:</b> 3 · <b class="w">Substituir:</b> 1 · <b class="w">Adicionar:</b> 6 · <b class="w">Final:</b> 9</p>
+<p class="cap"><b>Tabela 7</b> – Câmeras novas – Almoxarifado</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">04</td><td>T4 · Super Color 2 MP</td><td>Galpão de estoque: corredores de prateleiras e área de separação</td></tr><tr><td class="c">03</td><td>T3 · Full Color 2 MP com IA</td><td>Carga e descarga e acessos externos</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Galpão com prateleiras altas e iluminação irregular: Super Color no galpão e Full Color na área de carga e descarga, conforme a tipologia.</p>
+<h3>A.4.6 PCM e sala de reuniões</h3>
+<p><b class="w">Situação atual:</b> Não informada no levantamento. <b class="w">Atual:</b> 0 · <b class="w">Substituir:</b> 0 · <b class="w">Adicionar:</b> 4 · <b class="w">Final:</b> 4</p>
+<p class="cap"><b>Tabela 8</b> – Câmeras novas – PCM e sala de reuniões</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">03</td><td>T2 · Série 3000 · IR 2 MP</td><td>Salas de trabalho e circulação do PCM</td></tr><tr><td class="c">01</td><td>T1 · IR convencional 2 MP</td><td>Sala de reuniões anexa</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>As salas de trabalho têm uso operacional e recebem o padrão T2; a sala de reuniões é ambiente C1 e recebe o padrão mínimo T1.</p>
+<h3>A.4.7 Oficina</h3>
+<p><b class="w">Situação atual:</b> 02 câmeras. <b class="w">Atual:</b> 2 · <b class="w">Substituir:</b> 0 · <b class="w">Adicionar:</b> 2 · <b class="w">Final:</b> 4</p>
+<p class="cap"><b>Tabela 9</b> – Câmeras novas – Oficina</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">02</td><td>T4 · Super Color 2 MP</td><td>Bancadas, área de máquinas e acesso de veículos e equipamentos</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Ambiente com muitos equipamentos, sombras e iluminação localizada: Super Color, conforme a tipologia.</p>
+<h3>A.4.8 Caldeira WAD</h3>
+<p><b class="w">Situação atual:</b> 03 câmeras. <b class="w">Atual:</b> 3 · <b class="w">Substituir:</b> 0 · <b class="w">Adicionar:</b> 6 · <b class="w">Final:</b> 9</p>
+<p class="cap"><b>Tabela 10</b> – Câmeras novas – Caldeira WAD</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">04</td><td>T4 · Super Color 2 MP</td><td>Frente da caldeira, painel local, alimentação de combustível e circulação</td></tr><tr><td class="c">01</td><td>T5 · Termográfica</td><td>Pátio ou silo de combustível e região da fornalha: focos de calor</td></tr><tr><td class="c">01</td><td>T3 · Full Color 2 MP com IA</td><td>Acesso e entorno externo da casa de caldeira</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Área de calor crítica para a operação. Super Color nas áreas operacionais e câmera termográfica sobre o estoque de lenha e a fornalha, conforme a tipologia de caldeiras.</p>
+<p>Observações específicas do setor:</p>
+<ol class="al"><li>Medir a temperatura nos pontos de instalação e manter distância de superfícies quentes e saídas de gases;</li><li>Usar caixas de proteção e cabos com isolação compatível com a temperatura do local.</li></ol>
+<h3>A.4.9 Caldeira SECAMAQ</h3>
+<p><b class="w">Situação atual:</b> 01 câmera. <b class="w">Atual:</b> 1 · <b class="w">Substituir:</b> 0 · <b class="w">Adicionar:</b> 2 · <b class="w">Final:</b> 3</p>
+<p class="cap"><b>Tabela 11</b> – Câmeras novas – Caldeira SECAMAQ</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">02</td><td>T4 · Super Color 2 MP</td><td>Frente da caldeira, painel local e alimentação de lenha</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Mesmo perfil da Caldeira WAD: Super Color nas áreas operacionais.</p>
+<p>Observações específicas do setor:</p>
+<ol class="al"><li>Avaliar na vistoria a inclusão de câmera termográfica para o estoque de lenha, como na Caldeira WAD.</li></ol>
+<h3>A.4.10 Administração</h3>
+<p><b class="w">Situação atual:</b> 05 câmeras analógicas e 01 câmera IP. <b class="w">Atual:</b> 6 · <b class="w">Substituir:</b> 5 · <b class="w">Adicionar:</b> 5 · <b class="w">Final:</b> 11</p>
+<p class="cap"><b>Tabela 12</b> – Câmeras novas – Administração</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">04</td><td>T2 · Série 3000 · IR 2 MP</td><td>Recepção, circulações e acessos internos</td></tr><tr><td class="c">04</td><td>T1 · IR convencional 2 MP</td><td>Salas administrativas</td></tr><tr><td class="c">02</td><td>T3 · Full Color 2 MP com IA</td><td>Fachada e acessos externos do prédio</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Salas administrativas com o padrão mínimo T1; recepção e circulações com T2, pela contraluz das portas de vidro; fachada em Full Color.</p>
+<p>Observações específicas do setor:</p>
+<ol class="al"><li>Instalação de TV de no mínimo 43 polegadas, 4K, para visualização dos setores em mosaico (A.8).</li></ol>
+<h3>A.4.11 Diretoria</h3>
+<p><b class="w">Situação atual:</b> Não informada no levantamento. <b class="w">Atual:</b> 0 · <b class="w">Substituir:</b> 0 · <b class="w">Adicionar:</b> 1 · <b class="w">Final:</b> 1</p>
+<p class="cap"><b>Tabela 13</b> – Câmeras novas – Diretoria</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">01</td><td>T1 · IR convencional 2 MP</td><td>Acesso e circulação da diretoria</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Ambiente C1: padrão mínimo, enquadrando o acesso e não a área de trabalho.</p>
+<h3>A.4.12 Coordenação</h3>
+<p><b class="w">Situação atual:</b> Não informada no levantamento. <b class="w">Atual:</b> 0 · <b class="w">Substituir:</b> 0 · <b class="w">Adicionar:</b> 1 · <b class="w">Final:</b> 1</p>
+<p class="cap"><b>Tabela 14</b> – Câmeras novas – Coordenação</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">01</td><td>T1 · IR convencional 2 MP</td><td>Acesso e circulação da coordenação</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Mesmo critério da diretoria: padrão mínimo no acesso.</p>
+<h3>A.4.13 Balança</h3>
+<p><b class="w">Situação atual:</b> 01 câmera analógica. <b class="w">Atual:</b> 1 · <b class="w">Substituir:</b> 1 · <b class="w">Adicionar:</b> 0 · <b class="w">Final:</b> 1</p>
+<p class="cap"><b>Tabela 15</b> – Câmeras novas – Balança</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">01</td><td>T3 · Full Color 2 MP com IA</td><td>Plataforma da balança e veículo em pesagem</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Ponto de controle fiscal com operação noturna. A câmera analógica é substituída por Full Color com IA.</p>
+<p>Observações específicas do setor:</p>
+<ol class="al"><li>Recomendação não contabilizada: 01 câmera LPR e 01 câmera de vista superior da carroceria, conforme a tipologia.</li></ol>
+<h3>A.4.14 Subestação</h3>
+<p><b class="w">Situação atual:</b> Não informada no levantamento. <b class="w">Atual:</b> 0 · <b class="w">Substituir:</b> 0 · <b class="w">Adicionar:</b> 5 · <b class="w">Final:</b> 5</p>
+<p class="cap"><b>Tabela 16</b> – Câmeras novas – Subestação</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">02</td><td>T2 · Série 3000 · IR 2 MP</td><td>Interior: sala de painéis e cubículos</td></tr><tr><td class="c">02</td><td>T3 · Full Color 2 MP com IA</td><td>Exterior: transformadores e portão de acesso, com cerca virtual</td></tr><tr><td class="c">01</td><td>T5 · Termográfica</td><td>Transformadores e barramentos: pontos quentes</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Aplicação integral da tipologia de subestação: cobertura interna e externa e termografia dos transformadores.</p>
+<p>Observações específicas do setor:</p>
+<ol class="al"><li>Instalação conforme NR-10 e ABNT NBR 14039;</li><li>Uplink obrigatório em fibra óptica e DPS na alimentação e nos dados.</li></ol>
+<h3>A.4.15 Laboratório</h3>
+<p><b class="w">Situação atual:</b> Não informada no levantamento. <b class="w">Atual:</b> 0 · <b class="w">Substituir:</b> 0 · <b class="w">Adicionar:</b> 5 · <b class="w">Final:</b> 5</p>
+<p class="cap"><b>Tabela 17</b> – Câmeras novas – Laboratório</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">05</td><td>T2 · Série 3000 · IR 2 MP</td><td>Bancadas de análise, recebimento e guarda de amostras e acesso</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Rastreabilidade das análises e cadeia de custódia das amostras-testemunho: padrão T2, conforme a tipologia.</p>
+<h3>A.4.16 Supervisório</h3>
+<p><b class="w">Situação atual:</b> 01 câmera analógica. <b class="w">Atual:</b> 1 · <b class="w">Substituir:</b> 1 · <b class="w">Adicionar:</b> 1 · <b class="w">Final:</b> 2</p>
+<p class="cap"><b>Tabela 18</b> – Câmeras novas – Supervisório</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">01</td><td>T2 · Série 3000 · IR 2 MP</td><td>Substituição da câmera analógica: acesso à sala</td></tr><tr><td class="c">01</td><td>T6 · Fisheye 360°</td><td>Fisheye 8 MP no teto: telas de supervisão e ambiente geral</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Aplicação integral da tipologia: câmera de acesso T2 e fisheye no teto.</p>
+<p>Observações específicas do setor:</p>
+<ol class="al"><li>A fisheye de 8 MP foi calculada a 4.096 kbps (A.6).</li></ol>
+<h3>A.4.17 Carregamento</h3>
+<p><b class="w">Situação atual:</b> 03 câmeras. <b class="w">Atual:</b> 3 · <b class="w">Substituir:</b> 0 · <b class="w">Adicionar:</b> 1 · <b class="w">Final:</b> 4</p>
+<p class="cap"><b>Tabela 19</b> – Câmeras novas – Carregamento</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Padrão</th><th>Aplicação</th></tr><tr><td class="c">01</td><td>T7 · Antiexplosão (Ex)</td><td>Plataforma de carregamento (Ex, se a posição estiver em zona classificada)</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Área potencialmente classificada. Se a posição estiver em zona classificada, aplica-se o padrão T7; fora dela, Super Color, conforme a tipologia de carregamento.</p>
+<p>Observações específicas do setor:</p>
+<ol class="al"><li>Verificar se as 03 câmeras existentes estão dentro de zona classificada sem certificação Ex; nesse caso, devem ser relocadas ou substituídas.</li></ol>
+</section>
+<section id="sa-5">
+<div class="sec"><i>A.5</i><h2>Quadro quantitativo</h2></div>
+<p class="cap"><b>Tabela 20</b> – Câmeras por setor e por padrão – Formosa/GO</p>
+<div class="tw sm"><table><tr><th>Setor</th><th class="c">Atual</th><th class="c">Subst.</th><th class="c">Adic.</th><th class="c">Final</th><th class="c">T1</th><th class="c">T2</th><th class="c">T3</th><th class="c">T4</th><th class="c">T5</th><th class="c">T6</th><th class="c">T7</th><th class="c">Novas</th></tr><tr><td>Estacionamento de funcionários</td><td class="c">0</td><td class="c">0</td><td class="c">16</td><td class="c"><b class="w">16</b></td><td class="c"></td><td class="c"></td><td class="c">16</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><b class="w">16</b></td></tr><tr><td>Sala dos motoristas</td><td class="c">6</td><td class="c">1</td><td class="c">5</td><td class="c"><b class="w">11</b></td><td class="c"></td><td class="c">3</td><td class="c">3</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><b class="w">6</b></td></tr><tr><td>Pátio e estacionamento externo de caminhões</td><td class="c">3</td><td class="c">0</td><td class="c">6</td><td class="c"><b class="w">9</b></td><td class="c"></td><td class="c"></td><td class="c">4</td><td class="c"></td><td class="c">2</td><td class="c"></td><td class="c"></td><td class="c"><b class="w">6</b></td></tr><tr><td>Prédio da portaria</td><td class="c">8</td><td class="c">6</td><td class="c">8</td><td class="c"><b class="w">16</b></td><td class="c"></td><td class="c">9</td><td class="c">5</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><b class="w">14</b></td></tr><tr><td>Almoxarifado</td><td class="c">3</td><td class="c">1</td><td class="c">6</td><td class="c"><b class="w">9</b></td><td class="c"></td><td class="c"></td><td class="c">3</td><td class="c">4</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><b class="w">7</b></td></tr><tr><td>PCC e sala de reuniões</td><td class="c">0</td><td class="c">0</td><td class="c">4</td><td class="c"><b class="w">4</b></td><td class="c">1</td><td class="c">3</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><b class="w">4</b></td></tr><tr><td>Oficina</td><td class="c">2</td><td class="c">0</td><td class="c">2</td><td class="c"><b class="w">4</b></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c">2</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><b class="w">2</b></td></tr><tr><td>Caldeira WAD</td><td class="c">3</td><td class="c">0</td><td class="c">6</td><td class="c"><b class="w">9</b></td><td class="c"></td><td class="c"></td><td class="c">1</td><td class="c">4</td><td class="c">1</td><td class="c"></td><td class="c"></td><td class="c"><b class="w">6</b></td></tr><tr><td>Caldeira SECAMAQ</td><td class="c">1</td><td class="c">0</td><td class="c">2</td><td class="c"><b class="w">3</b></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c">2</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><b class="w">2</b></td></tr><tr><td>Administração</td><td class="c">6</td><td class="c">5</td><td class="c">5</td><td class="c"><b class="w">11</b></td><td class="c">4</td><td class="c">4</td><td class="c">2</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><b class="w">10</b></td></tr><tr><td>Diretoria</td><td class="c">0</td><td class="c">0</td><td class="c">1</td><td class="c"><b class="w">1</b></td><td class="c">1</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><b class="w">1</b></td></tr><tr><td>Coordenação</td><td class="c">0</td><td class="c">0</td><td class="c">1</td><td class="c"><b class="w">1</b></td><td class="c">1</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><b class="w">1</b></td></tr><tr><td>Balança</td><td class="c">1</td><td class="c">1</td><td class="c">0</td><td class="c"><b class="w">1</b></td><td class="c"></td><td class="c"></td><td class="c">1</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><b class="w">1</b></td></tr><tr><td>Subestação</td><td class="c">0</td><td class="c">0</td><td class="c">5</td><td class="c"><b class="w">5</b></td><td class="c"></td><td class="c">2</td><td class="c">2</td><td class="c"></td><td class="c">1</td><td class="c"></td><td class="c"></td><td class="c"><b class="w">5</b></td></tr><tr><td>Laboratório</td><td class="c">0</td><td class="c">0</td><td class="c">5</td><td class="c"><b class="w">5</b></td><td class="c"></td><td class="c">5</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"><b class="w">5</b></td></tr><tr><td>Supervisório</td><td class="c">1</td><td class="c">1</td><td class="c">1</td><td class="c"><b class="w">2</b></td><td class="c"></td><td class="c">1</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c">1</td><td class="c"></td><td class="c"><b class="w">2</b></td></tr><tr><td>Carregamento</td><td class="c">3</td><td class="c">0</td><td class="c">1</td><td class="c"><b class="w">4</b></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c">1</td><td class="c"><b class="w">1</b></td></tr><tr class="tot"><td><b class="w">Total</b></td><td class="c"><b class="w">37</b></td><td class="c"><b class="w">15</b></td><td class="c"><b class="w">74</b></td><td class="c"><b class="w">111</b></td><td class="c"><b class="w">7</b></td><td class="c"><b class="w">27</b></td><td class="c"><b class="w">37</b></td><td class="c"><b class="w">12</b></td><td class="c"><b class="w">4</b></td><td class="c"><b class="w">1</b></td><td class="c"><b class="w">1</b></td><td class="c"><b class="w">89</b></td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>O sistema final terá 111 câmeras, das quais 89 novas: 15 substituições e 74 adições. Por padrão: T1, 7; T2, 27; T3, 37; T4, 12; T5, 4; T6, 1; T7, 1.</p>
+</section>
+<section id="sa-6">
+<div class="sec"><i>A.6</i><h2>Gravação e armazenamento</h2></div>
+<p>Os 02 gravadores híbridos MHDX 3116 devem ser substituídos por 03 gravadores iNVD 5232 novos; o NVD 7132 existente é mantido. São 128 canais para 111 câmeras, com 17 canais de reserva (13,3%), acima do mínimo de 10% do padrão. Aplicando o método da seção 10.2:</p>
+<p class="cap"><b>Tabela 21</b> – Cálculo de armazenamento – Formosa/GO</p>
+<div class="tw"><table><tr><th>Etapa</th><th>Resultado</th></tr><tr><td>Taxa por câmera</td><td>1.024 kbps = 1,024 Mb/s</td></tr><tr><td>Por dia</td><td>1,024 Mb/s × 86.400 s ÷ 8 = 11,06 GB</td></tr><tr><td>Em 30 dias</td><td>11,06 GB × 30 = 331,78 GB por câmera</td></tr><tr><td>Sistema completo (2 MP)</td><td>111 × 331,78 GB = 36,83 TB</td></tr><tr><td>Acréscimo da fisheye a 4.096 kbps</td><td>1,00 TB</td></tr><tr class="tot"><td><b class="w">Total com margem de 20%</b></td><td><b class="w">45,39 TB</b></td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p class="cap"><b>Tabela 22</b> – Distribuição das câmeras por gravador – Formosa/GO</p>
+<div class="tw"><table><tr><th>Gravador</th><th>Modelo</th><th>Setores</th><th class="c">Canais</th><th class="c">30 dias</th><th class="c">+20%</th><th class="c">Discos</th></tr><tr><td>FSA-NVR-01</td><td>iNVD 5232 (novo)</td><td>Prédio da portaria, Sala dos motoristas, Balança</td><td class="c">28/32</td><td class="c">9,29 TB</td><td class="c">11,15 TB</td><td class="c">2 × 8 TB</td></tr><tr><td>FSA-NVR-02</td><td>iNVD 5232 (novo)</td><td>Estacionamento de funcionários, Pátio e estacionamento externo de caminhões</td><td class="c">25/32</td><td class="c">8,29 TB</td><td class="c">9,95 TB</td><td class="c">2 × 8 TB</td></tr><tr><td>FSA-NVR-03</td><td>iNVD 5232 (novo)</td><td>Administração, Diretoria, Coordenação, Almoxarifado, PCC e sala de reuniões, Oficina</td><td class="c">30/32</td><td class="c">9,95 TB</td><td class="c">11,94 TB</td><td class="c">2 × 8 TB</td></tr><tr><td>FSA-NVR-04</td><td>NVD 7132 (existente)</td><td>Caldeira WAD, Caldeira SECAMAQ, Subestação, Laboratório, Supervisório, Carregamento</td><td class="c">28/32</td><td class="c">10,29 TB</td><td class="c">12,34 TB</td><td class="c">2 × 8 TB</td></tr><tr class="tot"><td><b class="w">Total</b></td><td><b class="w">4 gravadores</b></td><td><b class="w">17 setores</b></td><td class="c"><b class="w">111/128</b></td><td class="c"><b class="w">37,82 TB</b></td><td class="c"><b class="w">45,39 TB</b></td><td class="c"><b class="w">8 × 8 TB</b></td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>Cada gravador recebe no mínimo 2 discos de 8 TB da linha de vigilância: 16 TB nominais, cerca de 14,4 TB úteis, o que atende inclusive à ocupação total dos 32 canais (12,74 TB com margem). As câmeras do perímetro estão distribuídas nos gravadores FSA-NVR-02 e FSA-NVR-04, conforme a seção 10.3. As câmeras termográficas de referência devem ser verificadas quanto à ocupação de um ou dois canais; a reserva de 17 canais absorve a diferença.</p>
+</section>
+<section id="sa-7">
+<div class="sec"><i>A.7</i><h2>Infraestrutura da unidade</h2></div>
+<p>A figura a seguir apresenta o diagrama de blocos da solução na unidade. Rotas, distâncias e switches de campo serão definidos no projeto executivo.</p>
+<p class="cap"><b>Figura 1</b> – Diagrama de blocos do CFTV da unidade de Formosa/GO</p>
+<figure class="fig"><img src="img/formosa-1.png" alt=""></figure>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+<p>As condições específicas de infraestrutura da unidade são as seguintes:</p>
+<ol class="al"><li><b class="w">Estacionamento de funcionários:</b> Rack outdoor IP65 com switch PoE, atendendo 16 câmeras; uplink por fibra óptica ou, alternativamente, por 02 rádios Ubiquiti LiteBeam 5AC Gen2, com tráfego estimado de 20 Mb/s;</li><li><b class="w">Sala dos motoristas:</b> Rack existente atende também o pátio de caminhões; verificar portas PoE, orçamento de potência e nobreak;</li><li><b class="w">Subestação:</b> uplink em fibra óptica;</li><li><b class="w">Rede:</b> VLAN de CFTV na rede óptica GPON em implantação na unidade; tráfego de cerca de 32 Mb/s por gravador;</li><li><b class="w">CPD:</b> 03 iNVD 5232 novos e NVD 7132 existente, com nobreak online e rede estabilizada.</li></ol>
+</section>
+<section id="sa-8">
+<div class="sec"><i>A.8</i><h2>Monitoramento</h2></div>
+<ol class="al"><li><b class="w">Administração:</b> TV de no mínimo 43 polegadas, 4K, em suporte de parede, alimentada por decodificador IP ou mini-PC na VLAN do CFTV, para visualização dos setores em mosaico;</li><li><b class="w">Portaria:</b> Estação de monitoramento na sala dos vigilantes, com recebimento dos alarmes de cerca virtual e das câmeras termográficas.</li></ol>
+</section>
+<section id="sa-9">
+<div class="sec"><i>A.9</i><h2>Equipamentos e materiais</h2></div>
+<p class="cap"><b>Quadro 3</b> – Lista preliminar de equipamentos e materiais – Formosa/GO</p>
+<div class="tw"><table><tr><th class="c">Qtd.</th><th>Item</th><th>Aplicação</th></tr><tr class="grp"><td colspan="3"><b class="w">Câmeras</b></td></tr><tr><td class="c">07</td><td>Câmera IP 2 MP IR convencional (padrão T1, ref. VIP 1230)</td><td>Salas de baixa criticidade</td></tr><tr><td class="c">27</td><td>Câmera IP 2 MP série 3000 (padrão T2, ref. VIP 3230)</td><td>Áreas internas operacionais</td></tr><tr><td class="c">37</td><td>Câmera IP 2 MP Full Color com IA (padrão T3)</td><td>Áreas externas</td></tr><tr><td class="c">12</td><td>Câmera IP 2 MP Super Color (padrão T4)</td><td>Almoxarifado, oficina e caldeiras</td></tr><tr><td class="c">04</td><td>Câmera termográfica (padrão T5, ref. VIP 5203)</td><td>Pátio, subestação e caldeira</td></tr><tr><td class="c">01</td><td>Câmera fisheye 8 MP (padrão T6)</td><td>Supervisório</td></tr><tr><td class="c">01</td><td>Câmera Ex certificada INMETRO ou câmera IP em invólucro Ex d (padrão T7)</td><td>Carregamento; demais conforme estudo</td></tr><tr class="grp"><td colspan="3"><b class="w">Gravação e visualização</b></td></tr><tr><td class="c">03</td><td>Gravador iNVD 5232, 32 canais IP, série 5000</td><td>CPD</td></tr><tr><td class="c">06</td><td>Disco rígido 8 TB, linha de vigilância</td><td>Gravadores novos</td></tr><tr><td class="c">A definir</td><td>Disco rígido 8 TB, linha de vigilância</td><td>NVD 7132 existente, após verificação</td></tr><tr><td class="c">01</td><td>TV 43 polegadas 4K com suporte de parede</td><td>Administração</td></tr><tr><td class="c">01</td><td>Decodificador IP ou mini-PC com software de gestão</td><td>Administração</td></tr><tr class="grp"><td colspan="3"><b class="w">Rede e infraestrutura</b></td></tr><tr><td class="c">01</td><td>Rack outdoor IP65 com ventilação, DPS, aterramento e nobreak</td><td>Estacionamento de funcionários</td></tr><tr><td class="c">02</td><td>Rádio Ubiquiti LiteBeam 5AC Gen2 (LBE-5AC-Gen2-BR)</td><td>Alternativa ao uplink em fibra</td></tr><tr><td class="c">A definir</td><td>Switches PoE setoriais e switch PoE industrial</td><td>Conforme vistoria</td></tr><tr><td class="c">A definir</td><td>Cabo óptico monomodo, DIO, cordões e módulos SFP</td><td>Uplinks</td></tr><tr><td class="c">A definir</td><td>Cabo UTP categoria 6 (interno e externo), conectores e patch cords</td><td>Pontos de câmera</td></tr><tr><td class="c">A definir</td><td>Eletrodutos, conduletes, caixas herméticas e fixações</td><td>Infraestrutura</td></tr><tr><td class="c">A definir</td><td>Postes metálicos galvanizados com aterramento</td><td>Estacionamento e pátio</td></tr><tr><td class="c">A definir</td><td>DPS de energia e de dados</td><td>Pontos externos e racks</td></tr><tr><td class="c">01</td><td>Nobreak online para o CPD ou ampliação do existente</td><td>CPD</td></tr></table></div>
+<p class="fonte">Fonte: elaborado pela A+.com Engenharia e Tecnologia (2026).</p>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  <img src="img/logo-amais.png" alt="A+.com Engenharia e Tecnologia">
+  <span>Projeto técnico de CFTV · Binatural Formosa, GO · A+.com Engenharia e Tecnologia</span>
+</div></footer>
+
+<script>
+/* PDF: o navegador salva o documento em A4 (Imprimir › Salvar como PDF) */
+function baixarPdf(){document.fonts.ready.then(()=>setTimeout(()=>print(),150))}
+document.getElementById('bPdf').onclick=baixarPdf;
+if(new URLSearchParams(location.search).has('pdf'))baixarPdf();
+</script>
+</body>
+</html>

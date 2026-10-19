@@ -25,6 +25,15 @@ Propostas cadastradas:
 - **Binatural · Formosa, GO · Rede óptica GPON · projeto executivo**: o documento
   do projeto em página corrida (base: `Projeto_GPON_Binatural_Formosa_GO.docx`), sem valores, com PDF em A4
   (`propostas/binatural-gpon/projeto.html`).
+- **Binatural · CFTV · padrão técnico corporativo**: o padrão de CFTV válido para
+  todas as unidades, em página corrida, sem quantitativos
+  (base: `Padrao Tecnico Corporativo CFTV Binatural REVISADO.docx`,
+  `propostas/binatural-cftv/padrao.html`).
+- **Binatural · Formosa, GO · CFTV · projeto técnico**: a aplicação do padrão na
+  unidade de Formosa, com quantitativos, gravadores e materiais
+  (base: `Projeto Tecnico CFTV Formosa-GO - Aplicacao do Padrao.docx`,
+  `propostas/binatural-cftv/projeto-formosa.html`). As duas páginas são geradas a
+  partir dos .docx por `PROJETO BINATURAL /projeto-cftv/docx-para-portal.py`.
 - **UFV Samambaia · CFTV térmico de perímetro**: apresentação hospedada como
   está, sem campos editáveis.
 
