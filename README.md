@@ -34,6 +34,12 @@ Propostas cadastradas:
   (base: `Projeto Tecnico CFTV Formosa-GO - Aplicacao do Padrao.docx`,
   `propostas/binatural-cftv/projeto-formosa.html`). As duas páginas são geradas a
   partir dos .docx por `PROJETO BINATURAL /projeto-cftv/docx-para-portal.py`.
+- **Alphaville Residencial 2 · Controle de acesso Condfy**: apresentação ao
+  conselho técnico e administrativo sobre a troca do InControl Web pelo Condfy
+  (`propostas/alphaville-condfy/proposta.html`). Só o responsável do último
+  slide (nome, cargo, telefone e e-mail) é editável no painel, aba Dados; não
+  tem materiais nem serviços. Gerada a partir do deck no formato Slides por
+  `alphaville /portal/converter.py`, sem as notas do apresentador.
 - **UFV Samambaia · CFTV térmico de perímetro**: apresentação hospedada como
   está, sem campos editáveis.
 

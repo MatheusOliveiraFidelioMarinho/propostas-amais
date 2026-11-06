@@ -62,7 +62,7 @@ async function tratar(req) {
       const c = p.modelo ? calcular(p, (await carregar(p.slug)).salvo) : null;
       return {
         slug: p.slug, cliente: p.cliente, titulo: p.titulo, unidade: c?.campos.local || p.unidade,
-        editavel: Boolean(p.modelo), status: c?.status || null, atualizado: c?.atualizado || null,
+        editavel: Boolean(p.modelo), comValores: Object.keys(p.modelo?.listas || {}).length > 0, status: c?.status || null, atualizado: c?.atualizado || null,
         total: c?.geral || null, links: (await links(p.slug)).length,
       };
     }));

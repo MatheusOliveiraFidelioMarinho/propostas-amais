@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Condfy — Alphaville Residencial 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@300..700&display=swap">
+<script src="protecao.js"></script>
+<style>
+/*
+ * Deck gerado a partir da apresentação no formato Slides (1920x1080).
+ * Cada <section class="slide"> traz o próprio estilo inline; aqui ficam só os
+ * padrões do formato (texto, tabelas, ícones) e o palco escalado.
+ */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#0b0e10}
+body{font-family:Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+[hidden]{display:none!important}
+
+#viewport{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#0b0e10}
+#stage{position:relative;width:1920px;height:1080px;flex:none;overflow:hidden;transform-origin:center center}
+
+.slide{
+  position:absolute;inset:0;width:1920px;height:1080px;overflow:hidden;
+  display:flex;flex-direction:column;
+  opacity:0;visibility:hidden;transition:opacity .5s ease,visibility .5s;
+}
+.slide.on{opacity:1;visibility:visible}
+.slide div{display:flex;flex-direction:column;min-width:0}
+.slide div[style*="display:flex"],.slide div[style*="display: flex"]{flex-direction:row}
+.slide h1{font-size:96px;font-weight:600;line-height:1.1}
+.slide h2{font-size:64px;font-weight:600;line-height:1.15}
+.slide h3{font-size:44px;font-weight:600;line-height:1.2}
+.slide p{font-size:32px;line-height:1.4}
+.slide b{font-weight:600}
+.slide img{display:block;flex:none}
+.slide .ic{display:block;flex:none}
+.slide table{width:100%;border-collapse:collapse;overflow:hidden;table-layout:fixed}
+.slide th,.slide td{padding:.35em .6em;text-align:left;vertical-align:top;line-height:1.35;border-bottom:1px solid rgba(27,33,40,.12)}
+.slide th{font-weight:600}
+
+/* entrada suave dos blocos do slide atual */
+.slide.on>*{animation:sobe .6s cubic-bezier(.2,.7,.2,1) both}
+.slide.on>*:nth-child(2){animation-delay:.06s}
+.slide.on>*:nth-child(3){animation-delay:.12s}
+.slide.on>*:nth-child(4){animation-delay:.18s}
+.slide.on>*:nth-child(5){animation-delay:.24s}
+@keyframes sobe{from{opacity:0;translate:0 24px}to{opacity:1;translate:0 0}}
+
+/* controles */
+#ctrl{
+  position:fixed;right:22px;bottom:18px;z-index:10;display:flex;align-items:center;gap:8px;
+  background:rgba(18,22,26,.82);backdrop-filter:blur(10px);border:1px solid #2a333b;border-radius:12px;padding:6px;
+  transition:opacity .3s;
+}
+#ctrl button{background:none;border:0;color:#bac4b4;width:38px;height:38px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#ctrl button:hover{background:#a6d32a;color:#12161a}
+#ctrl button svg{width:19px;height:19px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+#count{font:700 13px Inter,Arial,sans-serif;color:#bac4b4;min-width:54px;text-align:center;font-variant-numeric:tabular-nums}
+#prog{position:fixed;left:0;top:0;height:3px;background:#a6d32a;z-index:10;transition:width .4s}
+body.idle #ctrl{opacity:0}
+body.idle{cursor:none}
+@media (max-width:700px){#ctrl{right:50%;transform:translateX(50%);bottom:12px}}
+
+@media print{
+  @page{size:1920px 1080px;margin:0}
+  html,body{height:auto;overflow:visible;background:none}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #ctrl,#prog{display:none!important}
+  #viewport{position:static;display:block;background:none}
+  #stage{transform:none!important;width:1920px;height:auto;overflow:visible}
+  .slide{position:relative;inset:auto;opacity:1;visibility:visible;transition:none;break-after:page;break-inside:avoid}
+  .slide>*{animation:none!important}
+  .slide:last-child{break-after:auto}
+}
+</style>
+</head>
+<body class="idle">
+<div id="prog"></div>
+<div id="viewport"><div id="stage">
+<section class="slide" id="cover" style="background:radial-gradient(ellipse at 80% 30%, #26331A 0%, #12161A 60%);color:#F4F6F1;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:space-between">
+<img src="img/logo-amais.png" alt="Logo A+.com Engenharia e Tecnologia" style="width:392px;height:140px;object-fit:contain">
+<div style="width:1080px;display:flex;flex-direction:column;gap:32px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#A6D32A">Proposta ao Conselho Técnico e Administrativo</p>
+<h1 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:96px;font-weight:700;line-height:1.05;letter-spacing:-2px">Controle de acesso e gestão do condomínio no celular do morador</h1>
+<p style="font-size:32px;color:#BAC4B4;line-height:1.4">Migração do InControl Web para a plataforma Condfy</p>
+</div>
+<div style="position:absolute;left:1272px;top:340px;width:520px;height:400px;background:#FFFFFF;border-radius:32px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;box-shadow:0px 24px 80px rgba(0,0,0,0.45)">
+<img src="img/logo-alphaville.jpg" alt="Logo Alphaville Residencial 2" style="width:460px;height:326px;object-fit:contain">
+</div>
+
+</section>
+<section class="slide" id="hoje" style="background:#F4F6F1;color:#1B2128;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3F6B00">Onde estamos hoje</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">O controle de acesso é operado pela portaria, no InControl Web</h2>
+</div>
+<div style="display:flex;gap:32px;flex:1">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#FFFFFF;padding:48px;border:1px solid #DDE3D6;border-radius:24px">
+<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#3F6B00;width:56px;height:56px" aria-hidden="true"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:600;line-height:1.15">Centrado no operador</h3>
+<p style="font-size:32px;color:#4A5563;line-height:1.4">Software de gestão usado pela portaria e pela administração para cadastrar e liberar acessos.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#FFFFFF;padding:48px;border:1px solid #DDE3D6;border-radius:24px">
+<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#3F6B00;width:56px;height:56px" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:600;line-height:1.15">Morador depende da portaria</h3>
+<p style="font-size:32px;color:#4A5563;line-height:1.4">Visitantes, prestadores e entregas passam por ligação ou mensagem ao porteiro.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#FFFFFF;padding:48px;border:1px solid #DDE3D6;border-radius:24px">
+<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#3F6B00;width:56px;height:56px" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+<h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:600;line-height:1.15">Canais separados</h3>
+<p style="font-size:32px;color:#4A5563;line-height:1.4">Avisos, reservas e solicitações correm por WhatsApp, e-mail ou papel, fora do sistema de acesso.</p>
+</div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7480">A+.com Engenharia e Tecnologia · Alphaville Residencial 2</p>
+
+</section>
+<section class="slide" id="proposta" style="background:#12161A;color:#F4F6F1;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="width:1100px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#A6D32A">A proposta</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">Condfy: controle de acesso em nuvem, com aplicativo para cada morador</h2>
+</div>
+<div style="width:1100px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;gap:24px;align-items:center"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:48px;height:48px" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg><p style="font-size:32px;color:#D5DCCF;line-height:1.4"><b style="color:#F4F6F1">Plataforma em nuvem</b>: portaria, administração e moradores no mesmo sistema</p></div>
+<div style="display:flex;gap:24px;align-items:center"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:48px;height:48px" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg><p style="font-size:32px;color:#D5DCCF;line-height:1.4"><b style="color:#F4F6F1">Integra com Intelbras</b>, Control iD, Hikvision e outras marcas de equipamentos</p></div>
+<div style="display:flex;gap:24px;align-items:center"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:48px;height:48px" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><p style="font-size:32px;color:#D5DCCF;line-height:1.4"><b style="color:#F4F6F1">Adequada à LGPD</b>, com dados criptografados e encarregado (DPO) designado</p></div>
+<div style="display:flex;gap:24px;align-items:center"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:48px;height:48px" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg><p style="font-size:32px;color:#D5DCCF;line-height:1.4"><b style="color:#F4F6F1">Mais de 15 mil empreendimentos</b> e 1 milhão de usuários no app, segundo o fabricante</p></div>
+</div>
+<img src="img/guia-p01.jpg" alt="Capa do Guia do Usuário do aplicativo Condfy, com um celular mostrando a tela inicial" style="position:absolute;left:1328px;top:96px;width:464px;height:824px;object-fit:cover;border-radius:28px">
+<p style="position:absolute;left:128px;bottom:64px;width:1100px;font-size:24px;color:#8F9A88">Fonte: condfy.com.br, consultado em 06/11/2026</p>
+
+</section>
+<section class="slide" id="comparativo" style="background:#F4F6F1;color:#1B2128;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3F6B00">Antes e depois</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">O que muda no dia a dia</h2>
+</div>
+<table style="font-size:28px;color:#1B2128;background:#FFFFFF;border-radius:20px">
+<tr style="background:#1B2128"><th style="width:28%;color:#F4F6F1;text-align:left">Situação</th><th style="width:36%;color:#F4F6F1;text-align:left">Hoje · InControl Web</th><th style="width:36%;color:#A6D32A;text-align:left">Com o Condfy</th></tr>
+<tr><td>Receber uma visita</td><td>Ligar ou mandar mensagem à portaria</td><td>Convite pelo app: QR Code, chave virtual ou facial</td></tr>
+<tr style="background:#F4F6F1"><td>Abrir portão</td><td>Tag, controle ou porteiro</td><td>Também pelo botão “Acionar” no app</td></tr>
+<tr><td>Cadastrar a face</td><td>Presencial, na administração</td><td>Autocadastro com foto pelo app</td></tr>
+<tr style="background:#F4F6F1"><td>Reservar área comum</td><td>Contato com a administração</td><td>Agenda no app, com lista de convidados</td></tr>
+<tr><td>Saber quem entrou</td><td>Consulta à portaria</td><td>Histórico e notificação em tempo real</td></tr>
+<tr style="background:#F4F6F1"><td>Avisos e pedidos</td><td>Canais separados</td><td>Mural e pedidos no app, com status</td></tr>
+</table>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#6B7480">Coluna “Hoje”: validar com a administração antes da apresentação</p>
+
+</section>
+<section class="slide" id="recursos" style="background:#12161A;color:#F4F6F1;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#A6D32A">Visão geral</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">Doze recursos em um só aplicativo</h2>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:20px;flex:1">
+<div style="display:flex;gap:20px;align-items:center;background:#1E252B;padding:28px;border-radius:20px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:44px;height:44px" aria-hidden="true"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg><p style="font-size:30px;font-weight:600">Primeiro acesso</p></div>
+<div style="display:flex;gap:20px;align-items:center;background:#1E252B;padding:28px;border-radius:20px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:44px;height:44px" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><p style="font-size:30px;font-weight:600">Autorizados</p></div>
+<div style="display:flex;gap:20px;align-items:center;background:#1E252B;padding:28px;border-radius:20px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:44px;height:44px" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/></svg><p style="font-size:30px;font-weight:600">Acesso facial</p></div>
+<div style="display:flex;gap:20px;align-items:center;background:#1E252B;padding:28px;border-radius:20px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:44px;height:44px" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"/></svg><p style="font-size:30px;font-weight:600">Câmeras</p></div>
+<div style="display:flex;gap:20px;align-items:center;background:#1E252B;padding:28px;border-radius:20px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:44px;height:44px" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg><p style="font-size:30px;font-weight:600">Acionamentos</p></div>
+<div style="display:flex;gap:20px;align-items:center;background:#1E252B;padding:28px;border-radius:20px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:44px;height:44px" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg><p style="font-size:30px;font-weight:600">Convites</p></div>
+<div style="display:flex;gap:20px;align-items:center;background:#1E252B;padding:28px;border-radius:20px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:44px;height:44px" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><p style="font-size:30px;font-weight:600">Agendamentos</p></div>
+<div style="display:flex;gap:20px;align-items:center;background:#1E252B;padding:28px;border-radius:20px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:44px;height:44px" aria-hidden="true"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg><p style="font-size:30px;font-weight:600">Mural de avisos</p></div>
+<div style="display:flex;gap:20px;align-items:center;background:#1E252B;padding:28px;border-radius:20px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:44px;height:44px" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><p style="font-size:30px;font-weight:600">Pedidos</p></div>
+<div style="display:flex;gap:20px;align-items:center;background:#1E252B;padding:28px;border-radius:20px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:44px;height:44px" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><p style="font-size:30px;font-weight:600">Ocorrências</p></div>
+<div style="display:flex;gap:20px;align-items:center;background:#1E252B;padding:28px;border-radius:20px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:44px;height:44px" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg><p style="font-size:30px;font-weight:600">Entregas</p></div>
+<div style="display:flex;gap:20px;align-items:center;background:#1E252B;padding:28px;border-radius:20px"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#A6D32A;width:44px;height:44px" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><p style="font-size:30px;font-weight:600">Histórico e alertas</p></div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#8F9A88">Fonte: Guia do Usuário Condfy, versão 6.0</p>
+
+</section>
+<section class="slide" id="acesso" style="background:#F4F6F1;color:#1B2128;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="width:1100px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3F6B00">01 · Primeiro acesso</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">O morador entra por convite, em três passos</h2>
+</div>
+<div style="width:1100px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">1</p><p style="font-size:32px;color:#4A5563;line-height:1.4"><b style="color:#1B2128">Recebe o convite</b> da administração por SMS, e-mail ou WhatsApp</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">2</p><p style="font-size:32px;color:#4A5563;line-height:1.4"><b style="color:#1B2128">Cria o usuário</b> pelo link: nome, e-mail pessoal e senha</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">3</p><p style="font-size:32px;color:#4A5563;line-height:1.4"><b style="color:#1B2128">Baixa o app</b> e entra com o mesmo e-mail e senha</p></div>
+</div>
+<img src="img/guia-p04.jpg" alt="Página do guia mostrando a mensagem de convite com o link de cadastro" style="position:absolute;left:1328px;top:96px;width:464px;height:824px;object-fit:contain;background:#FFFFFF;border:1px solid #DDE3D6;border-radius:28px">
+<p style="position:absolute;left:128px;bottom:64px;width:1100px;font-size:24px;color:#6B7480">Guia do Usuário Condfy 6.0 · págs. 3 a 6</p>
+
+</section>
+<section class="slide" id="autorizados" style="background:#F4F6F1;color:#1B2128;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="width:1100px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3F6B00">02 · Autorizados</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">A unidade cadastra quem pode entrar</h2>
+</div>
+<div style="width:1100px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">1</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Em <b style="color:#1B2128">Cadastro</b>, escolhe a categoria: moradores, visitantes, prestadores ou veículos</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">2</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Toca em <b style="color:#1B2128">+ Cadastrar</b>, preenche os dados e inclui a foto</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">3</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Ou usa <b style="color:#1B2128">+ Convidar</b> para outro morador criar o próprio login</p></div>
+</div>
+<img src="img/guia-p08.jpg" alt="Página do guia mostrando o menu Cadastro e as categorias de autorizados" style="position:absolute;left:1328px;top:96px;width:464px;height:824px;object-fit:contain;background:#FFFFFF;border:1px solid #DDE3D6;border-radius:28px">
+<p style="position:absolute;left:128px;bottom:64px;width:1100px;font-size:24px;color:#6B7480">Guia do Usuário Condfy 6.0 · págs. 7 a 10</p>
+
+</section>
+<section class="slide" id="facial" style="background:#F4F6F1;color:#1B2128;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="width:1100px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3F6B00">03 · Acesso facial</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">Autocadastro da face, sem ir à administração</h2>
+</div>
+<div style="width:1100px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">1</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Seleciona o morador que ainda <b style="color:#1B2128">não tem foto</b> cadastrada</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">2</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Toca em <b style="color:#1B2128">Acesso por face</b> e envia a foto para o leitor facial</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">3</p><p style="font-size:32px;color:#4A5563;line-height:1.4">O condomínio define a aprovação: <b style="color:#1B2128">imediata ou com mediação</b></p></div>
+</div>
+<img src="img/guia-p12.jpg" alt="Página do guia mostrando a opção Acesso por face e o envio da foto" style="position:absolute;left:1328px;top:96px;width:464px;height:824px;object-fit:contain;background:#FFFFFF;border:1px solid #DDE3D6;border-radius:28px">
+<p style="position:absolute;left:128px;bottom:64px;width:1100px;font-size:24px;color:#6B7480">Guia do Usuário Condfy 6.0 · págs. 11 e 12</p>
+
+</section>
+<section class="slide" id="cameras" style="background:#F4F6F1;color:#1B2128;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="width:1100px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3F6B00">04 · Câmeras</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">Imagens ao vivo das câmeras liberadas</h2>
+</div>
+<div style="width:1100px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">1</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Toca em <b style="color:#1B2128">Câmeras</b>, na barra de destaques</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">2</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Desliza o dedo para ver <b style="color:#1B2128">todas as câmeras</b> disponíveis</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">3</p><p style="font-size:32px;color:#4A5563;line-height:1.4">O condomínio escolhe <b style="color:#1B2128">quais câmeras</b> cada perfil pode ver</p></div>
+</div>
+<img src="img/guia-p14.jpg" alt="Página do guia mostrando a tela de câmeras ao vivo no app" style="position:absolute;left:1328px;top:96px;width:464px;height:824px;object-fit:contain;background:#FFFFFF;border:1px solid #DDE3D6;border-radius:28px">
+<p style="position:absolute;left:128px;bottom:64px;width:1100px;font-size:24px;color:#6B7480">Guia do Usuário Condfy 6.0 · págs. 13 e 14</p>
+
+</section>
+<section class="slide" id="acionamentos" style="background:#F4F6F1;color:#1B2128;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="width:1100px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3F6B00">05 · Acionamentos</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">Portas e portões abertos pelo celular</h2>
+</div>
+<div style="width:1100px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">1</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Toca em <b style="color:#1B2128">Acionamentos</b>, na barra de destaques</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">2</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Escolhe o ponto, como o portão de veículos</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">3</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Confere a imagem e toca em <b style="color:#1B2128">Acionar</b></p></div>
+</div>
+<img src="img/guia-p20.jpg" alt="Página do guia mostrando a lista de acionamentos e o botão Acionar" style="position:absolute;left:1328px;top:96px;width:464px;height:824px;object-fit:contain;background:#FFFFFF;border:1px solid #DDE3D6;border-radius:28px">
+<p style="position:absolute;left:128px;bottom:64px;width:1100px;font-size:24px;color:#6B7480">Guia do Usuário Condfy 6.0 · págs. 19 e 20</p>
+
+</section>
+<section class="slide" id="convites" style="background:#F4F6F1;color:#1B2128;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:40px">
+<div style="width:1100px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3F6B00">06 · Convites</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">Cinco formas de receber visitas</h2>
+</div>
+<div style="width:1100px">
+<table style="font-size:28px;color:#1B2128;background:#FFFFFF">
+<tr style="background:#1B2128"><th style="width:34%;color:#A6D32A;text-align:left">Método</th><th style="width:66%;color:#F4F6F1;text-align:left">Como o visitante entra</th></tr>
+<tr><td><b>Chave virtual</b></td><td>Recebe um link no WhatsApp e aciona o portão no horário liberado</td></tr>
+<tr style="background:#F4F6F1"><td><b>QR Code</b></td><td>Mostra o QR Code recebido ao leitor da entrada</td></tr>
+<tr><td><b>QR Scanner</b></td><td>Aponta o celular para o QR Code fixado no local</td></tr>
+<tr style="background:#F4F6F1"><td><b>Facial</b></td><td>Envia uma selfie e passa pelo leitor facial</td></tr>
+<tr><td><b>Avisar portaria</b></td><td>Nome na lista enviada à portaria, com dia e hora</td></tr>
+</table>
+</div>
+<img src="img/guia-p24.jpg" alt="Página do guia mostrando o formulário de convite por chave virtual" style="position:absolute;left:1328px;top:96px;width:464px;height:824px;object-fit:contain;background:#FFFFFF;border:1px solid #DDE3D6;border-radius:28px">
+<p style="position:absolute;left:128px;bottom:64px;width:1100px;font-size:24px;color:#6B7480">Em todos: data e hora de entrada e saída definidas, e o morador é avisado da chegada</p>
+
+</section>
+<section class="slide" id="agendamento" style="background:#F4F6F1;color:#1B2128;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="width:1100px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3F6B00">07 · Agendamentos</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">Reserva de áreas comuns com lista de convidados</h2>
+</div>
+<div style="width:1100px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">1</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Em <b style="color:#1B2128">Agendamentos</b>, toca em + e escolhe o espaço</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">2</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Seleciona data e horário livres e confere o resumo</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">3</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Monta a <b style="color:#1B2128">lista de convidados</b>, que vai direto ao porteiro</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">4</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Acompanha o status; espaços com aprovação geram aviso</p></div>
+</div>
+<img src="img/guia-p17.jpg" alt="Página do guia mostrando o calendário e o resumo da reserva" style="position:absolute;left:1328px;top:96px;width:464px;height:824px;object-fit:contain;background:#FFFFFF;border:1px solid #DDE3D6;border-radius:28px">
+<p style="position:absolute;left:128px;bottom:64px;width:1100px;font-size:24px;color:#6B7480">Guia do Usuário Condfy 6.0 · págs. 15 a 18</p>
+
+</section>
+<section class="slide" id="comunicacao" style="background:#F4F6F1;color:#1B2128;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="width:720px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3F6B00">08 · Comunicação</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">Mural de avisos e pedidos no mesmo lugar</h2>
+</div>
+<div style="width:720px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px"><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:600">Mural de avisos</h3><p style="font-size:32px;color:#4A5563;line-height:1.4">Avisos gerais ou por unidade, com anexos e registro de quem leu</p></div>
+<div style="display:flex;flex-direction:column;gap:8px"><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:600">Pedidos e manifestações</h3><p style="font-size:32px;color:#4A5563;line-height:1.4">Solicitações ao síndico com fotos, acompanhadas por status</p></div>
+</div>
+<img src="img/guia-p34.jpg" alt="Página do guia mostrando como adicionar um aviso no mural" style="position:absolute;left:840px;top:96px;width:464px;height:824px;object-fit:contain;background:#FFFFFF;border:1px solid #DDE3D6;border-radius:28px">
+<img src="img/guia-p36.jpg" alt="Página do guia mostrando como abrir um pedido com fotos" style="position:absolute;left:1328px;top:96px;width:464px;height:824px;object-fit:contain;background:#FFFFFF;border:1px solid #DDE3D6;border-radius:28px">
+<p style="position:absolute;left:128px;bottom:64px;width:720px;font-size:24px;color:#6B7480">Guia do Usuário Condfy 6.0 · págs. 33 a 36</p>
+
+</section>
+<section class="slide" id="ocorrencias" style="background:#F4F6F1;color:#1B2128;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="width:1100px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3F6B00">09 · Ocorrências</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">Um toque para pedir ajuda à portaria</h2>
+</div>
+<div style="width:1100px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">1</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Toca em <b style="color:#1B2128">Ocorrências</b>, na barra de recursos</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">2</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Escolhe o tipo: <b style="color:#1B2128">pânico, emergência médica, entrada assistida</b>, elevador parado e outros</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">3</p><p style="font-size:32px;color:#4A5563;line-height:1.4">O alerta chega <b style="color:#1B2128">direto ao operador</b>, local ou remoto</p></div>
+</div>
+<img src="img/guia-p38.jpg" alt="Página do guia mostrando o gerador de ocorrências com emergência médica, entrada assistida e pânico" style="position:absolute;left:1328px;top:96px;width:464px;height:824px;object-fit:contain;background:#FFFFFF;border:1px solid #DDE3D6;border-radius:28px">
+<p style="position:absolute;left:128px;bottom:64px;width:1100px;font-size:24px;color:#6B7480">Guia do Usuário Condfy 6.0 · págs. 37 e 38</p>
+
+</section>
+<section class="slide" id="entregas" style="background:#F4F6F1;color:#1B2128;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="width:1100px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3F6B00">10 · Entregas</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">Encomendas com aviso de chegada e de retirada</h2>
+</div>
+<div style="width:1100px;display:flex;flex-direction:column;gap:32px">
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">1</p><p style="font-size:32px;color:#4A5563;line-height:1.4">A portaria registra a encomenda e o morador <b style="color:#1B2128">é notificado</b></p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">2</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Em <b style="color:#1B2128">Entregas</b>, vê foto, quem recebeu e quem retirou</p></div>
+<div style="display:flex;gap:28px;align-items:start"><p style="font-size:32px;font-weight:600;color:#12161A;background:#A6D32A;padding:8px 22px;border-radius:40px">3</p><p style="font-size:32px;color:#4A5563;line-height:1.4">Opcional: armários e compartimentos com <b style="color:#1B2128">acesso exclusivo</b> do destinatário</p></div>
+</div>
+<img src="img/guia-p40.jpg" alt="Página do guia mostrando o histórico de entregas com status de retirada" style="position:absolute;left:1328px;top:96px;width:464px;height:824px;object-fit:contain;background:#FFFFFF;border:1px solid #DDE3D6;border-radius:28px">
+<p style="position:absolute;left:128px;bottom:64px;width:1100px;font-size:24px;color:#6B7480">Guia do Usuário Condfy 6.0 · págs. 39 e 40</p>
+
+</section>
+<section class="slide" id="historico" style="background:#F4F6F1;color:#1B2128;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:44px">
+<div style="width:720px;display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#3F6B00">11 · Histórico e notificações</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">Cada entrada da unidade fica registrada</h2>
+</div>
+<div style="width:720px;display:flex;flex-direction:column;gap:28px">
+<div style="display:flex;flex-direction:column;gap:8px"><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:600">Histórico de acessos</h3><p style="font-size:32px;color:#4A5563;line-height:1.4">Tag, controle, face ou liberação da portaria, em tempo real</p></div>
+<div style="display:flex;flex-direction:column;gap:8px"><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:600">Notificações</h3><p style="font-size:32px;color:#4A5563;line-height:1.4">O morador escolhe o que quer receber, em Perfil › Configurações</p></div>
+</div>
+<img src="img/guia-p42.jpg" alt="Página do guia mostrando o histórico de acessos da unidade" style="position:absolute;left:840px;top:96px;width:464px;height:824px;object-fit:contain;background:#FFFFFF;border:1px solid #DDE3D6;border-radius:28px">
+<img src="img/guia-p45.jpg" alt="Página do guia mostrando a configuração de notificações" style="position:absolute;left:1328px;top:96px;width:464px;height:824px;object-fit:contain;background:#FFFFFF;border:1px solid #DDE3D6;border-radius:28px">
+<p style="position:absolute;left:128px;bottom:64px;width:720px;font-size:24px;color:#6B7480">Guia do Usuário Condfy 6.0 · págs. 41 a 45</p>
+
+</section>
+<section class="slide" id="gestao" style="background:#12161A;color:#F4F6F1;font-family:Inter, Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-size:24px;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:#A6D32A">Para o conselho</p>
+<h2 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:72px;font-weight:700;line-height:1.1;letter-spacing:-1px">O que o condomínio ganha com a troca</h2>
+</div>
+<div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:24px;flex:1">
+<div style="display:flex;flex-direction:column;gap:12px;background:#1E252B;padding:40px;border-radius:24px"><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:600;color:#A6D32A">Segurança e rastreio</h3><p style="font-size:32px;color:#D5DCCF;line-height:1.4">Cada convite, acionamento e entrada fica registrado com usuário, data e hora</p></div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#1E252B;padding:40px;border-radius:24px"><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:600;color:#A6D32A">Portaria mais leve</h3><p style="font-size:32px;color:#D5DCCF;line-height:1.4">Menos ligações e cadastros manuais; o porteiro foca na segurança</p></div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#1E252B;padding:40px;border-radius:24px"><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:600;color:#A6D32A">Gestão centralizada</h3><p style="font-size:32px;color:#D5DCCF;line-height:1.4">Avisos, reservas, pedidos e entregas em um sistema, acessível de qualquer lugar</p></div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#1E252B;padding:40px;border-radius:24px"><h3 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:44px;font-weight:600;color:#A6D32A">Dados protegidos</h3><p style="font-size:32px;color:#D5DCCF;line-height:1.4">Nuvem com criptografia e conformidade com a LGPD declarada pelo fabricante</p></div>
+</div>
+<p style="position:absolute;left:128px;bottom:64px;width:1664px;font-size:24px;color:#8F9A88">A+.com Engenharia e Tecnologia · Alphaville Residencial 2</p>
+
+</section>
+<section class="slide" id="frase" style="background:#A6D32A;color:#12161A;font-family:Inter, Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:center;gap:40px">
+<h1 style="font-family:'Space Grotesk', Arial, sans-serif;font-size:120px;font-weight:700;line-height:1.05;letter-spacing:-3px;width:1500px">A portaria continua. Agora ela também cabe no bolso do morador.</h1>
+<p style="font-size:32px;color:#2A3510;width:1300px;line-height:1.4">Os equipamentos e a equipe ficam; muda a forma de liberar, comunicar e acompanhar.</p>
+
+</section>
+<section class="slide" id="implantacao" style="display:flex; flex-direction:column; gap:48px; padding:128px 128px 160px; background:#f4f6f1">
+  <div style="display:flex; flex-direction:column; gap:20px">
+    <p style="font-family:Inter, Arial, sans-serif; font-size:24px; font-weight:600; letter-spacing:4px; text-transform:uppercase; color:#3f6b00">Implantação</p>
+    <h2 style="font-family:'Space Grotesk', Arial, sans-serif; font-size:72px; font-weight:700; line-height:1.1; letter-spacing:-1px; color:#1b2128">Cinco etapas, sem parar a portaria</h2>
+  </div>
+  <div style="display:flex; flex-direction:row; gap:20px; flex:1">
+    <div style="display:flex; flex-direction:column; gap:16px; flex:1; padding:32px; background:#ffffff; border:1px solid #dde3d6; border-radius:20px">
+      <p style="font-family:Inter, Arial, sans-serif; font-size:24px; font-weight:600; color:#3f6b00">ETAPA 1</p>
+      <h3 style="font-family:'Space Grotesk', Arial, sans-serif; font-size:32px; font-weight:600; line-height:1.15; color:#1b2128">Levantamento técnico</h3>
+      <p style="font-family:Inter, Arial, sans-serif; font-size:26px; line-height:1.4; color:#4a5563">Compatibilidade de leitores, controladoras, câmeras e internet</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px; flex:1; padding:32px; background:#ffffff; border:1px solid #dde3d6; border-radius:20px">
+      <p style="font-family:Inter, Arial, sans-serif; font-size:24px; font-weight:600; color:#3f6b00">ETAPA 2</p>
+      <h3 style="font-family:'Space Grotesk', Arial, sans-serif; font-size:32px; font-weight:600; line-height:1.15; color:#1b2128">Configuração</h3>
+      <p style="font-family:Inter, Arial, sans-serif; font-size:26px; line-height:1.4; color:#4a5563">Unidades, perfis, permissões e migração dos cadastros atuais</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px; flex:1; padding:32px; background:#ffffff; border:1px solid #dde3d6; border-radius:20px">
+      <p style="font-family:Inter, Arial, sans-serif; font-size:24px; font-weight:600; color:#3f6b00">ETAPA 3</p>
+      <h3 style="font-family:'Space Grotesk', Arial, sans-serif; font-size:32px; font-weight:600; line-height:1.15; color:#1b2128">Piloto</h3>
+      <p style="font-family:Inter, Arial, sans-serif; font-size:26px; line-height:1.4; color:#4a5563">Conselho e um grupo de moradores testam antes da abertura geral</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px; flex:1; padding:32px; background:#ffffff; border:1px solid #dde3d6; border-radius:20px">
+      <p style="font-family:Inter, Arial, sans-serif; font-size:24px; font-weight:600; color:#3f6b00">ETAPA 4</p>
+      <h3 style="font-family:'Space Grotesk', Arial, sans-serif; font-size:32px; font-weight:600; line-height:1.15; color:#1b2128">Convites e treino</h3>
+      <p style="font-family:Inter, Arial, sans-serif; font-size:26px; line-height:1.4; color:#4a5563">Convite a todas as unidades, vídeo tutorial e treino da portaria</p>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:16px; flex:1; padding:32px; background:#ffffff; border:1px solid #dde3d6; border-radius:20px">
+      <p style="font-family:Inter, Arial, sans-serif; font-size:24px; font-weight:600; color:#3f6b00">ETAPA 5</p>
+      <h3 style="font-family:'Space Grotesk', Arial, sans-serif; font-size:32px; font-weight:600; line-height:1.15; color:#1b2128">Operação assistida</h3>
+      <p style="font-family:Inter, Arial, sans-serif; font-size:26px; line-height:1.4; color:#4a5563">Suporte da A+ nas primeiras semanas e desligamento do sistema antigo</p>
+    </div>
+  </div>
+  <p style="position:absolute; bottom:64px; left:128px; width:1664px; font-family:Inter, Arial, sans-serif; font-size:24px; color:#6b7480">Prazo total estimado: [__ semanas], a confirmar após o levantamento técnico</p>
+  
+</section>
+<section class="slide" id="fim" style="display:flex; flex-direction:column; gap:48px; align-items:center; justify-content:center; padding:128px; background:radial-gradient(ellipse at 80% 30%, #26331a 0%, #12161a 60%)">
+  <img src="img/logo-amais.png" alt="Logo A+.com Engenharia e Tecnologia" style="width:560px; height:200px; object-fit:contain">
+  <h2 style="font-family:'Space Grotesk', Arial, sans-serif; font-size:72px; font-weight:700; line-height:1.1; text-align:center; color:#f4f6f1">Obrigado. Perguntas?</h2>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px"><p data-f="resp_nome" style="font-family:Inter, Arial, sans-serif;font-size:40px;font-weight:600;text-align:center;color:#f4f6f1">[Nome do responsável]</p><p data-f="resp_cargo" data-show="resp_cargo" style="font-family:Inter, Arial, sans-serif;font-size:28px;text-align:center;color:#a6d32a">[Cargo]</p><p data-contato style="font-family:Inter, Arial, sans-serif;font-size:30px;text-align:center;color:#bac4b4">[telefone] · [e-mail]</p></div>
+  
+</section>
+</div></div>
+
+<div id="ctrl">
+  <button id="bPrev" aria-label="Slide anterior"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+  <div id="count"></div>
+  <button id="bNext" aria-label="Próximo slide"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+  <button id="bPdf" aria-label="Baixar PDF" title="Baixar PDF"><svg viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg></button>
+  <button id="bFull" aria-label="Tela cheia"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const stage=document.getElementById('stage');
+const count=document.getElementById('count');
+const prog=document.getElementById('prog');
+let cur=0;
+
+function fit(){stage.style.transform='scale('+Math.min(innerWidth/1920,innerHeight/1080)+')'}
+function go(i){
+  i=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach((el,k)=>el.classList.toggle('on',k===i));
+  cur=i;
+  count.textContent=(i+1)+' / '+slides.length;
+  prog.style.width=((i+1)/slides.length*100)+'%';
+  history.replaceState(null,'','#'+(i+1));
+}
+function toggleFull(){
+  if(document.fullscreenElement)document.exitFullscreen();
+  else document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();
+}
+document.getElementById('bPrev').onclick=()=>go(cur-1);
+document.getElementById('bNext').onclick=()=>go(cur+1);
+document.getElementById('bFull').onclick=toggleFull;
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){go(cur+1);e.preventDefault()}
+  else if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){go(cur-1);e.preventDefault()}
+  else if(e.key==='Home')go(0);
+  else if(e.key==='End')go(slides.length-1);
+  else if(e.key==='f'||e.key==='F')toggleFull();
+});
+let tx=null;
+addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+addEventListener('touchend',e=>{
+  if(tx===null)return;
+  const d=e.changedTouches[0].clientX-tx;
+  if(Math.abs(d)>50)go(cur+(d<0?1:-1));
+  tx=null;
+});
+let idle;
+addEventListener('mousemove',()=>{
+  document.body.classList.remove('idle');
+  clearTimeout(idle);
+  idle=setTimeout(()=>document.body.classList.add('idle'),2500);
+});
+addEventListener('resize',fit);
+fit();
+go((parseInt(location.hash.slice(1),10)||1)-1);
+
+/* dados salvos no painel: responsável do último slide */
+const pronto=fetch('dados.json',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{
+  const c=d.campos||{};
+  document.querySelectorAll('[data-f]').forEach(el=>{el.textContent=c[el.dataset.f]??''});
+  document.querySelectorAll('[data-show]').forEach(el=>{el.hidden=!c[el.dataset.show]});
+  document.querySelectorAll('[data-contato]').forEach(el=>{
+    const t=[c.resp_telefone,c.resp_email].map(v=>String(v??'').trim()).filter(Boolean).join(' · ');
+    el.textContent=t;el.hidden=!t;
+  });
+}).catch(e=>console.warn('dados indisponíveis',e));
+
+/* PDF: um slide por página (Imprimir › Salvar como PDF) */
+function baixarPdf(){pronto.then(()=>document.fonts.ready).then(()=>setTimeout(()=>print(),150))}
+document.getElementById('bPdf').onclick=baixarPdf;
+if(new URLSearchParams(location.search).has('pdf'))baixarPdf();
+</script>
+</body>
+</html>

@@ -200,11 +200,11 @@ async function lista(){
           <span>${p.links} link${p.links===1?'':'s'} ativo${p.links===1?'':'s'}</span>
           ${p.atualizado?`<span>· salvo em ${data(p.atualizado)}</span>`:''}
         </div>
-        ${p.editavel?(p.total&&p.total.completo?`<div class="valor">${BRL(p.total.valor)}</div>`:`<div class="valor pend">Valores pendentes</div>`):''}
+        ${p.comValores?(p.total&&p.total.completo?`<div class="valor">${BRL(p.total.valor)}</div>`:`<div class="valor pend">Valores pendentes</div>`):''}
         <div class="acoes">
           <a class="btn" href="/p/${p.slug}/" target="_blank" rel="noopener">Abrir</a>
           <a class="btn" href="/p/${p.slug}/?pdf=1" target="_blank" rel="noopener" title="Abre a proposta e a janela de salvar em PDF">PDF</a>
-          ${p.editavel?`<a class="btn pri" href="#/${p.slug}">Editar valores</a>`:''}
+          ${p.editavel?`<a class="btn pri" href="#/${p.slug}">${p.comValores?'Editar valores':'Editar dados'}</a>`:''}
           <a class="btn" href="#/${p.slug}/links">Links de cliente</a>
         </div>
       </div>`).join('')}</div></section>`).join('');
@@ -242,6 +242,7 @@ async function editor(slug,aba){
   (d.modelo?.campos||[]).forEach(c=>{campos[c.id]=d.calculo.campos[c.id]});
   E={slug,d,modelo:d.modelo,campos,listas:structuredClone(d.listas||{}),status:d.calculo?.status||'Rascunho',atualizado:d.salvo.atualizado,sujo:false};
   const temModelo=Boolean(d.modelo);
+  const temListas=temModelo&&Object.keys(d.modelo.listas||{}).length>0;
   aba=aba||(temModelo?'dados':'links');
   app.innerHTML=`<a class="voltar" href="#/">← Todas as propostas</a>
     <div class="cab">
@@ -255,16 +256,16 @@ async function editor(slug,aba){
       </div>
     </div>${aviso(d.persistente)}
     <nav class="abas">
-      ${temModelo?`<button data-a="dados">Dados</button><button data-a="materiais">Materiais</button><button data-a="servicos">Serviços</button><button data-a="resumo">Resumo</button>`:''}
+      ${temModelo?`<button data-a="dados">Dados</button>`:''}${temListas?`<button data-a="materiais">Materiais</button><button data-a="servicos">Serviços</button><button data-a="resumo">Resumo</button>`:''}
       <button data-a="links">Links de cliente <span class="n" id="nlinks">${d.links.length}</span></button>
     </nav>
-    ${temModelo?`<section class="painel" id="p-dados"></section><section class="painel" id="p-materiais"></section><section class="painel" id="p-servicos"></section><section class="painel" id="p-resumo"></section>`:''}
+    ${temModelo?`<section class="painel" id="p-dados"></section>`:''}${temListas?`<section class="painel" id="p-materiais"></section><section class="painel" id="p-servicos"></section><section class="painel" id="p-resumo"></section>`:''}
     <section class="painel" id="p-links"></section>`;
   app.querySelectorAll('.abas button').forEach(b=>b.onclick=()=>trocar(b.dataset.a));
   if(temModelo){
     $('#salvar').onclick=salvar;
     $('#status').onchange=e=>{E.status=e.target.value;sujo()};
-    formDados();tabela('materiais');tabela('servicos');resumo();sujo(false);
+    formDados(temListas);if(temListas){tabela('materiais');tabela('servicos');resumo()}sujo(false);
   }
   painelLinks();
   trocar(aba);
@@ -277,7 +278,7 @@ function trocar(a){
   history.replaceState(null,'','#/'+E.slug+(a==='dados'?'':'/'+a));
 }
 
-function formDados(){
+function formDados(temListas=true){
   let html='<div class="form">',sec=null;
   for(const c of E.modelo.campos){
     if(c.secao!==sec){sec=c.secao;html+=`<div class="sec">${esc(sec)}</div>`}
@@ -285,7 +286,7 @@ function formDados(){
     if(c.tipo==='booleano')html+=`<div class="fld chk"><label><input type="checkbox" data-c="${c.id}" ${v?'checked':''}> ${esc(c.rotulo)}</label></div>`;
     else html+=`<div class="fld"><label for="c-${c.id}">${esc(c.rotulo)}</label><input id="c-${c.id}" data-c="${c.id}" ${c.tipo==='numero'?'inputmode="decimal"':''} value="${esc(v)}"></div>`;
   }
-  $('#p-dados').innerHTML=html+'</div><p class="dica">A margem padrão vale para todos os itens de materiais e serviços que não tiverem margem própria.</p>';
+  $('#p-dados').innerHTML=html+'</div>'+(temListas?'<p class="dica">A margem padrão vale para todos os itens de materiais e serviços que não tiverem margem própria.</p>':'<p class="dica">Salvou, a apresentação já muda.</p>');
   $('#p-dados').querySelectorAll('[data-c]').forEach(el=>el.oninput=()=>{
     const c=E.modelo.campos.find(x=>x.id===el.dataset.c);
     E.campos[c.id]=c.tipo==='booleano'?el.checked:c.tipo==='numero'?el.value.replace(',','.').trim():el.value;
